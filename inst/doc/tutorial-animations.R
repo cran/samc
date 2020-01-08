@@ -4,6 +4,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+required <- c("ggplot2", "gifski", "png", "viridis", "gganimate")
+if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+
 ## ---- message = FALSE----------------------------------------------------
 # First step is to load the libraries. Not all of these libraries are stricly
 # needed; some are used for convenience and visualization for this tutorial.

@@ -4,6 +4,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
+required <- c("viridis")
+if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+
 ## ---- message = FALSE----------------------------------------------------
 # First step is to load the libraries. Not all of these libraries are stricly
 # needed; some are used for convenience and visualization for this tutorial.
@@ -37,7 +42,7 @@ plot(raster(occ_data, xmn = 1, xmx = ncol(occ_data), ymn = 1, ymx = nrow(occ_dat
      main = "Example Occupancy Data", xlab = "x", ylab = "y", col = viridis(256))
 
 ## ------------------------------------------------------------------------
-# Create a `samc-class` object using the resistance and absorption data. We use the 
+# Create a `samc-class` object using the resistance and absorption data. We use the
 # recipricol of the arithmetic mean for calculating the transition matrix. Note,
 # the input data here are matrices, not RasterLayers. If using RasterLayers, the
 # `latlon` parameter must be set.
