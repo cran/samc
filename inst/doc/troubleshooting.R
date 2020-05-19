@@ -1,4 +1,4 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -11,7 +11,7 @@ res_data <- samc::ex_res_data
 abs_data <- samc::ex_abs_data
 occ_data <- samc::ex_occ_data
 
-## ---- error = TRUE-------------------------------------------------------
+## ---- error = TRUE------------------------------------------------------------
 # Working example
 r1 <- ex_res_data
 r2 <- ex_res_data
@@ -34,7 +34,7 @@ r2 <- ex_res_data
 r2 <- r2[1:5, 1:5]
 check(r1, r2)
 
-## ---- error = TRUE-------------------------------------------------------
+## ---- error = TRUE------------------------------------------------------------
 # Example: Skipping optional arguments. In this case, the `fidelity` argument is
 # optional and the `latlon` argument doesn't apply because our input data are
 # matrices, so we skip them. The tr_fun argument, however, is always required, 

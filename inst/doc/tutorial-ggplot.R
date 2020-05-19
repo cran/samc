@@ -1,4 +1,4 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -9,7 +9,7 @@ if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
-## ---- message = FALSE----------------------------------------------------
+## ---- message = FALSE---------------------------------------------------------
 # First step is to load the libraries. Not all of these libraries are stricly
 # needed; some are used for convenience and visualization for this tutorial.
 library("samc")
@@ -48,7 +48,7 @@ short_mort_map <- map(samc_obj, short_mort)
 long_mort_map <- map(samc_obj, long_mort)
 long_disp_map <- map(samc_obj, long_disp)
 
-## ---- fig.show='hold'----------------------------------------------------
+## ---- fig.show='hold'---------------------------------------------------------
 # Convert the landscape data RasterLayer objects to data frames for ggplot
 res_df <- as.data.frame(raster(res_data, xmn = 1, xmx = ncol(res_data), ymn = 1, ymx = nrow(res_data)),
                         xy = TRUE, na.rm = TRUE)
@@ -77,7 +77,7 @@ ggplot(abs_df, aes(x = x, y = y)) +
   ggtitle("Absorption Data") +
   coord_equal() + theme_bw()
 
-## ---- fig.show='hold'----------------------------------------------------
+## ---- fig.show='hold'---------------------------------------------------------
 # Convert result RasterLayer objects to data frames for ggplot
 short_mort_df <- as.data.frame(short_mort_map, xy = TRUE, na.rm = TRUE)
 long_mort_df <- as.data.frame(long_mort_map, xy = TRUE, na.rm = TRUE)

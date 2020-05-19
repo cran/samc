@@ -1,4 +1,4 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -9,7 +9,7 @@ if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
-## ---- message = FALSE----------------------------------------------------
+## ---- message = FALSE---------------------------------------------------------
 # First step is to load the libraries. Not all of these libraries are stricly
 # needed; some are used for convenience and visualization for this tutorial.
 library("samc")
@@ -41,20 +41,18 @@ samc_obj <- samc(res_data, abs_data, tr_fun = function(x) 1/mean(x))
 # left-to-right then top-to-bottom order.
 time_steps <- ((1:50)*2) ^ 2
 
-dist_list <- list()
-for (i in 1:length(time_steps)) {
-  dist_list[[i]] <- distribution(samc_obj, origin = 1, time = time_steps[i])
-}
+dist_list <- distribution(samc_obj, origin = 1, time = time_steps)
+dist_map <- map(samc_obj, dist_list)
 
-## ----eval = FALSE--------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # Adapted from the example in the gifski package reference
 #  png_path <- file.path(tempdir(), "frame%03d.png")
 #  png(png_path)
 #  par(ask = FALSE)
 #  
-#  for (i in 1:length(time_steps)) {
-#    temp_map <- map(samc_obj, dist_list[[i]])
-#    plot(temp_map, main = paste("Individual Location at", time_steps[i]), xlab = "x", ylab = "y", col = viridis(256))
+#  for (ts in time_steps) {
+#    name <- as.character(ts)
+#    plot(dist_map[[name]], main = paste("Individual Location at time step ", name), xlab = "x", ylab = "y", col = viridis(256))
 #  }
 #  
 #  dev.off()
@@ -64,16 +62,16 @@ for (i in 1:length(time_steps)) {
 #  unlink(png_files)
 #  utils::browseURL(gif_file)
 
-## ----fig1, out.width = '100%', fig.align = "center", echo = FALSE--------
+## ----fig1, out.width = '100%', fig.align = "center", echo = FALSE-------------
 knitr::include_graphics("img/gifski.gif")
 
-## ----fig2, fig.width = 6.5, out.width = '100%', dpi = 300, fig.align = "center"----
+## ----fig2, fig.width = 6.5, out.width = '100%', fig.align = "center"----------
 # Create an empty dataframe to hold all the data from all the plots
 dist_df <- data.frame(x = numeric(0), y = numeric(0), layer = numeric(0), steps = numeric(0))
 
 for (ts in time_steps) {
-  dist <- distribution(samc_obj, origin = 1, time = ts)
-  dist <- as.data.frame(map(samc_obj, dist), xy = TRUE, na.rm = TRUE)
+  name <- as.character(ts)
+  dist <- as.data.frame(dist_map[[name]], xy = TRUE, na.rm = TRUE)
   dist$steps <- ts
   
   dist_df <- rbind(dist_df, dist)

@@ -1,4 +1,4 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -13,7 +13,7 @@ library("raster")
 library("samc")
 library("viridis")
 
-## ---- fig.show='hold'----------------------------------------------------
+## ---- fig.show='hold'---------------------------------------------------------
 str(samc::ex_res_data)
 str(samc::ex_abs_data)
 str(samc::ex_occ_data)
@@ -28,7 +28,7 @@ plot(raster(samc::ex_abs_data, xmn = 1, xmx = ncol(samc::ex_abs_data), ymn = 1, 
 plot(raster(samc::ex_occ_data, xmn = 1, xmx = ncol(samc::ex_occ_data), ymn = 1, ymx = nrow(samc::ex_occ_data)),
      main = "Example Occupancy Data", xlab = "x", ylab = "y", col = viridis(256))
 
-## ----table1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'----
+## ----table1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'--------
 tabl <- "
 | Function | Equation | Description |
 |:---------|:---------|:------------|

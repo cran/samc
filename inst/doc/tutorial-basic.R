@@ -1,4 +1,4 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -9,14 +9,14 @@ if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
-## ---- message = FALSE----------------------------------------------------
+## ---- message = FALSE---------------------------------------------------------
 # First step is to load the libraries. Not all of these libraries are stricly
 # needed; some are used for convenience and visualization for this tutorial.
 library("samc")
 library("raster")
 library("viridis")
 
-## ---- fig.show='hold'----------------------------------------------------
+## ---- fig.show='hold'---------------------------------------------------------
 # "Load" the data. In this case we are using data built into the package.
 # In practice, users will likely load raster data using the raster() function
 # from the raster package.
@@ -41,7 +41,7 @@ plot(raster(abs_data, xmn = 1, xmx = ncol(abs_data), ymn = 1, ymx = nrow(abs_dat
 plot(raster(occ_data, xmn = 1, xmx = ncol(occ_data), ymn = 1, ymx = nrow(occ_data)),
      main = "Example Occupancy Data", xlab = "x", ylab = "y", col = viridis(256))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # Create a `samc-class` object using the resistance and absorption data. We use the
 # recipricol of the arithmetic mean for calculating the transition matrix. Note,
 # the input data here are matrices, not RasterLayers. If using RasterLayers, the
@@ -56,7 +56,7 @@ samc_obj <- samc(res_data, abs_data, tr_fun = function(x) 1/mean(x))
 # matrix should be 2625 x 2625
 str(samc_obj)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # Convert the occupancy data to probability of occurrence
 occ_prob_data <- occ_data / sum(occ_data, na.rm = TRUE)
 
@@ -66,7 +66,7 @@ short_mort <- mortality(samc_obj, occ_prob_data, time = 4800)
 long_mort <- mortality(samc_obj, occ_prob_data)
 long_disp <- dispersal(samc_obj, occ_prob_data)
 
-## ---- fig.show='hold'----------------------------------------------------
+## ---- fig.show='hold'---------------------------------------------------------
 # Create rasters using the vector result data for plotting.
 short_mort_map <- map(samc_obj, short_mort)
 long_mort_map <- map(samc_obj, long_mort)
