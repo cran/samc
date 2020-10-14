@@ -1,8 +1,7 @@
 Package: samc
 Type: Package
 Title: Spatial Absorbing Markov Chains
-Version: 1.1.0
-Date: 2020-05-19
+Version: 1.2.0
 Authors@R: c(
     person("Andrew", "Marx", , "andrewjmarx@ufl.edu", role = c("aut", "cre", "cph"), 
       comment = c(ORCID = "0000-0002-7456-1631")
@@ -33,17 +32,17 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.3.0)
 Imports: methods, gdistance, Matrix, raster
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: knitr, rmarkdown, testthat, ggplot2, png, viridis, gifski,
         gganimate
 VignetteBuilder: knitr
-Collate: 'RcppExports.R' 'samc-class.R' 'check.R' 'data.R'
-        'visitation.R' 'dispersal.R' 'distribution.R'
-        'internal-functions.R' 'map.R' 'mortality.R' 'samc.R'
-        'survival.R'
+Collate: 'RcppExports.R' 'samc-class.R' 'check.R' 'cond_passage.R'
+        'data.R' 'visitation.R' 'dispersal.R' 'distribution.R'
+        'internal-functions.R' 'locate.R' 'map.R' 'mortality.R'
+        'samc.R' 'survival.R'
 LinkingTo: Rcpp (>= 1.0.1), RcppEigen (>= 0.3.3.5.0)
 NeedsCompilation: yes
-Packaged: 2020-05-19 19:39:49 UTC; andrewjmarx
+Packaged: 2020-10-14 02:55:17 UTC; andrewjmarx
 Author: Andrew Marx [aut, cre, cph] (<https://orcid.org/0000-0002-7456-1631>),
   Robert Fletcher [ctb] (<https://orcid.org/0000-0003-1717-5707>),
   Miguel Acevedo [ctb] (<https://orcid.org/0000-0002-8289-1497>),
@@ -51,4 +50,4 @@ Author: Andrew Marx [aut, cre, cph] (<https://orcid.org/0000-0002-7456-1631>),
   Chao Wang [ctb] (<https://orcid.org/0000-0003-2706-5122>)
 Maintainer: Andrew Marx <andrewjmarx@ufl.edu>
 Repository: CRAN
-Date/Publication: 2020-05-19 20:50:02 UTC
+Date/Publication: 2020-10-14 08:20:03 UTC

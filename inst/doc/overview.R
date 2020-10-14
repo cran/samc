@@ -32,6 +32,7 @@ plot(raster(samc::ex_occ_data, xmn = 1, xmx = ncol(samc::ex_occ_data), ymn = 1, 
 tabl <- "
 | Function | Equation | Description |
 |:---------|:---------|:------------|
+| `cond_passage()` | $\\tilde{t} = \\tilde{B}_j^{-1}\\tilde{F}\\tilde{B}_j{\\cdot}1$ | Mean first conditional passage time |
 | `dispersal()` | $\\tilde{D}_{jt}=({\\sum}_{n=0}^{t-1}\\tilde{Q}^n)\\tilde{q}_j$ | Probability of an individual visiting a location, if starting at any other location, before or at time *t* |
 | | $\\psi^T\\tilde{D}_{jt}$ | Probability of an individual visiting a location, before or at time *t*, regardless of initial location |
 | | $D=(F-I)diag(F)^{-1}$ | Probability of an individual visiting a location |
