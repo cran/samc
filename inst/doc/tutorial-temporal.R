@@ -4,7 +4,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-required <- c("ggplot2", "viridis")
+required <- c("viridis")
 if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
@@ -15,7 +15,6 @@ options(max.print = 20)
 # needed; some are used for convenience and visualization for this tutorial.
 library("samc")
 library("raster")
-library("ggplot2")
 library("viridis")
 
 

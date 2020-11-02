@@ -12,7 +12,7 @@
 
 <meta name="author" content="Andrew Marx" />
 
-<meta name="date" content="2020-10-13" />
+<meta name="date" content="2020-11-02" />
 
 <title>Temporal Analysis</title>
 
@@ -315,7 +315,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Temporal Analysis</h1>
 <h4 class="author">Andrew Marx</h4>
-<h4 class="date">2020-10-13</h4>
+<h4 class="date">2020-11-02</h4>
 
 
 
@@ -329,23 +329,22 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="co"># needed; some are used for convenience and visualization for this tutorial.</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;samc&quot;</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;raster&quot;</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;viridis&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;viridis&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co"># &quot;Load&quot; the data. In this case we are using data built into the package.</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="co"># In practice, users will likely load raster data using the raster() function</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="co"># from the raster package.</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>res_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_res_data</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>abs_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_abs_data</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>occ_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_occ_data</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co"># &quot;Load&quot; the data. In this case we are using data built into the package.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co"># In practice, users will likely load raster data using the raster() function</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="co"># from the raster package.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>res_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_res_data</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>abs_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_abs_data</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>occ_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_occ_data</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="co"># Create a samc object using the resistance and absorption data. We use the </span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="co"># recipricol of the arithmetic mean for calculating the transition matrix. Note,</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="co"># the input data here are matrices, not RasterLayers. If using RasterLayers, the</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a><span class="co"># `latlon` parameter must be set.</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a>samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x))</span></code></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="co"># Create a samc object using the resistance and absorption data. We use the </span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="co"># recipricol of the arithmetic mean for calculating the transition matrix. Note,</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="co"># the input data here are matrices, not RasterLayers. If using RasterLayers, the</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="co"># `latlon` parameter must be set.</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a>samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x))</span></code></pre></div>
 </div>
 <div id="temporal-analysis" class="section level2">
 <h2>Temporal Analysis</h2>
