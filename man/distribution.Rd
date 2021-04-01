@@ -3,9 +3,9 @@
 \name{distribution}
 \alias{distribution}
 \alias{distribution,samc,missing,missing,missing,numeric-method}
-\alias{distribution,samc,missing,numeric,missing,numeric-method}
-\alias{distribution,samc,missing,missing,numeric,numeric-method}
-\alias{distribution,samc,missing,numeric,numeric,numeric-method}
+\alias{distribution,samc,missing,location,missing,numeric-method}
+\alias{distribution,samc,missing,missing,location,numeric-method}
+\alias{distribution,samc,missing,location,location,numeric-method}
 \alias{distribution,samc,RasterLayer,missing,missing,numeric-method}
 \alias{distribution,samc,matrix,missing,missing,numeric-method}
 \title{Calculate distribution metrics}
@@ -14,11 +14,11 @@ distribution(samc, occ, origin, dest, time)
 
 \S4method{distribution}{samc,missing,missing,missing,numeric}(samc, time)
 
-\S4method{distribution}{samc,missing,numeric,missing,numeric}(samc, origin, time)
+\S4method{distribution}{samc,missing,location,missing,numeric}(samc, origin, time)
 
-\S4method{distribution}{samc,missing,missing,numeric,numeric}(samc, dest, time)
+\S4method{distribution}{samc,missing,missing,location,numeric}(samc, dest, time)
 
-\S4method{distribution}{samc,missing,numeric,numeric,numeric}(samc, origin, dest, time)
+\S4method{distribution}{samc,missing,location,location,numeric}(samc, origin, dest, time)
 
 \S4method{distribution}{samc,RasterLayer,missing,missing,numeric}(samc, occ, time)
 
@@ -34,13 +34,15 @@ The input type must match the input type used to create the
 rest of the landscape data. See the \code{\link{check}} function for more
 details.}
 
-\item{origin}{A positive integer representing a cell in the landscape,
-excluding \code{NA} cells. Corresponds to row \emph{i} of matrix \emph{P}
-in the \code{\link{samc-class}} object.}
+\item{origin}{A positive integer or named location representing a cell in the
+landscape. Corresponds to row \emph{i} of matrix \emph{P} in the \code{\link{samc-class}}
+object. When paired with the dest parameter, multiple values may be provided
+as a vector.}
 
-\item{dest}{A positive integer representing a cell in the landscape,
-excluding \code{NA} cells. Corresponds to column \emph{j} of matrix \emph{P}
-in the \code{\link{samc-class}} object.}
+\item{dest}{A positive integer or named location representing a cell in the
+landscape. Corresponds to column \emph{j} of matrix \emph{P} in the \code{\link{samc-class}}
+object. When paired with the origin parameter, multiple values may be provided
+as a vector.}
 
 \item{time}{A positive integer or a vector of positive integers representing
 time steps. Vectors must be ordered and contain no duplicates. Vectors may

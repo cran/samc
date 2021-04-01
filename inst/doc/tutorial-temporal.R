@@ -15,7 +15,7 @@ options(max.print = 20)
 # needed; some are used for convenience and visualization for this tutorial.
 library("samc")
 library("raster")
-library("viridis")
+library("viridisLite")
 
 
 # "Load" the data. In this case we are using data built into the package.

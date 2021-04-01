@@ -2,42 +2,42 @@
 % Please edit documentation in R/dispersal.R
 \name{dispersal}
 \alias{dispersal}
-\alias{dispersal,samc,missing,missing,numeric,numeric-method}
-\alias{dispersal,samc,RasterLayer,missing,numeric,numeric-method}
-\alias{dispersal,samc,matrix,missing,numeric,numeric-method}
+\alias{dispersal,samc,missing,missing,location,numeric-method}
+\alias{dispersal,samc,RasterLayer,missing,location,numeric-method}
+\alias{dispersal,samc,matrix,missing,location,numeric-method}
 \alias{dispersal,samc,missing,missing,missing,missing-method}
-\alias{dispersal,samc,missing,numeric,missing,missing-method}
-\alias{dispersal,samc,missing,missing,numeric,missing-method}
-\alias{dispersal,samc,missing,numeric,numeric,missing-method}
+\alias{dispersal,samc,missing,location,missing,missing-method}
+\alias{dispersal,samc,missing,missing,location,missing-method}
+\alias{dispersal,samc,missing,location,location,missing-method}
 \alias{dispersal,samc,RasterLayer,missing,missing,missing-method}
 \alias{dispersal,samc,matrix,missing,missing,missing-method}
-\alias{dispersal,samc,RasterLayer,missing,numeric,missing-method}
-\alias{dispersal,samc,matrix,missing,numeric,missing-method}
+\alias{dispersal,samc,RasterLayer,missing,location,missing-method}
+\alias{dispersal,samc,matrix,missing,location,missing-method}
 \title{Calculate dispersal metrics}
 \usage{
 dispersal(samc, occ, origin, dest, time)
 
-\S4method{dispersal}{samc,missing,missing,numeric,numeric}(samc, dest, time)
+\S4method{dispersal}{samc,missing,missing,location,numeric}(samc, dest, time)
 
-\S4method{dispersal}{samc,RasterLayer,missing,numeric,numeric}(samc, occ, dest, time)
+\S4method{dispersal}{samc,RasterLayer,missing,location,numeric}(samc, occ, dest, time)
 
-\S4method{dispersal}{samc,matrix,missing,numeric,numeric}(samc, occ, dest, time)
+\S4method{dispersal}{samc,matrix,missing,location,numeric}(samc, occ, dest, time)
 
 \S4method{dispersal}{samc,missing,missing,missing,missing}(samc)
 
-\S4method{dispersal}{samc,missing,numeric,missing,missing}(samc, origin)
+\S4method{dispersal}{samc,missing,location,missing,missing}(samc, origin)
 
-\S4method{dispersal}{samc,missing,missing,numeric,missing}(samc, dest)
+\S4method{dispersal}{samc,missing,missing,location,missing}(samc, dest)
 
-\S4method{dispersal}{samc,missing,numeric,numeric,missing}(samc, origin, dest)
+\S4method{dispersal}{samc,missing,location,location,missing}(samc, origin, dest)
 
 \S4method{dispersal}{samc,RasterLayer,missing,missing,missing}(samc, occ)
 
 \S4method{dispersal}{samc,matrix,missing,missing,missing}(samc, occ)
 
-\S4method{dispersal}{samc,RasterLayer,missing,numeric,missing}(samc, occ, dest)
+\S4method{dispersal}{samc,RasterLayer,missing,location,missing}(samc, occ, dest)
 
-\S4method{dispersal}{samc,matrix,missing,numeric,missing}(samc, occ, dest)
+\S4method{dispersal}{samc,matrix,missing,location,missing}(samc, occ, dest)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object. This should be output from
@@ -49,13 +49,15 @@ The input type must match the input type used to create the
 rest of the landscape data. See the \code{\link{check}} function for more
 details.}
 
-\item{origin}{A positive integer representing a cell in the landscape,
-excluding \code{NA} cells. Corresponds to row \emph{i} of matrix \emph{P}
-in the \code{\link{samc-class}} object.}
+\item{origin}{A positive integer or named location representing a cell in the
+landscape. Corresponds to row \emph{i} of matrix \emph{P} in the \code{\link{samc-class}}
+object. When paired with the dest parameter, multiple values may be provided
+as a vector.}
 
-\item{dest}{A positive integer representing a cell in the landscape,
-excluding \code{NA} cells. Corresponds to column \emph{j} of matrix \emph{P}
-in the \code{\link{samc-class}} object.}
+\item{dest}{A positive integer or named location representing a cell in the
+landscape. Corresponds to column \emph{j} of matrix \emph{P} in the \code{\link{samc-class}}
+object. When paired with the origin parameter, multiple values may be provided
+as a vector.}
 
 \item{time}{A positive integer or a vector of positive integers representing
 time steps. Vectors must be ordered and contain no duplicates. Vectors may

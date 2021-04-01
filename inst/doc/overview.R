@@ -11,7 +11,7 @@ if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
 
 library("raster")
 library("samc")
-library("viridis")
+library("viridisLite")
 
 ## ---- fig.show='hold'---------------------------------------------------------
 str(samc::ex_res_data)

@@ -14,7 +14,7 @@ if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
 # needed; some are used for convenience and visualization for this tutorial.
 library("samc")
 library("raster")
-library("viridis")
+library("viridisLite")
 
 ## ---- fig.show='hold'---------------------------------------------------------
 # "Load" the data. In this case we are using data built into the package.

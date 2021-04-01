@@ -3,32 +3,34 @@
 \name{visitation}
 \alias{visitation}
 \alias{visitation,samc,missing,missing-method}
-\alias{visitation,samc,numeric,missing-method}
-\alias{visitation,samc,missing,numeric-method}
-\alias{visitation,samc,numeric,numeric-method}
+\alias{visitation,samc,location,missing-method}
+\alias{visitation,samc,missing,location-method}
+\alias{visitation,samc,location,location-method}
 \title{Calculate visitation metrics}
 \usage{
 visitation(samc, origin, dest)
 
 \S4method{visitation}{samc,missing,missing}(samc)
 
-\S4method{visitation}{samc,numeric,missing}(samc, origin)
+\S4method{visitation}{samc,location,missing}(samc, origin)
 
-\S4method{visitation}{samc,missing,numeric}(samc, dest)
+\S4method{visitation}{samc,missing,location}(samc, dest)
 
-\S4method{visitation}{samc,numeric,numeric}(samc, origin, dest)
+\S4method{visitation}{samc,location,location}(samc, origin, dest)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object. This should be output from
 the \code{\link{samc}} function.}
 
-\item{origin}{A positive integer representing a cell in the landscape,
-excluding \code{NA} cells. Corresponds to row \emph{i} of matrix \emph{P}
-in the \code{\link{samc-class}} object.}
+\item{origin}{A positive integer or named location representing a cell in the
+landscape. Corresponds to row \emph{i} of matrix \emph{P} in the \code{\link{samc-class}}
+object. When paired with the dest parameter, multiple values may be provided
+as a vector.}
 
-\item{dest}{A positive integer representing a cell in the landscape,
-excluding \code{NA} cells. Corresponds to column \emph{j} of matrix \emph{P}
-in the \code{\link{samc-class}} object.}
+\item{dest}{A positive integer or named location representing a cell in the
+landscape. Corresponds to column \emph{j} of matrix \emph{P} in the \code{\link{samc-class}}
+object. When paired with the origin parameter, multiple values may be provided
+as a vector.}
 }
 \value{
 A matrix, a vector, or a numeric

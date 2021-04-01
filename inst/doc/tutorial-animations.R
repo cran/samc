@@ -12,7 +12,7 @@ do.call(knitr::read_chunk, list(path = "scripts/tutorial-animations.R"))
 #  library("samc")
 #  library("raster")
 #  library("ggplot2")
-#  library("viridis")
+#  library("viridisLite")
 #  library("gifski")
 #  library("gganimate")
 #  

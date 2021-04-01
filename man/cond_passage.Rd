@@ -2,27 +2,29 @@
 % Please edit documentation in R/cond_passage.R
 \name{cond_passage}
 \alias{cond_passage}
-\alias{cond_passage,samc,missing,numeric-method}
-\alias{cond_passage,samc,numeric,numeric-method}
+\alias{cond_passage,samc,missing,location-method}
+\alias{cond_passage,samc,location,location-method}
 \title{Conditional Mean First Passage Time}
 \usage{
 cond_passage(samc, origin, dest)
 
-\S4method{cond_passage}{samc,missing,numeric}(samc, dest)
+\S4method{cond_passage}{samc,missing,location}(samc, dest)
 
-\S4method{cond_passage}{samc,numeric,numeric}(samc, origin, dest)
+\S4method{cond_passage}{samc,location,location}(samc, origin, dest)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object. This should be output from
 the \code{\link{samc}} function.}
 
-\item{origin}{A positive integer representing a cell in the landscape,
-excluding \code{NA} cells. Corresponds to row \emph{i} of matrix \emph{P}
-in the \code{\link{samc-class}} object.}
+\item{origin}{A positive integer or named location representing a cell in the
+landscape. Corresponds to row \emph{i} of matrix \emph{P} in the \code{\link{samc-class}}
+object. When paired with the dest parameter, multiple values may be provided
+as a vector.}
 
-\item{dest}{A positive integer representing a cell in the landscape,
-excluding \code{NA} cells. Corresponds to column \emph{j} of matrix \emph{P}
-in the \code{\link{samc-class}} object.}
+\item{dest}{A positive integer or named location representing a cell in the
+landscape. Corresponds to column \emph{j} of matrix \emph{P} in the \code{\link{samc-class}}
+object. When paired with the origin parameter, multiple values may be provided
+as a vector.}
 }
 \value{
 A numeric vector or a single numeric value
@@ -37,14 +39,13 @@ Calculate the mean number of steps to first passage
 
 The result is a vector where each element corresponds to a cell in the landscape,
 and can be mapped back to the landscape using the \code{\link{map}} function.
-Element \emph{i} is the mean number of steps for the first passage time from
+Element \emph{i} is the mean number of steps before absorption starting from
 location \emph{i} conditional on absorption into \emph{j}
 
   \item \strong{cond_passage(samc, origin, dest)}
 
-The result is a numeric value representing the mean number of steps for the
-first passage time from a given origin conditional on absorption into a given
-destination.
+The result is a numeric value representing the mean number of steps before
+absorption starting from a given origin conditional on absorption into \emph{j}.
 }
 
 \strong{WARNING}: This function will crash when used with data representing

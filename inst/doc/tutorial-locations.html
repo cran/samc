@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Andrew Marx" />
+
+<meta name="date" content="2021-04-01" />
+
+<title>Locations</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Locations</h1>
+<h4 class="author">Andrew Marx</h4>
+<h4 class="date">2021-04-01</h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This tutorial discusses how to perform and retrieve results that are specific to individual locations.</p>
+</div>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>Most of the analytical functions in this package provide the ability to get results that are specific to particular locations (e.g., cells or transient states). This accomplished through the use of <code>origin</code> and <code>dest</code> parameters, which correspond to row <em>i</em> and column <em>j</em> of the P matrix, respectively.</p>
+<p>Locations can be specified one of two ways: First, they can be referred to via a positive integer value. These values map directly to the row/columns numbers of the <em>P</em> matrix (specifically, the transition matrix portion of <em>P</em>, aka <em>Q</em>). It’s important to not assume that the locations directly correlate to cell numbers in a raster layer or matrix (e.g., location <code>1</code> refers to the first cell of a raster). There is a relationship between the two, and in some cases there may be a direct correlation, but if the matrix or raster inputs contain <code>NA</code>’s, this will not be the case. This can make the creation and interpretation of location values tricky. The <code>locate()</code> function was specifically created to help with this. It can be used to get a raster that shows how the location values map to the raster. It can also be used to map xy coordinates to location values, which is recommended over manually choosing location values since coordinates have a clearer interpretation that makes it easier to catch and fix mistakes in code.</p>
+<p>The second approach is to refer to locations by the row/column names of the <em>P</em> matrix. This is more applicable to <code>samc-class</code> objects directly created from a P matrix, which can have custom names applied to it via functions such as <code>dimnames()</code>, <code>rownames()</code>, and/or <code>colnames()</code>. It’ll be particularly useful via named nodes when graph support is added in a future release. Referring to locations by names has a significant advantage in that it makes it easier to read and interpret the code of an analysis, which in turn can make it easier to catch unintended mistakes (when using integers for location inputs, it may not be obvious that the wrong number was used if it refers to a valid location and returns a result).</p>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># First step is to load the libraries. Not all of these libraries are stricly</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># needed; some are used for convenience and visualization for this tutorial.</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(<span class="st">&quot;samc&quot;</span>)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(<span class="st">&quot;raster&quot;</span>)</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">library</span>(<span class="st">&quot;viridisLite&quot;</span>)</a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co"># &quot;Load&quot; the data. In this case we are using data built into the package.</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co"># In practice, users will likely load raster data using the raster() function</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co"># from the raster package.</span></a>
+<a class="sourceLine" id="cb1-10" title="10">res_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_res_data</a>
+<a class="sourceLine" id="cb1-11" title="11">abs_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_abs_data</a>
+<a class="sourceLine" id="cb1-12" title="12">occ_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_occ_data</a>
+<a class="sourceLine" id="cb1-13" title="13"></a>
+<a class="sourceLine" id="cb1-14" title="14"></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="co"># Create a samc object using the resistance and absorption data. We use the</span></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co"># recipricol of the arithmetic mean for calculating the transition matrix. Note,</span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="co"># the input data here are matrices, not RasterLayers. If using RasterLayers, the</span></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="co"># `latlon` parameter must be set.</span></a>
+<a class="sourceLine" id="cb1-19" title="19">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x))</a></code></pre></div>
+</div>
+<div id="basic-location-usage" class="section level2">
+<h2>Basic Location Usage</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># A couple examples of using numeric locations</span></a>
+<a class="sourceLine" id="cb2-2" title="2">mort_origin &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">origin =</span> <span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">head</span>(mort_origin) <span class="co"># The result is a vector. Let&#39;s see the first few elements</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; [1] 0.0004454945 0.0005970254 0.0006268049 0.0006652296 0.0007168680</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; [6] 0.0007962162</span></a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7">mort_dest &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">dest =</span> <span class="dv">13</span>)</a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw">head</span>(mort_dest) <span class="co"># The result is a vector. Let&#39;s see the first few elements</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; [1] 0.0004952858 0.0005096278 0.0005283281 0.0005495412 0.0005727323</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; [6] 0.0005978134</span></a>
+<a class="sourceLine" id="cb2-11" title="11"></a>
+<a class="sourceLine" id="cb2-12" title="12">mort_both &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">origin =</span> <span class="dv">7</span>, <span class="dt">dest =</span> <span class="dv">13</span>)</a>
+<a class="sourceLine" id="cb2-13" title="13">mort_both <span class="co"># The result is a single value</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; [1] 0.0006250264</span></a>
+<a class="sourceLine" id="cb2-15" title="15"></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co"># The single value of mort_both simply is just extracted from one of the vector</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co"># results. So using both the origin and dest parameters is largely for convenience,</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co"># and helps to prevent accidental mistakes from trying to manually extract values</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co"># from the vectors</span></a>
+<a class="sourceLine" id="cb2-20" title="20">mort_origin[<span class="dv">13</span>]</a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; [1] 0.0006250264</span></a>
+<a class="sourceLine" id="cb2-22" title="22">mort_dest[<span class="dv">7</span>]</a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; [1] 0.0006250264</span></a></code></pre></div>
+</div>
+<div id="viewing-location-values" class="section level2">
+<h2>Viewing Location Values</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Use the locate() function to get a raster that shows pixels or cells as</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co"># location values</span></a>
+<a class="sourceLine" id="cb3-3" title="3">locations_raster &lt;-<span class="st"> </span><span class="kw">locate</span>(samc_obj)</a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co"># Plot it. since the location values increase incrementally from left to right and</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co"># top to bottom, it forms what appears to be a smooth gradient. If a user is </span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># interested in identifying actual location values from this raster, they&#39;ll likely</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># have to save the raster and view it in external GIS software</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="kw">plot</span>(locations_raster, <span class="dt">col =</span> <span class="kw">viridis</span>(<span class="dv">1024</span>))</a>
+<a class="sourceLine" id="cb3-10" title="10"></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="co"># There&#39;s a simple way to see visually where a particular location is. The location</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co"># will be shown as 1 (converted from TRUE), and all other locations will be shown</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co"># as 0 (converted from FALSE)</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="kw">plot</span>(locations_raster <span class="op">==</span><span class="st"> </span><span class="dv">277</span>, <span class="dt">col =</span> <span class="kw">viridis</span>(<span class="dv">2</span>))</a></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAIAAACb4TnXAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAWcUlEQVR4nO3df1ATd94H8O8mKSGVqMEK06HgL06gP0Yr1B9XikXsI0zAH2cY7vw153WAK89jpxRl/DEPM6J1elbKTKs+Ym1naodSa21Rib07rczV85l56omOzFULNQRx0Hq1UOBUks3u88famJBNhCSfZIH3a3Zadr+7yydt3nx3N7vfcKIoMgCgoQp3AQAjGQIGQAgBAyCEgAEQQsAACCFgAIQQMABCCBgAIQQMgBACBkAIAQMghIABEELAAAghYACEEDAAQggYACEEDIAQAgZACAEDIISAARBCwAAIIWAAhBAwAEIIGAAhBAyAEAIGQAgBAyCEgAEQQsAACCFgAIQQMABCCBgAIQQMgBACBkAIAQMghIABEELAAAghYACEEDAAQggYACEEDIAQAgZACAEDIISAARBCwAAIIWAAhBAwAEIIGAAhBAyAEAIGQAgBAyCEgAEQQsAACCFgAIQQMABCCBgAIQQMgBACBkAIAQMghIABEELAAAghYACEEDAAQggYACEEDIAQAgZACAEDIISAARBCwAAIIWAAhBAwAEIIGAAhBAyAEAIGQAgBAyCEgAEQQsAACGnCXUDopKWlXb58OdxVKJpGozl79uzTTz8d7kJGjlEUsO++++53v/vdiy++GO5ClOsPf/jDlStXELAgGkUBY4zNnTt31apV4a5CuQoLC8NdwkiDczAAQggYACEEDIAQAgZACAEDIISAARBCwAAIIWAAhBAwAEIIGAAhBAyA0Ii6F/Gf//znO++846317t27P/zwQyjrARhRAYuJiUlLSxNFUbb1wIEDPT09IS4JRrkRFbCJEyf6uB+8pKRErVaHsh4AnIMBEELAAAghYACEEDAAQggYACEEDIAQAgZACAEDIISAwbC3e/fuuXPn6vX65OTkXbt28TwvLf/iiy84d673IRw5cmT27Nnjx49fsGDBxYsXXXfoo2moEDAY3rZv375u3brnn3/+k08+WbZs2aZNmyorK6Umi8USExOzz4VzVEyz2Zyfn5+WlnbgwAGtVpuent7R0fHQJn+Io4Zard60aVO4q1C0yMjIw4cPh7uKIejv7x87duyrr77qXFJWVqbT6XieF0WxpKQkKytLdsPMzMzs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" /><img src="data:image/png;base64,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" /></p>
+</div>
+<div id="using-coordinates" class="section level2">
+<h2>Using Coordinates</h2>
+<p>Users can use the <code>locate()</code> function to convert coordinate information (or even line or polygon info) to locations. The coordinate information can be provided in a variety of ways, including a data frame, a matrix, sf spatial objects, etc. Given how locations map to a raster/matrix in the samc package, it is imperative that users do <em>not</em> use the <code>cellFrom*</code> functions from the raster package; they may work in some situations, but will generally produce incorrect location values for the samc package.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">coords &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">130</span>),</a>
+<a class="sourceLine" id="cb4-2" title="2">                     <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">9</span>))</a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co"># Use the locate() function with coords to get location values</span></a>
+<a class="sourceLine" id="cb4-5" title="5">locations &lt;-<span class="st"> </span><span class="kw">locate</span>(samc_obj, coords)</a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="kw">plot</span>(locations_raster <span class="op">==</span><span class="st"> </span>locations[<span class="dv">1</span>], <span class="dt">col =</span> <span class="kw">viridis</span>(<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw">plot</span>(locations_raster <span class="op">==</span><span class="st"> </span>locations[<span class="dv">2</span>], <span class="dt">col =</span> <span class="kw">viridis</span>(<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co"># Use the locations in a function</span></a>
+<a class="sourceLine" id="cb4-11" title="11">mort_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">origin =</span> locations[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="kw">head</span>(mort_<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; [1] 0.0004313355 0.0005695849 0.0005833685 0.0005963590 0.0006070493</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; [6] 0.0006144510</span></a>
+<a class="sourceLine" id="cb4-15" title="15"></a>
+<a class="sourceLine" id="cb4-16" title="16">mort_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">origin =</span> locations[<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="kw">head</span>(mort_<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; [1] 0.0001651789 0.0002113811 0.0002086714 0.0002057462 0.0002027257</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; [6] 0.0001996758</span></a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><img src="data:image/png;base64,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" /></p>
+</div>
+<div id="multiple-locations" class="section level2">
+<h2>Multiple locations</h2>
+<p>When specifying both the <code>origin</code> and <code>dest</code> parameters to a function, it is possible to provide multiple values as vectors. When doing so, the <code>origin</code> and <code>dest</code> vectors are paired, so they must be the same length. This eliminates the need for users to use for loops or apply statements to get results for multiple pairs of locations. Additionally, the built-in solution has optimizations not possible using external for loops or apply statements. The order of the outputs is guaranteed to match the order of the inputs.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># We&#39;re going to use a data.frame to manage our input and output vectors easily</span></a>
+<a class="sourceLine" id="cb5-2" title="2">data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">origin =</span> <span class="kw">c</span>(<span class="dv">45</span>, <span class="dv">3</span>, <span class="dv">99</span>),</a>
+<a class="sourceLine" id="cb5-3" title="3">                   <span class="dt">dest =</span> <span class="kw">c</span>(<span class="dv">102</span>, <span class="dv">102</span>, <span class="dv">33</span>))</a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co"># Use the locations in a function</span></a>
+<a class="sourceLine" id="cb5-6" title="6">data<span class="op">$</span>mort &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">origin =</span> data<span class="op">$</span>origin, <span class="dt">dest =</span> data<span class="op">$</span>dest)</a>
+<a class="sourceLine" id="cb5-7" title="7">data</a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;   origin dest         mort</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; 1     45  102 0.0002442529</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="co">#&gt; 2      3  102 0.0001578835</span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; 3     99   33 0.0002157067</span></a></code></pre></div>
+<p>Some users may wish to perform a pairwise analysis of all the combinations of the values in an <code>origin</code> vector and a <code>dest</code> vector, the results of which can be represented as a pairwise matrix. To accommodate this, the <code>pairwise()</code> utility function can be used. Since the input vectors aren’t paired, they can be different lengths. The result is in a ‘long’ format; to convert this result to a pairwise matrix, see the <a href="code-snippets.html">Code Snippets</a> vignette.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Get the result for all the pairwise combinations of two vectors of locations</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">pairwise</span>(mortality, samc_obj, <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">23</span><span class="op">:</span><span class="dv">25</span>)</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co">#&gt;   origin dest       result</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt; 1      5   23 0.0004605204</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">#&gt; 2      6   23 0.0004784789</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">#&gt; 3      5   24 0.0004510868</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; 4      6   24 0.0004686200</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; 5      5   25 0.0004418815</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; 6      6   25 0.0004590024</span></a></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
