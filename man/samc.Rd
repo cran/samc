@@ -2,104 +2,162 @@
 % Please edit documentation in R/samc.R
 \name{samc}
 \alias{samc}
-\alias{samc,RasterLayer,RasterLayer,RasterLayer,logical,function,missing-method}
-\alias{samc,RasterLayer,RasterLayer,missing,logical,function,missing-method}
-\alias{samc,matrix,matrix,matrix,missing,function,missing-method}
-\alias{samc,matrix,matrix,missing,missing,function,missing-method}
-\alias{samc,missing,missing,missing,missing,missing,dgCMatrix-method}
-\alias{samc,missing,missing,missing,missing,missing,matrix-method}
+\alias{samc,TransitionLayer,RasterLayer,RasterLayer,missing-method}
+\alias{samc,TransitionLayer,RasterLayer,missing,missing-method}
+\alias{samc,RasterLayer,RasterLayer,RasterLayer,list-method}
+\alias{samc,RasterLayer,RasterLayer,missing,list-method}
+\alias{samc,matrix,matrix,matrix,list-method}
+\alias{samc,matrix,matrix,missing,list-method}
+\alias{samc,dgCMatrix,missing,missing,missing-method}
+\alias{samc,matrix,missing,missing,missing-method}
+\alias{samc,missing,missing,missing,missing-method}
+\alias{samc,RasterLayer,RasterLayer,RasterLayer,missing-method}
+\alias{samc,matrix,matrix,matrix,missing-method}
+\alias{samc,missing,RasterLayer,RasterLayer,missing-method}
+\alias{samc,missing,matrix,matrix,missing-method}
+\alias{samc,RasterLayer,RasterLayer,missing,missing-method}
+\alias{samc,matrix,matrix,missing,missing-method}
+\alias{samc,missing,RasterLayer,missing,missing-method}
+\alias{samc,missing,matrix,missing,missing-method}
 \title{Create an samc object}
 \usage{
-samc(resistance, absorption, fidelity, latlon, tr_fun, p_mat, ...)
+samc(data, absorption, fidelity, tr_args, ...)
 
-\S4method{samc}{RasterLayer,RasterLayer,RasterLayer,logical,`function`,missing}(
+\S4method{samc}{TransitionLayer,RasterLayer,RasterLayer,missing}(data, absorption, fidelity)
+
+\S4method{samc}{TransitionLayer,RasterLayer,missing,missing}(data, absorption)
+
+\S4method{samc}{RasterLayer,RasterLayer,RasterLayer,list}(data, absorption, fidelity, tr_args)
+
+\S4method{samc}{RasterLayer,RasterLayer,missing,list}(data, absorption, tr_args)
+
+\S4method{samc}{matrix,matrix,matrix,list}(data, absorption, fidelity, tr_args)
+
+\S4method{samc}{matrix,matrix,missing,list}(data, absorption, tr_args)
+
+\S4method{samc}{dgCMatrix,missing,missing,missing}(data, override)
+
+\S4method{samc}{matrix,missing,missing,missing}(data, override)
+
+\S4method{samc}{missing,missing,missing,missing}(p_mat, override)
+
+\S4method{samc}{RasterLayer,RasterLayer,RasterLayer,missing}(data, absorption, fidelity, tr_fun, latlon, override, directions = 8)
+
+\S4method{samc}{matrix,matrix,matrix,missing}(data, absorption, fidelity, tr_fun, override, directions = 8)
+
+\S4method{samc}{missing,RasterLayer,RasterLayer,missing}(
   resistance,
   absorption,
   fidelity,
   latlon,
   tr_fun,
-  override = FALSE,
+  override,
   directions = 8
 )
 
-\S4method{samc}{RasterLayer,RasterLayer,missing,logical,`function`,missing}(resistance, absorption, latlon, tr_fun, override = FALSE, directions = 8)
+\S4method{samc}{missing,matrix,matrix,missing}(resistance, absorption, fidelity, tr_fun, override, directions = 8)
 
-\S4method{samc}{matrix,matrix,matrix,missing,`function`,missing}(
-  resistance,
-  absorption,
-  fidelity,
-  tr_fun,
-  override = FALSE,
-  directions = 8
-)
+\S4method{samc}{RasterLayer,RasterLayer,missing,missing}(data, absorption, latlon, tr_fun, override = FALSE, directions = 8)
 
-\S4method{samc}{matrix,matrix,missing,missing,`function`,missing}(resistance, absorption, tr_fun, override = FALSE, directions = 8)
+\S4method{samc}{matrix,matrix,missing,missing}(data, absorption, tr_fun, override = FALSE, directions = 8)
 
-\S4method{samc}{missing,missing,missing,missing,missing,dgCMatrix}(p_mat, override = FALSE)
+\S4method{samc}{missing,RasterLayer,missing,missing}(resistance, absorption, latlon, tr_fun, override = FALSE, directions = 8)
 
-\S4method{samc}{missing,missing,missing,missing,missing,matrix}(p_mat, override = FALSE)
+\S4method{samc}{missing,matrix,missing,missing}(resistance, absorption, tr_fun, override = FALSE, directions = 8)
 }
 \arguments{
-\item{resistance}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}}
+\item{data}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}} or Matrix package dgCMatrix sparse matrix.}
 
 \item{absorption}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}}
 
 \item{fidelity}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}}
 
-\item{latlon}{Logical (\code{TRUE} or \code{FALSE}) indicating whether the rasters use latitude/longitude}
-
-\item{tr_fun}{A function to calculate the transition values in the \code{\link[gdistance]{transition}} function}
-
-\item{p_mat}{A base R \code{\link[base]{matrix}} object or Matrix package dgCMatrix sparse matrix}
+\item{tr_args}{A list with args for constructing a transition matrix.}
 
 \item{...}{Placeholder}
 
-\item{override}{Optional flag to prevent accidentally running memory intensive functions. Defaults to \code{FALSE}}
+\item{override}{Deprecated. See \code{\link{samc-class}} for the alternative.}
 
-\item{directions}{Optional param. Must be set to either 4 or 8 (default is 8)}
+\item{p_mat}{Deprecated. Use the \code{data} parameter.}
+
+\item{tr_fun}{Deprecated. Use \code{tr_args}.}
+
+\item{latlon}{Deprecated. No longer needed.}
+
+\item{directions}{Deprecated Use \code{tr_args}.}
+
+\item{resistance}{Deprecated. Use the \code{data} parameter.}
 }
 \value{
-A spatial absorbing Markov chain object
+A \code{\link{samc-class}} object
 }
 \description{
 Create an samc object that contains the absorbing Markov chain data
 }
 \details{
 This function is used to create a \code{\link{samc-class}} object. There are
-two options for creating this object.
+multiple options for creating this object.
 
-\strong{Option 1: Raster and Matrix Inputs}
+\strong{Option 1: Raster or Matrix Maps}
+
+\emph{\code{samc(data = matrix, absorption = matrix, fidelity = matrix, tr_args = list())}}
+
+\emph{\code{samc(data = RasterLayer, absorption = RasterLayer, fidelity = RasterLayer, tr_args = list())}}
 
 The \code{\link{samc-class}} object can be created from a combination of
-resistance, absorption, and fidelity data. These different landscape data
+resistance (or conductance), absorption, and fidelity data. These different landscape data
 inputs must be the same type (a matrix or RasterLayer), and have identical
 properties, including dimensions, location of NA cells, and CRS (if using
-RasterLayers). Some of the inputs are mandatory, whereas others are optional.
+RasterLayers).
 
-The \code{resistance} and \code{absorption} inputs are always mandatory, whereas the
+The \code{data} and \code{absorption} inputs are always mandatory for this approach. The
 \code{fidelity} input is optional. If the \code{fidelity} input is not provided, then it it
 is assumed that there is no site fidelity (i.e., individuals will always move
 to an adjacent cell each time step).
 
-The \code{latlon} parameter is required if the landscape data inputs are RasterLayer
-objects. The package does not attempt to determine this automatically, and it
-does not assume a default. Users must set it to \code{TRUE} if they are using
-latitude and longitude data.
+The \code{tr_args} parameter is mandatory. It used when calculating the values for
+the transition matrix. Internally, is used in the \code{\link[gdistance]{transition}}
+function in the gdistance package to create the transition matrix. \code{tr_args}
+must be constructed as list with a transition function, the number of directions (4 or 8),
+and if the transition function is symmetric (TRUE or FALSE). Here is the template:
+\code{list(fun = `function`, dir = `numeric`, sym = `logical`)}
 
-The \code{tr_fun} parameter is mandatory. It used when calculating the values for
-the transition matrix. Internally, this is passed to the \code{\link[gdistance]{transition}}
-function in the gdistance package to create the transition matrix.
+\strong{Option 2: TransitionLayer}
 
-\strong{Option 2: P Matrix Input}
+\emph{\code{samc(data = TransitionLayer, absorption = RasterLayer, fidelity = RasterLayer)}}
 
-The \code{p_mat} parameter can be used to create a \code{\link{samc-class}} object
+The \code{data} parameter can be a \code{TransitionLayer} object created using the gdistance package.
+In this case the \code{absorption} parameter is mandatory and should be a RasterLayer
+that has identical properties to the RasterLayer used to create the TransitionLayer
+object. The \code{fidelity} parameter is optional and has the same requirements as
+the \code{absorption} parameter. The \code{\link{check}} function can be used to
+verify these requirements.
+
+The advantage of this approach is that it offers slightly more flexibility than
+the first option. Namely, it's useful if the TransitionLayer needs additional
+modifications before it is normalized with the absorption and fidelity inputs.
+The disadvantage compared to the first option is that samc() cannot detect certain
+issues when the TransitionLayer is manually created and modified. So if users
+do not need to manually modify the TransitionLayer, then the first option for
+creating a samc object is recommended.
+
+\strong{Option 3: P Matrix}
+
+\emph{\code{samc(data = matrix)}}
+
+\emph{\code{samc(data = dgCMatrix)}}
+
+The \code{data} parameter can be used alone to create a \code{\link{samc-class}} object
 directly from a preconstructed P matrix. This matrix must be either a base R
 matrix, or a sparse matrix (dgCMatrix format) from the Matrix package. It
-must meet the requirement of a P matrix described in Fletcher et al. (2019).
-This includes:
+must meet the following requirements:
 \itemize{
   \item The number of rows must equal the number of columns (a square matrix)
-  \item The last row must contain all 0's, except the last element, which must be 1
+  \item Total absorption must be a single column on the right-hand side of the matrix
+  \item At the bottom of the matrix, there must be a row filled with 0's except
+  for last element (bottom-right of the matrix diagonal), which must be set to 1
+  \item Every disconnected region of the matrix must have at least one non-zero
+  absorbing value
   \item Each row must sum to 1
   \item All values must be in the range of 0-1
 }
@@ -115,19 +173,7 @@ there must be no duplicate names. The exception to these rules is the very last
 column and the very last row of the P matrix. Since these are not part of the
 pairwise transition matrix, they may have whatever names the user prefers.
 
-\strong{Other Parameters}
-
-The \code{override} parameter is optional. To prevent users from unintentionally
-running memory intensive versions of functions that could make their systems
-non-responsive or crash software, it is set to \code{FALSE} by default. For various
-reasons, it can be set to \code{TRUE}. In particular, a user might do this if they
-are using a very small landscape dataset, or perhaps for a moderately sized
-dataset if they have access to a system with exceptionally large amounts of
-RAM. Before setting this to \code{TRUE}, users should read the Performance vignette/
-article to understand the expected memory requirements. They should also
-consider starting with scaled down version of their data and then gradually
-scaling back up while monitoring their memory usage as a means to gauge what
-is reasonable for their system.
+\strong{Other Parameters} \emph{Deprecated}
 
 The \code{directions} parameter is optional. When constructing the P matrix from
 matrix or raster data, the \code{samc()} function must decide how adjacent cells are
@@ -171,12 +217,17 @@ occ_data <- samc::ex_occ_data
 check(res_data, abs_data)
 check(res_data, occ_data)
 
+# Setup the details for our transition function
+tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+           dir = 8, # Directions of the transitions. Either 4 or 8.
+           sym = TRUE) # Is the function symmetric?
+
 
 # Create a `samc-class` object with the resistance and absorption data using
 # the samc() function. We use the recipricol of the arithmetic mean for
 # calculating the transition matrix. Note, the input data here are matrices,
-# not RasterLayers. If using RasterLayers, the latlon parameter must be set.
-samc_obj <- samc(res_data, abs_data, tr_fun = function(x) 1/mean(x))
+# not RasterLayers.
+samc_obj <- samc(res_data, abs_data, tr_args = tr)
 
 
 # Convert the occupancy data to probability of occurrence

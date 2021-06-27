@@ -4,7 +4,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-required <- c("viridis")
+required <- c("viridisLite")
 if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
@@ -42,11 +42,15 @@ plot(raster(occ_data, xmn = 1, xmx = ncol(occ_data), ymn = 1, ymx = nrow(occ_dat
      main = "Example Occupancy Data", xlab = "x", ylab = "y", col = viridis(256))
 
 ## -----------------------------------------------------------------------------
+# Setup the details for our transition function
+tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+           dir = 8, # Directions of the transitions. Either 4 or 8.
+           sym = TRUE) # Is the function symmetric?
+
 # Create a `samc-class` object using the resistance and absorption data. We use the
 # recipricol of the arithmetic mean for calculating the transition matrix. Note,
-# the input data here are matrices, not RasterLayers. If using RasterLayers, the
-# `latlon` parameter must be set.
-samc_obj <- samc(res_data, abs_data, tr_fun = function(x) 1/mean(x))
+# the input data here are matrices, not RasterLayers.
+samc_obj <- samc(res_data, abs_data, tr_args = tr)
 
 
 # Print out the samc object and make sure everything is filled out. Try to

@@ -2,25 +2,25 @@
 % Please edit documentation in R/check.R
 \name{check}
 \alias{check}
-\alias{check,RasterLayer,missing-method}
+\alias{check,Raster,missing-method}
 \alias{check,matrix,missing-method}
-\alias{check,RasterLayer,RasterLayer-method}
+\alias{check,Raster,Raster-method}
 \alias{check,matrix,matrix-method}
-\alias{check,samc,RasterLayer-method}
+\alias{check,samc,Raster-method}
 \alias{check,samc,matrix-method}
 \title{Check landscape data}
 \usage{
 check(a, b)
 
-\S4method{check}{RasterLayer,missing}(a)
+\S4method{check}{Raster,missing}(a)
 
 \S4method{check}{matrix,missing}(a)
 
-\S4method{check}{RasterLayer,RasterLayer}(a, b)
+\S4method{check}{Raster,Raster}(a, b)
 
 \S4method{check}{matrix,matrix}(a, b)
 
-\S4method{check}{samc,RasterLayer}(a, b)
+\S4method{check}{samc,Raster}(a, b)
 
 \S4method{check}{samc,matrix}(a, b)
 }
@@ -66,12 +66,17 @@ occ_data <- samc::ex_occ_data
 check(res_data, abs_data)
 check(res_data, occ_data)
 
+# Setup the details for our transition function
+tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+           dir = 8, # Directions of the transitions. Either 4 or 8.
+           sym = TRUE) # Is the function symmetric?
+
 
 # Create a `samc-class` object with the resistance and absorption data using
 # the samc() function. We use the recipricol of the arithmetic mean for
 # calculating the transition matrix. Note, the input data here are matrices,
-# not RasterLayers. If using RasterLayers, the latlon parameter must be set.
-samc_obj <- samc(res_data, abs_data, tr_fun = function(x) 1/mean(x))
+# not RasterLayers.
+samc_obj <- samc(res_data, abs_data, tr_args = tr)
 
 
 # Convert the occupancy data to probability of occurrence

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Andrew Marx" />
 
-<meta name="date" content="2021-04-01" />
+<meta name="date" content="2021-06-27" />
 
 <title>Troubleshooting</title>
 
@@ -301,7 +301,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Troubleshooting</h1>
 <h4 class="author">Andrew Marx</h4>
-<h4 class="date">2021-04-01</h4>
+<h4 class="date">2021-06-27</h4>
 
 
 
@@ -335,32 +335,31 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb1-21" title="21">r2 &lt;-<span class="st"> </span>ex_res_data</a>
 <a class="sourceLine" id="cb1-22" title="22">r2 &lt;-<span class="st"> </span>r2[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
 <a class="sourceLine" id="cb1-23" title="23"><span class="kw">check</span>(r1, r2)</a>
-<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; Error: different extent in input data</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; Error in h(simpleError(msg, call)): error in evaluating the argument &#39;a&#39; in selecting a method for function &#39;check&#39;: different extent</span></a></code></pre></div>
 </div>
 <div id="unable-to-find-an-inherited-method" class="section level2">
 <h2>Unable to find an inherited method</h2>
 <p>The SAMC package makes use of R’s S4 method dispatch system to enforce how the different versions of each function can be used. Hopefully, this will ensure that users are not unintentionally misusing functions by producing an error rather than letting the code run and returning a result that may not be obviously incorrect. If this error appears, it means that the combination of arguments provided to the function are not valid. This could be for a couple different reasons. The first is that an optional parameter is skipped without specifying argument names for the subsequent arguments. The second is that a user is passing the wrong type of data to an argument (e.g., passing a <code>numeric</code> when the function expects a <code>RasterLayer</code> or a <code>matrix</code>).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Example: Skipping optional arguments. In this case, the `fidelity` argument is</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="co"># optional and the `latlon` argument doesn&#39;t apply because our input data are</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co"># matrices, so we skip them. The tr_fun argument, however, is always required, </span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co"># so we pass `function(x) 1/mean(x)` to it. But because we don&#39;t specify which</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co"># argument it is, R is trying to find a version of the function that expects it</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="co"># as the third argument, but this version does not exist.</span></a>
-<a class="sourceLine" id="cb2-7" title="7">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x))</a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; Error in (function (classes, fdef, mtable) : unable to find an inherited method for function &#39;samc&#39; for signature &#39;&quot;matrix&quot;, &quot;matrix&quot;, &quot;function&quot;, &quot;missing&quot;, &quot;missing&quot;, &quot;missing&quot;&#39;</span></a>
-<a class="sourceLine" id="cb2-9" title="9"></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="co"># Solution</span></a>
-<a class="sourceLine" id="cb2-11" title="11">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x))</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co"># optional, so we skip it. The tr_args argument, however, is always required, </span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co"># so we pass the relevant to it. But because we don&#39;t specify which</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co"># argument it is, R is trying to find a version of the function that expects it</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co"># as the third argument, but this version does not exist.</span></a>
+<a class="sourceLine" id="cb2-6" title="6">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="kw">list</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x), <span class="dt">dir =</span> <span class="dv">8</span>, <span class="dt">sym =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt; Error in (function (classes, fdef, mtable) : unable to find an inherited method for function &#39;samc&#39; for signature &#39;&quot;matrix&quot;, &quot;matrix&quot;, &quot;list&quot;, &quot;missing&quot;&#39;</span></a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co"># Solution</span></a>
+<a class="sourceLine" id="cb2-10" title="10">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_args =</span> <span class="kw">list</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x), <span class="dt">dir =</span> <span class="dv">8</span>, <span class="dt">sym =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb2-11" title="11"></a>
 <a class="sourceLine" id="cb2-12" title="12"></a>
-<a class="sourceLine" id="cb2-13" title="13"></a>
-<a class="sourceLine" id="cb2-14" title="14"><span class="co"># Example: Incorrect input types. In this case, we are attempting to pass a</span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="co"># single numeric value as absorption data. However, the absorption data must </span></a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="co"># always be in a matrix or RasterLayer object</span></a>
-<a class="sourceLine" id="cb2-17" title="17">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, <span class="fl">0.01</span>, <span class="dt">tr_fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x))</a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; Error in (function (classes, fdef, mtable) : unable to find an inherited method for function &#39;samc&#39; for signature &#39;&quot;matrix&quot;, &quot;numeric&quot;, &quot;missing&quot;, &quot;missing&quot;, &quot;function&quot;, &quot;missing&quot;&#39;</span></a>
-<a class="sourceLine" id="cb2-19" title="19"></a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="co"># Solution</span></a>
-<a class="sourceLine" id="cb2-21" title="21">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x))</a></code></pre></div>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co"># Example: Incorrect input types. In this case, we are attempting to pass a</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co"># single numeric value as absorption data. However, the absorption data must </span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co"># always be in a matrix or RasterLayer object</span></a>
+<a class="sourceLine" id="cb2-16" title="16">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, <span class="fl">0.01</span>, <span class="dt">tr_args =</span> <span class="kw">list</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x), <span class="dt">dir =</span> <span class="dv">8</span>, <span class="dt">sym =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; Error in (function (classes, fdef, mtable) : unable to find an inherited method for function &#39;samc&#39; for signature &#39;&quot;matrix&quot;, &quot;numeric&quot;, &quot;missing&quot;, &quot;list&quot;&#39;</span></a>
+<a class="sourceLine" id="cb2-18" title="18"></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co"># Solution</span></a>
+<a class="sourceLine" id="cb2-20" title="20">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_args =</span> <span class="kw">list</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x), <span class="dt">dir =</span> <span class="dv">8</span>, <span class="dt">sym =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 </div>
 
 

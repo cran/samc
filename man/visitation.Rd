@@ -19,57 +19,61 @@ visitation(samc, origin, dest)
 \S4method{visitation}{samc,location,location}(samc, origin, dest)
 }
 \arguments{
-\item{samc}{A \code{\link{samc-class}} object. This should be output from
-the \code{\link{samc}} function.}
+\item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}
 
-\item{origin}{A positive integer or named location representing a cell in the
-landscape. Corresponds to row \emph{i} of matrix \emph{P} in the \code{\link{samc-class}}
-object. When paired with the dest parameter, multiple values may be provided
-as a vector.}
+\item{origin}{A positive integer or character name representing transient state
+\eqn{\mathit{i}}. Corresponds to row \eqn{\mathit{i}} of matrix \eqn{\mathbf{P}}
+in the \code{\link{samc-class}} object. When paired with the \code{dest}
+parameter, multiple values may be provided as a vector.}
 
-\item{dest}{A positive integer or named location representing a cell in the
-landscape. Corresponds to column \emph{j} of matrix \emph{P} in the \code{\link{samc-class}}
-object. When paired with the origin parameter, multiple values may be provided
-as a vector.}
+\item{dest}{A positive integer or character name representing transient state
+\eqn{\mathit{j}}. Corresponds to column \eqn{\mathit{j}} of matrix \eqn{\mathbf{P}}
+in the \code{\link{samc-class}} object. When paired with the \code{origin} parameter,
+multiple values may be provided as a vector.}
 }
 \value{
-A matrix, a vector, or a numeric
+See Details
 }
 \description{
-Calculates the number of times that individuals from each location visit each
-location in the landscape before death.
+Calculates the number of times that transient states are visited before absorption.
 }
 \details{
 \eqn{F = (I-Q)^{-1}}
 \itemize{
   \item \strong{visitation(samc)}
 
-The result is a matrix where element (\emph{i},\emph{j}) is the expected
-number of times an individual that starts in \emph{i} uses \emph{j} before it
-dies.
+The result is a matrix \eqn{M} where \eqn{M_{i,j}} is the number of times that
+transient state \eqn{\mathit{j}} is visited before absorption if starting at
+transient state \eqn{\mathit{i}}.
 
 The returned matrix will always be dense and cannot be optimized. Must enable
-override to use.
+override to use (see \code{\link{samc-class}}).
 
   \item \strong{visitation(samc, origin)}
 
-The result is a vector where each element corresponds to a cell in the
-landscape, and can be mapped back to the landscape using the
-\code{\link{map}} function. Element \emph{j} is the number of times that an
-individual starting at the origin visits location \emph{j} before it dies.
+The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the number
+of times that transient state \eqn{\mathit{j}} is visited before absorption if
+starting at transient state \eqn{\mathit{i}}.
+
+If the samc-class object was created using matrix or RasterLayer maps, then
+vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
+\code{\link{map}} function.
 
   \item \strong{visitation(samc, dest)}
 
-The result is a vector where each element corresponds to a cell in the
-landscape, and can be mapped back to the landscape using the
-\code{\link{map}} function. Element \emph{i} is the number of times that an
-individual starting at location \emph{i} visits the destination before it
-dies.
+The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the number
+of times that transient state \eqn{\mathit{j}} is visited before absorption if
+starting at transient state \eqn{\mathit{i}}.
+
+If the samc-class object was created using matrix or RasterLayer maps, then
+vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
+\code{\link{map}} function.
 
   \item \strong{visitation(samc, origin, dest)}
 
-The result is a numeric value that is the expected number of times an
-individual starting at the origin visits the destination before it dies.
+The result is a numeric value that is the number of times transient state
+\eqn{\mathit{j}} is visited before absorption if starting at transient
+state \eqn{\mathit{i}}.
 }
 }
 \section{Performance}{
@@ -93,12 +97,17 @@ occ_data <- samc::ex_occ_data
 check(res_data, abs_data)
 check(res_data, occ_data)
 
+# Setup the details for our transition function
+tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+           dir = 8, # Directions of the transitions. Either 4 or 8.
+           sym = TRUE) # Is the function symmetric?
+
 
 # Create a `samc-class` object with the resistance and absorption data using
 # the samc() function. We use the recipricol of the arithmetic mean for
 # calculating the transition matrix. Note, the input data here are matrices,
-# not RasterLayers. If using RasterLayers, the latlon parameter must be set.
-samc_obj <- samc(res_data, abs_data, tr_fun = function(x) 1/mean(x))
+# not RasterLayers.
+samc_obj <- samc(res_data, abs_data, tr_args = tr)
 
 
 # Convert the occupancy data to probability of occurrence

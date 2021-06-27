@@ -6,14 +6,12 @@
 \alias{mortality,samc,missing,location,missing,numeric-method}
 \alias{mortality,samc,missing,missing,location,numeric-method}
 \alias{mortality,samc,missing,location,location,numeric-method}
-\alias{mortality,samc,RasterLayer,missing,missing,numeric-method}
-\alias{mortality,samc,matrix,missing,missing,numeric-method}
+\alias{mortality,samc,ANY,missing,missing,numeric-method}
 \alias{mortality,samc,missing,missing,missing,missing-method}
 \alias{mortality,samc,missing,location,missing,missing-method}
 \alias{mortality,samc,missing,missing,location,missing-method}
 \alias{mortality,samc,missing,location,location,missing-method}
-\alias{mortality,samc,RasterLayer,missing,missing,missing-method}
-\alias{mortality,samc,matrix,missing,missing,missing-method}
+\alias{mortality,samc,ANY,missing,missing,missing-method}
 \title{Calculate mortality metrics}
 \usage{
 mortality(samc, occ, origin, dest, time)
@@ -26,9 +24,7 @@ mortality(samc, occ, origin, dest, time)
 
 \S4method{mortality}{samc,missing,location,location,numeric}(samc, origin, dest, time)
 
-\S4method{mortality}{samc,RasterLayer,missing,missing,numeric}(samc, occ, time)
-
-\S4method{mortality}{samc,matrix,missing,missing,numeric}(samc, occ, time)
+\S4method{mortality}{samc,ANY,missing,missing,numeric}(samc, occ, time)
 
 \S4method{mortality}{samc,missing,missing,missing,missing}(samc)
 
@@ -38,126 +34,149 @@ mortality(samc, occ, origin, dest, time)
 
 \S4method{mortality}{samc,missing,location,location,missing}(samc, origin, dest)
 
-\S4method{mortality}{samc,RasterLayer,missing,missing,missing}(samc, occ)
-
-\S4method{mortality}{samc,matrix,missing,missing,missing}(samc, occ)
+\S4method{mortality}{samc,ANY,missing,missing,missing}(samc, occ)
 }
 \arguments{
-\item{samc}{A \code{\link{samc-class}} object. This should be output from
-the \code{\link{samc}} function.}
+\item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}
 
-\item{occ}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}.
-The input type must match the input type used to create the
-\code{\link{samc-class}} object, and must have the same properties as the
-rest of the landscape data. See the \code{\link{check}} function for more
-details.}
+\item{occ}{The initial state \eqn{\psi} of the Markov chain. If the \code{\link{samc-class}}
+objects was constructed using map inputs, then occ must be the same type of input
+(either \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}),
+and must have the same properties as initial map inputs (see the \code{\link{check}}
+function).}
 
-\item{origin}{A positive integer or named location representing a cell in the
-landscape. Corresponds to row \emph{i} of matrix \emph{P} in the \code{\link{samc-class}}
-object. When paired with the dest parameter, multiple values may be provided
-as a vector.}
+\item{origin}{A positive integer or character name representing transient state
+\eqn{\mathit{i}}. Corresponds to row \eqn{\mathit{i}} of matrix \eqn{\mathbf{P}}
+in the \code{\link{samc-class}} object. When paired with the \code{dest}
+parameter, multiple values may be provided as a vector.}
 
-\item{dest}{A positive integer or named location representing a cell in the
-landscape. Corresponds to column \emph{j} of matrix \emph{P} in the \code{\link{samc-class}}
-object. When paired with the origin parameter, multiple values may be provided
-as a vector.}
+\item{dest}{A positive integer or character name representing transient state
+\eqn{\mathit{j}}. Corresponds to column \eqn{\mathit{j}} of matrix \eqn{\mathbf{P}}
+in the \code{\link{samc-class}} object. When paired with the \code{origin} parameter,
+multiple values may be provided as a vector.}
 
 \item{time}{A positive integer or a vector of positive integers representing
-time steps. Vectors must be ordered and contain no duplicates. Vectors may
-not be used for metrics that return dense matrices. The maximum time step
-value is capped at 10,000.}
+\eqn{\mathit{t}} time steps. Vectors must be ordered and contain no duplicates.
+Vectors may not be used for metrics that return dense matrices. The maximum time
+step value is capped at 10,000 due to numerical precision issues.}
 }
 \value{
-A matrix, vector, or numeric
+See Details
 }
 \description{
-Calculates the probability of experiencing mortality at specific locations.
+Calculates the probability of absorption at individual transient states.
 }
 \details{
 \eqn{\tilde{B}_t = (\sum_{n=0}^{t-1} Q^n) \tilde{R}}
 \itemize{
   \item \strong{mortality(samc, time)}
 
-The result is a matrix where element (i,j) is the probability of experiencing
-mortality at location j within t or fewer steps if starting at location i.
+The result is a matrix \eqn{M} where \eqn{M_{i,j}} is the
+probability of absorption at transient state \eqn{\mathit{j}} within \eqn{\mathit{t}}
+or fewer steps if starting at transient state \eqn{\mathit{i}}.
 
 The returned matrix will always be dense and cannot be optimized. Must enable
-override to use.
+override to use (see \code{\link{samc-class}}).
 
   \item \strong{mortality(samc, origin, time)}
 
-The result is a vector (single time step) or a list of vectors (multiple
-time steps) where each element corresponds to a cell in the
-landscape, and can be mapped back to the landscape using the
-\code{\link{map}} function. Element j is the probability of experiencing
-mortality at location j within t or fewer steps if starting at a given origin.
+The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the probability
+of absorption at transient state \eqn{\mathit{j}} within \eqn{\mathit{t}} or
+fewer steps if starting at transient state \eqn{\mathit{i}}.
+
+If multiple time steps were provided as a vector, then the result will be an
+ordered named list containing a vector for each time step.
+
+If the samc-class object was created using matrix or RasterLayer maps, then
+vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
+\code{\link{map}} function.
 
   \item \strong{mortality(samc, dest, time)}
 
-The result is a vector (single time step) or a list of vectors (multiple
-time steps) where each element corresponds to a cell in the
-landscape, and can be mapped back to the landscape using the
-\code{\link{map}} function. Element i is the probability of experiencing
-mortality at a given destination within t or fewer steps if starting at
-location i.
+The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the probability
+of absorption at transient state \eqn{\mathit{j}} within \eqn{\mathit{t}} or
+fewer steps if starting at transient state \eqn{\mathit{i}}.
+
+If multiple time steps were provided as a vector, then the result will be an
+ordered named list containing a vector for each time step.
+
+If the samc-class object was created using matrix or RasterLayer maps, then
+vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
+\code{\link{map}} function.
 
   \item \strong{mortality(samc, origin, dest, time)}
 
-The result is a numeric value (single time step) or a list of numeric
-values (multiple time steps) that is the probability of experiencing
-mortality at a given destination within t or fewer steps if starting at a
-given origin.
+The result is a numeric value that is the probability of absorption at transient
+state \eqn{\mathit{j}} within \eqn{\mathit{t}} or fewer time steps if starting
+at transient state \eqn{\mathit{i}}.
+
+If multiple time steps were provided as a vector, then the result will be an
+ordered named list containing a numeric value for each time step.
 }
 
 \eqn{\psi^T \tilde{B}_t}
 \itemize{
   \item \strong{mortality(samc, occ, time)}
 
-The result is a vector (single time step) or a list of vectors (multiple
-time steps) where each element corresponds to a cell in the
-landscape, and can be mapped back to the landscape using the
-\code{\link{map}} function. Element j is the unconditional probability of
-experiencing mortality at location j within t or fewer time steps.
+The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the unconditional
+probability of absorption at transient state \eqn{\mathit{j}} within \eqn{\mathit{t}}
+or fewer steps given an initial state \eqn{\psi}.
+
+If multiple time steps were provided as a vector, then the result will be an
+ordered named list containing a vector for each time step.
+
+If the samc-class object was created using matrix or RasterLayer maps, then
+vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
+\code{\link{map}} function.
+
 }
 
 \eqn{B = F \tilde{R}}
 \itemize{
   \item \strong{mortality(samc)}
 
-The result is a matrix where element (i,j) is the probability of experiencing
-mortality at location j if starting at location i.
+The result is a matrix \eqn{M} where \eqn{M_{i,j}} is the
+probability of absorption at transient state \eqn{\mathit{j}} if starting at
+transient state \eqn{\mathit{i}}.
 
 The returned matrix will always be dense and cannot be optimized. Must enable
-override to use.
+override to use (see \code{\link{samc-class}}).
 
   \item \strong{mortality(samc, origin)}
 
-The result is a vector where each element corresponds to a cell in the
-landscape, and can be mapped back to the landscape using the
-\code{\link{map}} function. Element j is the probability of experiencing
-mortality at location j if starting at a given origin.
+The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the probability of absorption
+at transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
+
+If the samc-class object was created using matrix or RasterLayer maps, then
+vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
+\code{\link{map}} function.
 
   \item \strong{mortality(samc, dest)}
 
-The result is a vector where each element corresponds to a cell in the
-landscape, and can be mapped back to the landscape using the
-\code{\link{map}} function. Element i is the probability of experiencing
-mortality at a given destination if starting at location i.
+The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the probability of absorption
+at transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
+
+If the samc-class object was created using matrix or RasterLayer maps, then
+vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
+\code{\link{map}} function.
 
   \item \strong{mortality(samc, origin, dest)}
 
-The result is a numeric value that is the probability of experiencing
-mortality at a given destination if starting at a given origin
+The result is a numeric value that is the probability of absorption
+at transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
 }
 
 \eqn{\psi^T B}
 \itemize{
   \item \strong{mortality(samc, occ)}
 
-The result is a vector where each element corresponds to a cell in the
-landscape, and can be mapped back to the landscape using the
-\code{\link{map}} function. Element j is the unconditional probability of
-experiencing mortality at location j, regardless of the initial state.
+The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the unconditional
+probability of absorption at transient state \eqn{\mathit{j}} given an initial
+state \eqn{\psi}.
+
+If the samc-class object was created using matrix or RasterLayer maps, then
+vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
+\code{\link{map}} function.
 }
 }
 \section{Performance}{
@@ -181,12 +200,17 @@ occ_data <- samc::ex_occ_data
 check(res_data, abs_data)
 check(res_data, occ_data)
 
+# Setup the details for our transition function
+tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+           dir = 8, # Directions of the transitions. Either 4 or 8.
+           sym = TRUE) # Is the function symmetric?
+
 
 # Create a `samc-class` object with the resistance and absorption data using
 # the samc() function. We use the recipricol of the arithmetic mean for
 # calculating the transition matrix. Note, the input data here are matrices,
-# not RasterLayers. If using RasterLayers, the latlon parameter must be set.
-samc_obj <- samc(res_data, abs_data, tr_fun = function(x) 1/mean(x))
+# not RasterLayers.
+samc_obj <- samc(res_data, abs_data, tr_args = tr)
 
 
 # Convert the occupancy data to probability of occurrence

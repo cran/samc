@@ -12,7 +12,7 @@
 
 <meta name="author" content="Andrew Marx" />
 
-<meta name="date" content="2021-04-01" />
+<meta name="date" content="2021-06-27" />
 
 <title>Locations</title>
 
@@ -301,7 +301,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Locations</h1>
 <h4 class="author">Andrew Marx</h4>
-<h4 class="date">2021-04-01</h4>
+<h4 class="date">2021-06-27</h4>
 
 
 
@@ -331,37 +331,44 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb1-12" title="12">occ_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_occ_data</a>
 <a class="sourceLine" id="cb1-13" title="13"></a>
 <a class="sourceLine" id="cb1-14" title="14"></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="co"># Create a samc object using the resistance and absorption data. We use the</span></a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="co"># recipricol of the arithmetic mean for calculating the transition matrix. Note,</span></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="co"># the input data here are matrices, not RasterLayers. If using RasterLayers, the</span></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="co"># `latlon` parameter must be set.</span></a>
-<a class="sourceLine" id="cb1-19" title="19">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x))</a></code></pre></div>
+<a class="sourceLine" id="cb1-15" title="15"><span class="co"># Setup the details for our transition function</span></a>
+<a class="sourceLine" id="cb1-16" title="16">tr &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x), <span class="co"># Function for calculating transition probabilities</span></a>
+<a class="sourceLine" id="cb1-17" title="17">           <span class="dt">dir =</span> <span class="dv">8</span>, <span class="co"># Directions of the transitions. Either 4 or 8.</span></a>
+<a class="sourceLine" id="cb1-18" title="18">           <span class="dt">sym =</span> <span class="ot">TRUE</span>) <span class="co"># Is the function symmetric?</span></a>
+<a class="sourceLine" id="cb1-19" title="19"></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="co"># Create a samc object using the resistance and absorption data. We use the</span></a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="co"># recipricol of the arithmetic mean for calculating the transition matrix. Note,</span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co"># the input data here are matrices, not RasterLayers.</span></a>
+<a class="sourceLine" id="cb1-23" title="23">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_args =</span> tr)</a></code></pre></div>
 </div>
 <div id="basic-location-usage" class="section level2">
 <h2>Basic Location Usage</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># A couple examples of using numeric locations</span></a>
 <a class="sourceLine" id="cb2-2" title="2">mort_origin &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">origin =</span> <span class="dv">7</span>)</a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="kw">head</span>(mort_origin) <span class="co"># The result is a vector. Let&#39;s see the first few elements</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; [1] 0.0004454945 0.0005970254 0.0006268049 0.0006652296 0.0007168680</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; [6] 0.0007962162</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt;            1            2            3            4            5            6 </span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; 0.0004454945 0.0005970254 0.0006268049 0.0006652296 0.0007168680 0.0007962162</span></a>
 <a class="sourceLine" id="cb2-6" title="6"></a>
 <a class="sourceLine" id="cb2-7" title="7">mort_dest &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">dest =</span> <span class="dv">13</span>)</a>
 <a class="sourceLine" id="cb2-8" title="8"><span class="kw">head</span>(mort_dest) <span class="co"># The result is a vector. Let&#39;s see the first few elements</span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; [1] 0.0004952858 0.0005096278 0.0005283281 0.0005495412 0.0005727323</span></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; [6] 0.0005978134</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt;            1            2            3            4            5            6 </span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; 0.0004952858 0.0005096278 0.0005283281 0.0005495412 0.0005727323 0.0005978134</span></a>
 <a class="sourceLine" id="cb2-11" title="11"></a>
 <a class="sourceLine" id="cb2-12" title="12">mort_both &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">origin =</span> <span class="dv">7</span>, <span class="dt">dest =</span> <span class="dv">13</span>)</a>
 <a class="sourceLine" id="cb2-13" title="13">mort_both <span class="co"># The result is a single value</span></a>
-<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; [1] 0.0006250264</span></a>
-<a class="sourceLine" id="cb2-15" title="15"></a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="co"># The single value of mort_both simply is just extracted from one of the vector</span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="co"># results. So using both the origin and dest parameters is largely for convenience,</span></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="co"># and helps to prevent accidental mistakes from trying to manually extract values</span></a>
-<a class="sourceLine" id="cb2-19" title="19"><span class="co"># from the vectors</span></a>
-<a class="sourceLine" id="cb2-20" title="20">mort_origin[<span class="dv">13</span>]</a>
-<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; [1] 0.0006250264</span></a>
-<a class="sourceLine" id="cb2-22" title="22">mort_dest[<span class="dv">7</span>]</a>
-<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; [1] 0.0006250264</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt;           13 </span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; 0.0006250264</span></a>
+<a class="sourceLine" id="cb2-16" title="16"></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co"># The single value of mort_both simply is just extracted from one of the vector</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co"># results. So using both the origin and dest parameters is largely for convenience,</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co"># and helps to prevent accidental mistakes from trying to manually extract values</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co"># from the vectors</span></a>
+<a class="sourceLine" id="cb2-21" title="21">mort_origin[<span class="dv">13</span>]</a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt;           13 </span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; 0.0006250264</span></a>
+<a class="sourceLine" id="cb2-24" title="24">mort_dest[<span class="dv">7</span>]</a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt;            7 </span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="co">#&gt; 0.0006250264</span></a></code></pre></div>
 </div>
 <div id="viewing-location-values" class="section level2">
 <h2>Viewing Location Values</h2>
@@ -396,13 +403,13 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb4-10" title="10"><span class="co"># Use the locations in a function</span></a>
 <a class="sourceLine" id="cb4-11" title="11">mort_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">origin =</span> locations[<span class="dv">1</span>])</a>
 <a class="sourceLine" id="cb4-12" title="12"><span class="kw">head</span>(mort_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; [1] 0.0004313355 0.0005695849 0.0005833685 0.0005963590 0.0006070493</span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; [6] 0.0006144510</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;            1            2            3            4            5            6 </span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; 0.0004313355 0.0005695849 0.0005833685 0.0005963590 0.0006070493 0.0006144510</span></a>
 <a class="sourceLine" id="cb4-15" title="15"></a>
 <a class="sourceLine" id="cb4-16" title="16">mort_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">mortality</span>(samc_obj, <span class="dt">origin =</span> locations[<span class="dv">2</span>])</a>
 <a class="sourceLine" id="cb4-17" title="17"><span class="kw">head</span>(mort_<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt; [1] 0.0001651789 0.0002113811 0.0002086714 0.0002057462 0.0002027257</span></a>
-<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; [6] 0.0001996758</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt;            1            2            3            4            5            6 </span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt; 0.0001651789 0.0002113811 0.0002086714 0.0002057462 0.0002027257 0.0001996758</span></a></code></pre></div>
 <p><img src="data:image/png;base64,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" /><img src="data:image/png;base64,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" /></p>
 </div>
 <div id="multiple-locations" class="section level2">

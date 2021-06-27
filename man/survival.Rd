@@ -3,52 +3,49 @@
 \name{survival}
 \alias{survival}
 \alias{survival,samc,missing-method}
-\alias{survival,samc,RasterLayer-method}
-\alias{survival,samc,matrix-method}
+\alias{survival,samc,ANY-method}
 \title{Calculate survival metrics}
 \usage{
 survival(samc, occ)
 
 \S4method{survival}{samc,missing}(samc)
 
-\S4method{survival}{samc,RasterLayer}(samc, occ)
-
-\S4method{survival}{samc,matrix}(samc, occ)
+\S4method{survival}{samc,ANY}(samc, occ)
 }
 \arguments{
-\item{samc}{A \code{\link{samc-class}} object. This should be output from
-the \code{\link{samc}} function.}
+\item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}
 
-\item{occ}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}.
-The input type must match the input type used to create the
-\code{\link{samc-class}} object, and must have the same properties as the
-rest of the landscape data. See the \code{\link{check}} function for more
-details.}
+\item{occ}{The initial state \eqn{\psi} of the Markov chain. If the \code{\link{samc-class}}
+objects was constructed using map inputs, then occ must be the same type of input
+(either \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}),
+and must have the same properties as initial map inputs (see the \code{\link{check}}
+function).}
 }
 \value{
-A \code{vector} or a \code{numeric}
+See Details
 }
 \description{
-Calculates the expected amount of time that individuals survive
-in the landscape.
+Calculates the expected time to absorption
 }
 \details{
 \eqn{z=(I-Q)^{-1}{\cdot}1=F{\cdot}1}
 \itemize{
   \item \strong{survival(samc)}
 
-The result is a vector where each element corresponds to a cell in the
-landscape, and can be mapped back to the landscape using the
-\code{\link{map}} function. The value of element \emph{i} is the expected
-amount of time that individuals survive when starting at location \emph{j}.
+The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the expected
+time to absorption if starting at transient state \eqn{\mathit{i}}.
+
+If the samc-class object was created using matrix or RasterLayer maps, then
+vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
+\code{\link{map}} function.
 }
 
 \eqn{\psi^Tz}
 \itemize{
   \item \strong{survival(samc, occ)}
 
-The result is a numeric that represents the expected time that any individual
-stays in the landscape before death, regardless of the initial location.
+The result is a numeric that is the expected time to absorption given an initial
+state \eqn{\psi}.
 }
 }
 \section{Performance}{
@@ -72,12 +69,17 @@ occ_data <- samc::ex_occ_data
 check(res_data, abs_data)
 check(res_data, occ_data)
 
+# Setup the details for our transition function
+tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+           dir = 8, # Directions of the transitions. Either 4 or 8.
+           sym = TRUE) # Is the function symmetric?
+
 
 # Create a `samc-class` object with the resistance and absorption data using
 # the samc() function. We use the recipricol of the arithmetic mean for
 # calculating the transition matrix. Note, the input data here are matrices,
-# not RasterLayers. If using RasterLayers, the latlon parameter must be set.
-samc_obj <- samc(res_data, abs_data, tr_fun = function(x) 1/mean(x))
+# not RasterLayers.
+samc_obj <- samc(res_data, abs_data, tr_args = tr)
 
 
 # Convert the occupancy data to probability of occurrence

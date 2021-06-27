@@ -12,7 +12,7 @@
 
 <meta name="author" content="Andrew Marx" />
 
-<meta name="date" content="2021-04-01" />
+<meta name="date" content="2021-06-27" />
 
 <title>Temporal Analysis</title>
 
@@ -301,7 +301,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Temporal Analysis</h1>
 <h4 class="author">Andrew Marx</h4>
-<h4 class="date">2021-04-01</h4>
+<h4 class="date">2021-06-27</h4>
 
 
 
@@ -326,11 +326,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb1-13" title="13">occ_data &lt;-<span class="st"> </span>samc<span class="op">::</span>ex_occ_data</a>
 <a class="sourceLine" id="cb1-14" title="14"></a>
 <a class="sourceLine" id="cb1-15" title="15"></a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="co"># Create a samc object using the resistance and absorption data. We use the </span></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="co"># recipricol of the arithmetic mean for calculating the transition matrix. Note,</span></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="co"># the input data here are matrices, not RasterLayers. If using RasterLayers, the</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="co"># `latlon` parameter must be set.</span></a>
-<a class="sourceLine" id="cb1-20" title="20">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x))</a></code></pre></div>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co"># Setup the details for our transition function</span></a>
+<a class="sourceLine" id="cb1-17" title="17">tr &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x), <span class="co"># Function for calculating transition probabilities</span></a>
+<a class="sourceLine" id="cb1-18" title="18">           <span class="dt">dir =</span> <span class="dv">8</span>, <span class="co"># Directions of the transitions. Either 4 or 8.</span></a>
+<a class="sourceLine" id="cb1-19" title="19">           <span class="dt">sym =</span> <span class="ot">TRUE</span>) <span class="co"># Is the function symmetric?</span></a>
+<a class="sourceLine" id="cb1-20" title="20"></a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="co"># Create a samc object using the resistance and absorption data. We use the </span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co"># recipricol of the arithmetic mean for calculating the transition matrix. Note,</span></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="co"># the input data here are matrices, not RasterLayers.</span></a>
+<a class="sourceLine" id="cb1-24" title="24">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_args =</span> tr)</a></code></pre></div>
 </div>
 <div id="temporal-analysis" class="section level2">
 <h2>Temporal Analysis</h2>
