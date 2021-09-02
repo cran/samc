@@ -12,13 +12,29 @@
 
 <meta name="author" content="Andrew Marx" />
 
-<meta name="date" content="2021-06-27" />
+<meta name="date" content="2021-09-01" />
 
 <title>Troubleshooting</title>
 
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
@@ -104,6 +120,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+
 
 
 
@@ -301,7 +318,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Troubleshooting</h1>
 <h4 class="author">Andrew Marx</h4>
-<h4 class="date">2021-06-27</h4>
+<h4 class="date">2021-09-01</h4>
 
 
 
@@ -360,6 +377,18 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <a class="sourceLine" id="cb2-18" title="18"></a>
 <a class="sourceLine" id="cb2-19" title="19"><span class="co"># Solution</span></a>
 <a class="sourceLine" id="cb2-20" title="20">samc_obj &lt;-<span class="st"> </span><span class="kw">samc</span>(res_data, abs_data, <span class="dt">tr_args =</span> <span class="kw">list</span>(<span class="dt">fun =</span> <span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span><span class="kw">mean</span>(x), <span class="dt">dir =</span> <span class="dv">8</span>, <span class="dt">sym =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+</div>
+<div id="error-all-disconnected-regions-must-have-at-least-one-non-zero-absorption-value" class="section level2">
+<h2>Error: All disconnected regions must have at least one non-zero absorption value</h2>
+<p>See the <a href="data-disconnected.html">Disconnected Data</a> vignette.</p>
+</div>
+<div id="warning-input-contains-disconnected-regions.-this-does-not-work-with-the-cond_passage-metric" class="section level2">
+<h2>Warning: Input contains disconnected regions. This does not work with the cond_passage() metric</h2>
+<p>See the <a href="data-disconnected.html">Disconnected Data</a> vignette.</p>
+</div>
+<div id="error-in-function-rcpp_precious_remove-not-provided-by-package-rcpp" class="section level2">
+<h2>Error in &lt;…&gt; : function ‘Rcpp_precious_remove’ not provided by package ‘Rcpp’</h2>
+<p>Update the Rcpp package. Then make sure to unload all of your packages and reload them again. You do not need to load the Rcpp package (i.e, do not <code>library(Rcpp)</code>).</p>
 </div>
 
 

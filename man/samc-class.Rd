@@ -58,6 +58,7 @@ be accessed and modified in the class:
   were used to create the samc object.
 
   The input must be in the same form as the absorption inputs used in \code{\link{samc}()}.
+  Matrices are passed in as a \code{list}, and rasters are passed in as a \code{RasterStack}.
   Using \code{NA} as the input will reset it.
 }
 }
