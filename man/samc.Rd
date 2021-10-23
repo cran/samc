@@ -10,18 +10,9 @@
 \alias{samc,matrix,matrix,missing,list-method}
 \alias{samc,dgCMatrix,missing,missing,missing-method}
 \alias{samc,matrix,missing,missing,missing-method}
-\alias{samc,missing,missing,missing,missing-method}
-\alias{samc,RasterLayer,RasterLayer,RasterLayer,missing-method}
-\alias{samc,matrix,matrix,matrix,missing-method}
-\alias{samc,missing,RasterLayer,RasterLayer,missing-method}
-\alias{samc,missing,matrix,matrix,missing-method}
-\alias{samc,RasterLayer,RasterLayer,missing,missing-method}
-\alias{samc,matrix,matrix,missing,missing-method}
-\alias{samc,missing,RasterLayer,missing,missing-method}
-\alias{samc,missing,matrix,missing,missing-method}
 \title{Create an samc object}
 \usage{
-samc(data, absorption, fidelity, tr_args, ...)
+samc(data, absorption, fidelity, tr_args)
 
 \S4method{samc}{TransitionLayer,RasterLayer,RasterLayer,missing}(data, absorption, fidelity)
 
@@ -35,35 +26,9 @@ samc(data, absorption, fidelity, tr_args, ...)
 
 \S4method{samc}{matrix,matrix,missing,list}(data, absorption, tr_args)
 
-\S4method{samc}{dgCMatrix,missing,missing,missing}(data, override)
+\S4method{samc}{dgCMatrix,missing,missing,missing}(data)
 
-\S4method{samc}{matrix,missing,missing,missing}(data, override)
-
-\S4method{samc}{missing,missing,missing,missing}(p_mat, override)
-
-\S4method{samc}{RasterLayer,RasterLayer,RasterLayer,missing}(data, absorption, fidelity, tr_fun, latlon, override, directions = 8)
-
-\S4method{samc}{matrix,matrix,matrix,missing}(data, absorption, fidelity, tr_fun, override, directions = 8)
-
-\S4method{samc}{missing,RasterLayer,RasterLayer,missing}(
-  resistance,
-  absorption,
-  fidelity,
-  latlon,
-  tr_fun,
-  override,
-  directions = 8
-)
-
-\S4method{samc}{missing,matrix,matrix,missing}(resistance, absorption, fidelity, tr_fun, override, directions = 8)
-
-\S4method{samc}{RasterLayer,RasterLayer,missing,missing}(data, absorption, latlon, tr_fun, override = FALSE, directions = 8)
-
-\S4method{samc}{matrix,matrix,missing,missing}(data, absorption, tr_fun, override = FALSE, directions = 8)
-
-\S4method{samc}{missing,RasterLayer,missing,missing}(resistance, absorption, latlon, tr_fun, override = FALSE, directions = 8)
-
-\S4method{samc}{missing,matrix,missing,missing}(resistance, absorption, tr_fun, override = FALSE, directions = 8)
+\S4method{samc}{matrix,missing,missing,missing}(data)
 }
 \arguments{
 \item{data}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}} or Matrix package dgCMatrix sparse matrix.}
@@ -73,20 +38,6 @@ samc(data, absorption, fidelity, tr_args, ...)
 \item{fidelity}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}}
 
 \item{tr_args}{A list with args for constructing a transition matrix.}
-
-\item{...}{Placeholder}
-
-\item{override}{Deprecated. See \code{\link{samc-class}} for the alternative.}
-
-\item{p_mat}{Deprecated. Use the \code{data} parameter.}
-
-\item{tr_fun}{Deprecated. Use \code{tr_args}.}
-
-\item{latlon}{Deprecated. No longer needed.}
-
-\item{directions}{Deprecated Use \code{tr_args}.}
-
-\item{resistance}{Deprecated. Use the \code{data} parameter.}
 }
 \value{
 A \code{\link{samc-class}} object
@@ -173,19 +124,6 @@ there must be no duplicate names. The exception to these rules is the very last
 column and the very last row of the P matrix. Since these are not part of the
 pairwise transition matrix, they may have whatever names the user prefers.
 
-\strong{Other Parameters} \emph{Deprecated}
-
-The \code{directions} parameter is optional. When constructing the P matrix from
-matrix or raster data, the \code{samc()} function must decide how adjacent cells are
-connected. This value can be set to either 4 or 8. When set to 4, nodes are
-connected horizontally and vertically (similar to the directions of how a rook
-moves in chess). When set to 8, nodes are connected diagonally in addition to
-horizontally and vertically (queen movement in chess). When not specified,
-the \code{samc()} function defaults to a value of 8. When using large datasets to
-construct a P matrix, setting the directions to 4 may lead to significant
-improvements in computation time and the amount of memory needed to perform
-an analysis.
-
 \strong{Additional Information}
 
 Depending on the data used to construct the samc-class object, some metrics
@@ -202,6 +140,12 @@ metrics.
 Future work is planned towards identifying these issues during creation of the
 samc-class object and handling them appropriately to prevent inadvertent
 crashes.
+
+\strong{Version 2 Changes}
+
+Version 1.5.0 officially removed support for the deprecated \code{resistance}, \code{tr_fun},
+\code{directions}, \code{p_mat}, \code{latlon}, and \code{override} arguments. Old
+code will have to be updated to the new samc() function structure in order to work.
 }
 \examples{
 # "Load" the data. In this case we are using data built into the package.

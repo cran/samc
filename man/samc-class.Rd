@@ -60,6 +60,12 @@ be accessed and modified in the class:
   The input must be in the same form as the absorption inputs used in \code{\link{samc}()}.
   Matrices are passed in as a \code{list}, and rasters are passed in as a \code{RasterStack}.
   Using \code{NA} as the input will reset it.
+
+  \item \strong{threads}
+
+  \code{samc_obj$threads} can be used to get or set the number of threads used
+  for parallel computations. Details can be found in the Parallel Computing
+  vignette.
 }
 }
 \section{Slots}{
@@ -74,6 +80,8 @@ be accessed and modified in the class:
 \item{\code{clumps}}{Number of discontinuous regions in data}
 
 \item{\code{override}}{Used to prevent accidental use of memory intensive functions}
+
+\item{\code{threads}}{Used for multi-threading}
 
 \item{\code{.cache}}{Cached data for performance boosts}
 }}

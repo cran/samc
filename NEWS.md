@@ -1,3 +1,11 @@
+# samc 2.0.0
+
+- Removed backwards compatibility for deprecated `samc()` function parameters. This is a breaking change that will make maintaining the package and adding new features a simpler process going forward, and that will hopefully only be a minor inconvenience for users. The warning message on package load introduced in v1.4.0 has been updated to reflect the new changes.
+- Updated `cond_passage()` to return `0` for when *i==j* in the vectors. This fixes an issue associated with shifted indices in `cond_passage(samc, dest)`. It also technically breaks backwards compatibility for when `dest` equals `origin` in `cond_passage(samc, origin, dest)`. Previously, `cond_passage(samc, origin, dest)` would return `NA` when `origin` equaled `dest`, but this decision was arbitrary. The `cond_passage()` documentation explains why.
+- Added a new section for worked examples on the website.
+- Added a new example illustrating how to use various aspects of the package with a simple perfect maze and interpret the results. See the Maze Part 1 vignette.
+- Added multithreading for the `dispersal(samc, origin/occ)` function via the RcppThread package. See the Parallel Computing vignette for details.
+
 # samc 1.4.1
 
 - Added an input check for multiple absorption that throws a more informative error when a list contains anything other than matrices
@@ -5,6 +13,7 @@
 - Added an initial vignette discussing *Disconnected Data*. The current contents are only slightly modified from an email discussion; they will be rewritten and expanded upon in the future. The *Troubleshooting* vignette has had an error message and a warning message related to the topic added to it.
 - Added a Rcpp related error to the *Troubleshooting* vignette.
 - Bumped version requirements for R to 3.6.0, Rcpp to 1.0.5, RcppEigen to 0.3.3.9.1, and set C++14 as the standard to use in Makevars.
+- Enabled the Github discussions page as a replacement for Gitter: https://github.com/andrewmarx/samc/discussions
 
 # samc 1.4.0
 

@@ -1,7 +1,7 @@
 Package: samc
 Type: Package
 Title: Spatial Absorbing Markov Chains
-Version: 1.4.1
+Version: 2.0.0
 Authors@R: c(
     person("Andrew", "Marx", , "andrewjmarx@ufl.edu", role = c("aut", "cre", "cph"), 
       comment = c(ORCID = "0000-0002-7456-1631")
@@ -43,9 +43,10 @@ Collate: 'RcppExports.R' 'location-class.R' 'internal-classes.R'
         'data.R' 'visitation.R' 'dispersal.R' 'distribution.R'
         'generics.R' 'internal-functions.R' 'locate.R' 'map.R'
         'mortality.R' 'pairwise.R' 'samc.R' 'survival.R' 'zzz.R'
-LinkingTo: Rcpp (>= 1.0.5), RcppEigen (>= 0.3.3.9.1)
+LinkingTo: Rcpp (>= 1.0.5), RcppEigen (>= 0.3.3.9.1), RcppThread (>=
+        1.0.0)
 NeedsCompilation: yes
-Packaged: 2021-09-01 16:58:18 UTC; andrewjmarx
+Packaged: 2021-10-22 22:07:42 UTC; andrewjmarx
 Author: Andrew Marx [aut, cre, cph] (<https://orcid.org/0000-0002-7456-1631>),
   Robert Fletcher [ctb] (<https://orcid.org/0000-0003-1717-5707>),
   Miguel Acevedo [ctb] (<https://orcid.org/0000-0002-8289-1497>),
@@ -53,4 +54,4 @@ Author: Andrew Marx [aut, cre, cph] (<https://orcid.org/0000-0002-7456-1631>),
   Chao Wang [ctb] (<https://orcid.org/0000-0003-2706-5122>)
 Maintainer: Andrew Marx <andrewjmarx@ufl.edu>
 Repository: CRAN
-Date/Publication: 2021-09-02 14:30:02 UTC
+Date/Publication: 2021-10-23 04:20:02 UTC
