@@ -9,184 +9,176 @@ if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
+do.call(knitr::read_chunk, list(path = "scripts/example-maze.R"))
+
 ## ---- message = FALSE---------------------------------------------------------
 library(samc)
 library(raster)
 library(gdistance)
 library(viridisLite)
 
+## -----------------------------------------------------------------------------
+plot_maze <- function(map, title, colors) {
+  # start = 1 (top left), finish = last element (bottom right)
+  sf <- xyFromCell(map, c(1, length(map)))
+
+  plot(map, main = title, col = colors, axes = FALSE, box = FALSE, asp = 1)
+  plot(rasterToPolygons(map), border = 'black', lwd = 1, add = TRUE)
+  points(sf, pch = c('S', 'F'), cex = 1, font = 2)
+}
+
+## -----------------------------------------------------------------------------
+# A simple color palette with 2 colors
+vir_col <- viridis(3)[2:3]
+
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
-maze = matrix(
-  c(1,1,1,1,0,1,0,1,0,1,0,1,0,0,1,1,1,0,0,1,
-    0,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1,1,0,1,
-    0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,
-    0,1,1,0,1,1,0,1,1,1,1,0,1,0,1,0,1,1,1,1,
-    0,0,0,0,1,0,0,1,0,0,1,1,1,1,1,0,0,0,0,1,
-    1,1,1,1,1,0,1,1,0,1,1,0,1,0,1,0,1,1,0,1,
-    1,0,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,1,
-    1,1,1,0,1,1,0,1,1,0,1,1,0,1,1,1,0,1,1,1,
-    1,0,1,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,
-    1,0,0,0,1,1,1,0,1,1,1,1,0,1,1,0,1,0,1,1,
-    1,1,1,0,1,0,1,1,1,0,1,0,0,0,1,1,1,0,1,0,
-    0,1,0,0,0,0,0,0,1,0,1,1,0,1,1,0,0,0,1,1,
-    1,1,1,1,0,1,1,0,0,0,0,1,0,0,1,0,1,0,1,0,
-    0,0,0,1,0,0,1,1,1,0,1,1,0,1,1,0,1,1,1,1,
-    0,1,0,0,0,1,1,0,1,0,0,0,0,1,0,0,0,0,0,1,
-    0,1,1,1,1,1,0,0,0,0,1,1,1,1,0,1,1,1,0,1,
-    0,0,0,0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,0,1,
-    1,1,0,1,0,1,1,1,0,0,0,0,0,0,1,0,1,1,1,1,
-    0,1,1,1,0,0,0,1,1,1,0,1,0,1,1,1,1,0,1,0,
-    1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,0,0,1,1),
-  nrow = 20
+maze_res = matrix(
+  c(1,0,0,0,0,1,1,1,1,1,1,0,1,0,0,0,0,1,0,1,
+    1,1,1,1,0,1,0,1,0,0,1,1,1,0,1,1,0,1,1,1,
+    1,0,0,1,0,1,0,1,1,0,1,0,1,0,0,1,0,0,1,0,
+    1,1,0,0,0,1,0,0,0,0,0,0,1,1,0,1,0,1,1,1,
+    0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,0,0,0,1,
+    1,1,0,1,0,0,0,1,0,1,0,0,1,0,1,1,1,1,0,1,
+    0,0,0,0,0,1,0,0,0,1,1,0,1,1,1,0,0,1,0,1,
+    1,1,0,1,1,1,1,1,0,0,1,0,0,1,0,0,1,1,1,1,
+    0,1,0,1,0,0,0,1,1,1,1,1,0,1,1,0,1,0,1,0,
+    1,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,1,0,1,1,
+    0,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,1,0,0,1,
+    1,1,0,0,1,0,0,1,0,1,0,1,1,1,0,1,0,0,1,1,
+    0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,1,
+    0,0,0,0,1,0,0,1,1,1,0,1,0,1,1,1,0,0,1,1,
+    1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,0,0,1,1,0,
+    1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1,1,
+    1,1,1,1,0,1,0,0,0,1,1,0,1,1,0,1,1,1,1,0,
+    0,1,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,1,0,0,
+    0,0,0,1,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,
+    1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1),
+  nrow = 20, byrow = TRUE
 )
 
-maze <- raster(maze, xmn = 0.5, xmx = ncol(maze) + 0.5, ymn = 0.5, ymx = nrow(maze) + 0.5)
-maze[maze==0] <- NA
+maze_res <- raster(maze_res, xmn = 0.5, xmx = ncol(maze_res) + 0.5, ymn = 0.5, ymx = nrow(maze_res) + 0.5)
+maze_res[maze_res==0] <- NA # 0 makes the formatting cleaner above, but NA is needed for true barriers
 
-#
 # Get info about the shortest path through the maze using gdistance
-#
-points <- xyFromCell(maze, c(1, 400))
-
 lcd <- (function() {
-  tr <- transition(maze, function(x) 1/mean(x), 4)
+  points <- xyFromCell(maze_res, c(1, 400))
+
+  tr <- transition(maze_res, function(x) 1/mean(x), 4)
   tr <- geoCorrection(tr)
 
   list(dist = costDistance(tr, points),
        path = shortestPath(tr, points[1, ], points[2, ], output="SpatialLines"))
 })()
 
-# Setup a simple color palette
-vir_col <- viridis(3)
-
 # Basic maze layout
-plot(maze, main = "Resistance", col = vir_col[2], axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze), border = 'black', lwd = 1, add = TRUE)
-lines(lcd$path, col = vir_col[3], lw = 3)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(maze_res, "Resistance", vir_col[1])
+lines(lcd$path, col = vir_col[2], lw = 3)
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
 # End of maze
-maze_end <- maze * 0
-maze_end[20, 20] <- 1
+maze_finish <- maze_res * 0
+maze_finish[20, 20] <- 1
 
-plot(maze_end, main = "Absorption", col = vir_col[c(2, 3)], axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze_end), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(maze_finish, "Absorption", vir_col)
+
+## -----------------------------------------------------------------------------
+tolerance = sqrt(.Machine$double.eps) # Default tolerance in functions like all.equal()
+
+print(tolerance)
 
 ## -----------------------------------------------------------------------------
 tr <- list(fun = function(x) 1/mean(x), dir = 4, sym = TRUE)
 
-samc_obj <- samc(maze, maze_end, tr_args = tr)
+maze_samc <- samc(maze_res, maze_finish, tr_args = tr)
 
-start <- locate(samc_obj, data.frame(x = 1, y = 20))
-finish <- locate(samc_obj, data.frame(x = 20, y = 1))
+maze_origin <- locate(maze_samc, data.frame(x = 1, y = 20))
+maze_dest <- locate(maze_samc, data.frame(x = 20, y = 1))
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
-survive <- survival(samc_obj)
+maze_surv <- survival(maze_samc)
 
-plot(map(samc_obj, survive), col = viridis(256), main = "Expected time to finish", axes = F, box = F, asp = 1)
-plot(rasterToPolygons(maze_end), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(map(maze_samc, maze_surv), "Expected time to finish", viridis(256))
 
 ## -----------------------------------------------------------------------------
-survive[start]
+maze_surv[maze_origin]
 
 ## -----------------------------------------------------------------------------
-cond <- cond_passage(samc_obj, dest = finish)
-cond[start]
+maze_cond <- cond_passage(maze_samc, dest = maze_dest)
+
+maze_cond[maze_origin]
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
-disp <- dispersal(samc_obj, origin = start)
+maze_disp <- dispersal(maze_samc, origin = maze_origin)
 
-plot(map(samc_obj, disp), col = viridis(256), main = "Probability of Visit", axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze_end), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(map(maze_samc, maze_disp), "Probability of Visit", viridis(256))
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
-# Ideally, we would just use `as.numeric(disp == 1)`, but float precision means
-# that what we think is `1` isn't always `1` with computers, so it won't always
-# work. We work around it by subtracting 1 and seeing if the result fits within
-# a very small tolerance
-tolerance = sqrt(.Machine$double.eps) # Default tolerance in functions like all.equal()
-print(tolerance)
-disp_sol <- as.numeric(abs(disp - 1) < tolerance)
+# Ideally would use `as.numeric(maze_disp == 1)`, but floating point precision issues force an approximation
+maze_disp_sol <- as.numeric(abs(maze_disp - 1) < tolerance)
 
-plot(map(samc_obj, disp_sol), col = vir_col[c(2, 3)], main = "Solution Using Dispersal()", axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze_end), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(map(maze_samc, maze_disp_sol), "Solution Using Dispersal()", vir_col)
 
 ## -----------------------------------------------------------------------------
-disp[start]
+maze_disp[maze_origin]
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
-visit <- visitation(samc_obj, origin = start)
+maze_visit <- visitation(maze_samc, origin = maze_origin)
 
-plot(map(samc_obj, visit), col = viridis(256), main = "Visits Per Cell", axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze_end), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(map(maze_samc, maze_visit), "Visits Per Cell", viridis(256))
 
 ## -----------------------------------------------------------------------------
-visit[finish]
+maze_visit[maze_dest]
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
-dist <- distribution(samc_obj, origin = start, time = 20)
+maze_dist <- distribution(maze_samc, origin = maze_origin, time = 20)
 
-plot(map(samc_obj, dist), col = viridis(256), main = "Location at t=20", axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze_end), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(map(maze_samc, maze_dist), "Location at t=20", col = viridis(256))
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
-dist <- distribution(samc_obj, origin = start, time = 21)
+maze_dist <- distribution(maze_samc, origin = maze_origin, time = 21)
 
-plot(map(samc_obj, dist), col = viridis(256), main = "Location at t=21", axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze_end), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(map(maze_samc, maze_dist), "Location at t=21", viridis(256))
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
-# End of maze
-maze_occ <- maze * 0
+maze_occ <- maze_res * 0
 maze_occ[1, 1] <- 1
 
-plot(maze_occ, main = "Occupancy", col = vir_col[c(2, 3)], axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze_occ), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(maze_occ, "Occupancy", vir_col)
 
 ## ---- fig.show='hold'---------------------------------------------------------
-survival(samc_obj, occ = maze_occ)
+survival(maze_samc, occ = maze_occ)
 
-survive[start]
+maze_surv[maze_origin]
 
 ## ---- fig.show='hold'---------------------------------------------------------
 # Scenario 1: 3 people start in the maze
-maze_occ <- maze * 0
-maze_occ[1, 1] <- 3
+maze_occ3 <- maze_res * 0
+maze_occ3[1, 1] <- 3
 
-survival(samc_obj, occ = maze_occ)
+survival(maze_samc, occ = maze_occ3)
 
 ## -----------------------------------------------------------------------------
-survival(samc_obj, occ = maze_occ) / 3
+survival(maze_samc, occ = maze_occ3) / 3
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
 # Scenario 2: A person starts in each corner of the maze
-maze_occ <- maze * 0
-maze_occ[1, 1] <- 1
-maze_occ[20, 1] <- 1
-maze_occ[1, 20] <- 1
+maze_occ3 <- maze_res * 0
+maze_occ3[1, 1] <- 1
+maze_occ3[20, 1] <- 1
+maze_occ3[1, 20] <- 1
 
-plot(maze_occ, main = "Occupancy", col = vir_col[c(2, 3)], axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze_occ), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+plot_maze(maze_occ3, "Occupancy", vir_col)
 
-survival(samc_obj, occ = maze_occ)
+survival(maze_samc, occ = maze_occ3)
 
 ## ---- fig.show='hold'---------------------------------------------------------
-survival(samc_obj, occ = maze_occ) / 3
+survival(maze_samc, occ = maze_occ3) / 3
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
-dist <- distribution(samc_obj, occ = maze_occ, time = 100)
+maze_occ3_dist <- distribution(maze_samc, occ = maze_occ3, time = 17)
 
-plot(map(samc_obj, dist), col = viridis(256), main = "Location at t=100", axes = FALSE, box = FALSE, asp = 1)
-plot(rasterToPolygons(maze_end), border = 'black', lwd = 1, add = TRUE)
-points(points, pch = c('S', 'F'), cex = 1, font = 2)
+# This makes it easier to see how far along the individuals could be
+maze_occ3_dist <- as.numeric(maze_occ3_dist > 0)
+
+plot_maze(map(maze_samc, maze_occ3_dist), "Location at t=17", viridis(256))
 
