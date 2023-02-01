@@ -13,28 +13,30 @@ options(max.print = 20)
 ## ---- message = FALSE---------------------------------------------------------
 #  # First step is to load the libraries. Not all of these libraries are stricly
 #  # needed; some are used for convenience and visualization for this tutorial.
+#  library("terra")
 #  library("samc")
-#  library("raster")
 #  library("viridisLite")
 #  
 #  
 #  # "Load" the data. In this case we are using data built into the package.
 #  # In practice, users will likely load raster data using the raster() function
 #  # from the raster package.
-#  res_data <- samc::ex_res_data
-#  abs_data <- samc::ex_abs_data
-#  occ_data <- samc::ex_occ_data
+#  res_data <- samc::example_split_corridor$res
+#  abs_data <- samc::example_split_corridor$abs
 #  
+#  # To make things easier for plotting later, convert the matrices to rasters
+#  res_data <- rasterize(res_data)
+#  abs_data <- rasterize(abs_data)
 #  
 #  # Setup the details for our transition function
-#  tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
-#             dir = 8, # Directions of the transitions. Either 4 or 8.
-#             sym = TRUE) # Is the function symmetric?
+#  rw_model <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+#                   dir = 8, # Directions of the transitions. Either 4 or 8.
+#                   sym = TRUE) # Is the function symmetric?
 #  
 #  # Create a samc object using the resistance and absorption data. We use the
 #  # recipricol of the arithmetic mean for calculating the transition matrix. Note,
 #  # the input data here are matrices, not RasterLayers.
-#  samc_obj <- samc(res_data, abs_data, tr_args = tr)
+#  samc_obj <- samc(res_data, abs_data, model = rw_model)
 #  
 
 ## -----------------------------------------------------------------------------
@@ -52,10 +54,10 @@ options(max.print = 20)
 #  results_map <- map(samc_obj, results)
 #  str(results_map, max.level = 1) # max.level is to hide a lot of gory details
 #  
-#  # Conveniently, this is easy to turn into a RasterStack
-#  results_stack <- raster::stack(results_map)
+#  # A list of SpatRasters can be turned
+#  results_stack <- rast(results_map)
 #  
-#  # A caveat: RasterStacks cannot have numeric names, so it prepends an 'X'
+#  # Let's look at the names
 #  names(results_stack)
 #  
 #  # RasterStacks are convenient for a lot of different things, like processing the
@@ -63,7 +65,7 @@ options(max.print = 20)
 #  plot(results_stack, xlab = "x", ylab = "y", col = viridis(256))
 
 ## ---- max.print=5, fig.width = 6.5, out.width = '100%', dpi = 300, fig.align = "center"----
-#  # The results of indivudal time steps can be retrieved by either index or by name
+#  # The results of individual time steps can be retrieved by either index or by name
 #  results[[3]]
 #  results[["1000"]]
 #  
@@ -89,5 +91,4 @@ options(max.print = 20)
 #    dist_map <- map(samc_obj, dist)
 #    plot(dist_map, main = paste("Individual Location at Time", ts), xlab = "x", ylab = "y", col = viridis(256))
 #  }
-#  
 

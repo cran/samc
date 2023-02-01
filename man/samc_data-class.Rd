@@ -10,7 +10,7 @@ Contains the data fields used in the samc-class
 \section{Slots}{
 
 \describe{
-\item{\code{q}}{Q matrix}
+\item{\code{f}}{F matrix}
 
 \item{\code{t_abs}}{Total absorption}
 

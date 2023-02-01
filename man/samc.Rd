@@ -2,9 +2,9 @@
 % Please edit documentation in R/samc.R
 \name{samc}
 \alias{samc}
-\alias{samc,TransitionLayer,RasterLayer,RasterLayer,missing-method}
-\alias{samc,TransitionLayer,RasterLayer,missing,missing-method}
+\alias{samc,SpatRaster,SpatRaster,SpatRaster,list-method}
 \alias{samc,RasterLayer,RasterLayer,RasterLayer,list-method}
+\alias{samc,SpatRaster,SpatRaster,missing,list-method}
 \alias{samc,RasterLayer,RasterLayer,missing,list-method}
 \alias{samc,matrix,matrix,matrix,list-method}
 \alias{samc,matrix,matrix,missing,list-method}
@@ -12,32 +12,32 @@
 \alias{samc,matrix,missing,missing,missing-method}
 \title{Create an samc object}
 \usage{
-samc(data, absorption, fidelity, tr_args)
+samc(data, absorption, fidelity, model)
 
-\S4method{samc}{TransitionLayer,RasterLayer,RasterLayer,missing}(data, absorption, fidelity)
+\S4method{samc}{SpatRaster,SpatRaster,SpatRaster,list}(data, absorption, fidelity, model)
 
-\S4method{samc}{TransitionLayer,RasterLayer,missing,missing}(data, absorption)
+\S4method{samc}{RasterLayer,RasterLayer,RasterLayer,list}(data, absorption, fidelity, model)
 
-\S4method{samc}{RasterLayer,RasterLayer,RasterLayer,list}(data, absorption, fidelity, tr_args)
+\S4method{samc}{SpatRaster,SpatRaster,missing,list}(data, absorption, model)
 
-\S4method{samc}{RasterLayer,RasterLayer,missing,list}(data, absorption, tr_args)
+\S4method{samc}{RasterLayer,RasterLayer,missing,list}(data, absorption, model)
 
-\S4method{samc}{matrix,matrix,matrix,list}(data, absorption, fidelity, tr_args)
+\S4method{samc}{matrix,matrix,matrix,list}(data, absorption, fidelity, model)
 
-\S4method{samc}{matrix,matrix,missing,list}(data, absorption, tr_args)
+\S4method{samc}{matrix,matrix,missing,list}(data, absorption, model)
 
 \S4method{samc}{dgCMatrix,missing,missing,missing}(data)
 
 \S4method{samc}{matrix,missing,missing,missing}(data)
 }
 \arguments{
-\item{data}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}} or Matrix package dgCMatrix sparse matrix.}
+\item{data}{A \code{\link[terra]{SpatRaster-class}} or \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}} or Matrix package dgCMatrix sparse matrix.}
 
-\item{absorption}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}}
+\item{absorption}{A \code{\link[terra]{SpatRaster-class}} or \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}}
 
-\item{fidelity}{A \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}}
+\item{fidelity}{A \code{\link[terra]{SpatRaster-class}} or \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}}
 
-\item{tr_args}{A list with args for constructing a transition matrix.}
+\item{model}{A list with args for constructing a transition matrix.}
 }
 \value{
 A \code{\link{samc-class}} object
@@ -51,48 +51,35 @@ multiple options for creating this object.
 
 \strong{Option 1: Raster or Matrix Maps}
 
-\emph{\code{samc(data = matrix, absorption = matrix, fidelity = matrix, tr_args = list())}}
+\emph{\code{samc(data = matrix, absorption = matrix, fidelity = matrix, model = list())}}
 
-\emph{\code{samc(data = RasterLayer, absorption = RasterLayer, fidelity = RasterLayer, tr_args = list())}}
+\emph{\code{samc(data = SpatRaster, absorption = SpatRaster, fidelity = SpatRaster, model = list())}}
+
+\emph{\code{samc(data = RasterLayer, absorption = RasterLayer, fidelity = RasterLayer, model = list())}}
 
 The \code{\link{samc-class}} object can be created from a combination of
 resistance (or conductance), absorption, and fidelity data. These different landscape data
-inputs must be the same type (a matrix or RasterLayer), and have identical
+inputs must be the same type (a matrix, SpatRaster, or RasterLayer), and have identical
 properties, including dimensions, location of NA cells, and CRS (if using
-RasterLayers).
+raster inputs).
 
 The \code{data} and \code{absorption} inputs are always mandatory for this approach. The
-\code{fidelity} input is optional. If the \code{fidelity} input is not provided, then it it
+\code{fidelity} input is optional. If the \code{fidelity} input is not provided, then it
 is assumed that there is no site fidelity (i.e., individuals will always move
 to an adjacent cell each time step).
 
-The \code{tr_args} parameter is mandatory. It used when calculating the values for
-the transition matrix. Internally, is used in the \code{\link[gdistance]{transition}}
-function in the gdistance package to create the transition matrix. \code{tr_args}
-must be constructed as list with a transition function, the number of directions (4 or 8),
-and if the transition function is symmetric (TRUE or FALSE). Here is the template:
+The \code{model} parameter is mandatory. It is used when calculating the values for
+the transition matrix. \code{model} must be constructed as a list with a
+transition function, the number of directions (4 or 8), and if the transition
+function is symmetric (TRUE or FALSE; currently not used). Here is the template:
 \code{list(fun = `function`, dir = `numeric`, sym = `logical`)}
 
-\strong{Option 2: TransitionLayer}
+When using raster inputs, SpatRaster objects (from the terra package) are recommended
+over RasterLayer objects (from the raster package). Internally, samc is using SpatRaster
+objects, which means RasterLayer objects are being converted to SpatRaster objects,
+which is a source of memory inefficiency.
 
-\emph{\code{samc(data = TransitionLayer, absorption = RasterLayer, fidelity = RasterLayer)}}
-
-The \code{data} parameter can be a \code{TransitionLayer} object created using the gdistance package.
-In this case the \code{absorption} parameter is mandatory and should be a RasterLayer
-that has identical properties to the RasterLayer used to create the TransitionLayer
-object. The \code{fidelity} parameter is optional and has the same requirements as
-the \code{absorption} parameter. The \code{\link{check}} function can be used to
-verify these requirements.
-
-The advantage of this approach is that it offers slightly more flexibility than
-the first option. Namely, it's useful if the TransitionLayer needs additional
-modifications before it is normalized with the absorption and fidelity inputs.
-The disadvantage compared to the first option is that samc() cannot detect certain
-issues when the TransitionLayer is manually created and modified. So if users
-do not need to manually modify the TransitionLayer, then the first option for
-creating a samc object is recommended.
-
-\strong{Option 3: P Matrix}
+\strong{Option 2: P Matrix}
 
 \emph{\code{samc(data = matrix)}}
 
@@ -106,7 +93,7 @@ must meet the following requirements:
   \item The number of rows must equal the number of columns (a square matrix)
   \item Total absorption must be a single column on the right-hand side of the matrix
   \item At the bottom of the matrix, there must be a row filled with 0's except
-  for last element (bottom-right of the matrix diagonal), which must be set to 1
+  for the last element (bottom-right of the matrix diagonal), which must be set to 1
   \item Every disconnected region of the matrix must have at least one non-zero
   absorbing value
   \item Each row must sum to 1
@@ -133,13 +120,18 @@ that represents a disconnected graph, which can lead to the \code{cond_passage()
 function crashing. In terms of raster/matrix inputs, a disconnected graph
 occurs when one or more pixels/cells are unreachable from other pixels/cells
 due to the presence of a full barrier made up of NA values. In a raster, these
-may be obvious as islands, but can be as inconspicuous as a rogue isolated
+may be obvious as islands but can be as inconspicuous as a rogue isolated
 pixel. There may be other currently unknown situations that lead to unsolvable
 metrics.
 
-Future work is planned towards identifying these issues during creation of the
-samc-class object and handling them appropriately to prevent inadvertent
+Future work is planned towards identifying these issues during the creation of
+the samc-class object and handling them appropriately to prevent inadvertent
 crashes.
+
+\strong{Version 3 Changes}
+
+Support for creating samc-class objects from TransitionLayer objects was removed
+so that the package is not dependent on gdistance.
 
 \strong{Version 2 Changes}
 
@@ -151,37 +143,37 @@ code will have to be updated to the new samc() function structure in order to wo
 # "Load" the data. In this case we are using data built into the package.
 # In practice, users will likely load raster data using the raster() function
 # from the raster package.
-res_data <- samc::ex_res_data
-abs_data <- samc::ex_abs_data
-occ_data <- samc::ex_occ_data
+res_data <- samc::example_split_corridor$res
+abs_data <- samc::example_split_corridor$abs
+init_data <- samc::example_split_corridor$init
 
 
 # Make sure our data meets the basic input requirements of the package using
 # the check() function.
 check(res_data, abs_data)
-check(res_data, occ_data)
+check(res_data, init_data)
 
-# Setup the details for our transition function
-tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
-           dir = 8, # Directions of the transitions. Either 4 or 8.
-           sym = TRUE) # Is the function symmetric?
+# Setup the details for a random-walk model
+rw_model <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+                 dir = 8, # Directions of the transitions. Either 4 or 8.
+                 sym = TRUE) # Is the function symmetric?
 
 
 # Create a `samc-class` object with the resistance and absorption data using
 # the samc() function. We use the recipricol of the arithmetic mean for
 # calculating the transition matrix. Note, the input data here are matrices,
 # not RasterLayers.
-samc_obj <- samc(res_data, abs_data, tr_args = tr)
+samc_obj <- samc(res_data, abs_data, model = rw_model)
 
 
-# Convert the occupancy data to probability of occurrence
-occ_prob_data <- occ_data / sum(occ_data, na.rm = TRUE)
+# Convert the initial state data to probabilities
+init_prob_data <- init_data / sum(init_data, na.rm = TRUE)
 
 
 # Calculate short- and long-term metrics using the analytical functions
-short_mort <- mortality(samc_obj, occ_prob_data, time = 50)
+short_mort <- mortality(samc_obj, init_prob_data, time = 50)
 short_dist <- distribution(samc_obj, origin = 3, time = 50)
-long_disp <- dispersal(samc_obj, occ_prob_data)
+long_disp <- dispersal(samc_obj, init_prob_data)
 visit <- visitation(samc_obj, dest = 4)
 surv <- survival(samc_obj)
 

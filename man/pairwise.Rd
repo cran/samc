@@ -47,20 +47,19 @@ and `dest` parameters for an analytical function and returns the results in a
 'long' format data.frame. This data.frame can then be reshaped into a pairwise
 matrix or 'wide' format data.frame using tools like the reshape2 or tidyr packages.
 
-This function is not intended to be used with other inputs such as `occ` or `time`
+This function is not intended to be used with other inputs such as `init` or `time`
 }
 \examples{
 library(samc)
 
 # Load example data
-res_data <- samc::ex_res_data
-abs_data <- samc::ex_abs_data
-occ_data <- samc::ex_occ_data
+res_data <- samc::example_split_corridor$res
+abs_data <- samc::example_split_corridor$abs
 
 
 # Create samc-class object
 samc_obj <- samc(res_data, abs_data,
-                 tr_args = list(fun = function(x) 1/mean(x), dir = 8, sym = TRUE))
+                 model = list(fun = function(x) 1/mean(x), dir = 8, sym = TRUE))
 
 # pairwise() example
 pw <- pairwise(cond_passage, samc_obj, origin = 1:4, dest = 5)

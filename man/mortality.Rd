@@ -14,7 +14,7 @@
 \alias{mortality,samc,ANY,missing,missing,missing-method}
 \title{Calculate mortality metrics}
 \usage{
-mortality(samc, occ, origin, dest, time)
+mortality(samc, init, origin, dest, time)
 
 \S4method{mortality}{samc,missing,missing,missing,numeric}(samc, time)
 
@@ -24,7 +24,7 @@ mortality(samc, occ, origin, dest, time)
 
 \S4method{mortality}{samc,missing,location,location,numeric}(samc, origin, dest, time)
 
-\S4method{mortality}{samc,ANY,missing,missing,numeric}(samc, occ, time)
+\S4method{mortality}{samc,ANY,missing,missing,numeric}(samc, init, time)
 
 \S4method{mortality}{samc,missing,missing,missing,missing}(samc)
 
@@ -34,16 +34,14 @@ mortality(samc, occ, origin, dest, time)
 
 \S4method{mortality}{samc,missing,location,location,missing}(samc, origin, dest)
 
-\S4method{mortality}{samc,ANY,missing,missing,missing}(samc, occ)
+\S4method{mortality}{samc,ANY,missing,missing,missing}(samc, init)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}
 
-\item{occ}{The initial state \eqn{\psi} of the Markov chain. If the \code{\link{samc-class}}
-objects was constructed using map inputs, then occ must be the same type of input
-(either \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}),
-and must have the same properties as initial map inputs (see the \code{\link{check}}
-function).}
+\item{init}{Sets the initial state \eqn{\psi} of the transients states. Input
+must be able to pass the \code{\link{check}} function when compared against
+the \code{\link{samc-class}} object. Can only contain positive finite values.}
 
 \item{origin}{A positive integer or character name representing transient state
 \eqn{\mathit{i}}. Corresponds to row \eqn{\mathit{i}} of matrix \eqn{\mathbf{P}}
@@ -67,7 +65,7 @@ See Details
 Calculates the probability of absorption at individual transient states.
 }
 \details{
-\eqn{\tilde{B}_t = (\sum_{n=0}^{t-1} Q^n) \tilde{R}}
+\eqn{\tilde{B}_t = \tilde{F} \tilde{R}}
 \itemize{
   \item \strong{mortality(samc, time)}
 
@@ -116,7 +114,7 @@ ordered named list containing a numeric value for each time step.
 
 \eqn{\psi^T \tilde{B}_t}
 \itemize{
-  \item \strong{mortality(samc, occ, time)}
+  \item \strong{mortality(samc, init, time)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the unconditional
 probability of absorption at transient state \eqn{\mathit{j}} within \eqn{\mathit{t}}
@@ -168,7 +166,7 @@ at transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{
 
 \eqn{\psi^T B}
 \itemize{
-  \item \strong{mortality(samc, occ)}
+  \item \strong{mortality(samc, init)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the unconditional
 probability of absorption at transient state \eqn{\mathit{j}} given an initial
@@ -190,37 +188,37 @@ performance vignette: \href{../doc/performance.html}{\code{vignette("performance
 # "Load" the data. In this case we are using data built into the package.
 # In practice, users will likely load raster data using the raster() function
 # from the raster package.
-res_data <- samc::ex_res_data
-abs_data <- samc::ex_abs_data
-occ_data <- samc::ex_occ_data
+res_data <- samc::example_split_corridor$res
+abs_data <- samc::example_split_corridor$abs
+init_data <- samc::example_split_corridor$init
 
 
 # Make sure our data meets the basic input requirements of the package using
 # the check() function.
 check(res_data, abs_data)
-check(res_data, occ_data)
+check(res_data, init_data)
 
-# Setup the details for our transition function
-tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
-           dir = 8, # Directions of the transitions. Either 4 or 8.
-           sym = TRUE) # Is the function symmetric?
+# Setup the details for a random-walk model
+rw_model <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+                 dir = 8, # Directions of the transitions. Either 4 or 8.
+                 sym = TRUE) # Is the function symmetric?
 
 
 # Create a `samc-class` object with the resistance and absorption data using
 # the samc() function. We use the recipricol of the arithmetic mean for
 # calculating the transition matrix. Note, the input data here are matrices,
 # not RasterLayers.
-samc_obj <- samc(res_data, abs_data, tr_args = tr)
+samc_obj <- samc(res_data, abs_data, model = rw_model)
 
 
-# Convert the occupancy data to probability of occurrence
-occ_prob_data <- occ_data / sum(occ_data, na.rm = TRUE)
+# Convert the initial state data to probabilities
+init_prob_data <- init_data / sum(init_data, na.rm = TRUE)
 
 
 # Calculate short- and long-term metrics using the analytical functions
-short_mort <- mortality(samc_obj, occ_prob_data, time = 50)
+short_mort <- mortality(samc_obj, init_prob_data, time = 50)
 short_dist <- distribution(samc_obj, origin = 3, time = 50)
-long_disp <- dispersal(samc_obj, occ_prob_data)
+long_disp <- dispersal(samc_obj, init_prob_data)
 visit <- visitation(samc_obj, dest = 4)
 surv <- survival(samc_obj)
 

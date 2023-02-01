@@ -12,30 +12,42 @@
 
 <meta name="author" content="Andrew Marx" />
 
-<meta name="date" content="2022-06-07" />
+<meta name="date" content="2023-01-31" />
 
 <title>Overview</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -53,55 +65,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -110,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -128,7 +146,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -142,13 +340,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Overview</h1>
 <h4 class="author">Andrew Marx</h4>
-<h4 class="date">2022-06-07</h4>
+<h4 class="date">2023-01-31</h4>
 
 
 
 <div id="background" class="section level2">
 <h2>Background</h2>
-<p>This package provides a series of functions for working with absorbing Markov chains. A Markov chain is a model consisting of multiple states and describes how transitions occur between these states. An absorbing Markov chain is a special kind of Markov chain where every state is a <em>transient state</em> that can eventually reach one or more <em>absorbing states</em>. Absorbing states are a special type of state that cannot be left. Absorbing Markov chains can be represented using a <span class="math inline">\(P\)</span> matrix with the following structure:</p>
+<p>This package provides a series of functions for working with
+absorbing Markov chains. A Markov chain is a model consisting of
+multiple states and describes how transitions occur between these
+states. An absorbing Markov chain is a special kind of Markov chain
+where every state is a <em>transient state</em> that can eventually
+reach one or more <em>absorbing states</em>. Absorbing states are a
+special type of state that cannot be left. Absorbing Markov chains can
+be represented using a <span class="math inline">\(P\)</span> matrix
+with the following structure:</p>
 <p><span class="math display">\[
 P =
 \begin{bmatrix}
@@ -157,60 +363,148 @@ Q &amp; R \\
 \end{bmatrix}
 \]</span> Where:</p>
 <ul>
-<li><span class="math inline">\(Q\)</span> is a matrix that describes the probability of transition between different transient states. <span class="math inline">\(Q_{i,j}\)</span> is the probability of transitioning from transient state <span class="math inline">\(i\)</span> to transient state <span class="math inline">\(j\)</span>. When <span class="math inline">\(i=j\)</span>, the transition probability is describing the probability that a transient state stays the same, or doesn’t transition to a different transient state.</li>
-<li><span class="math inline">\(R\)</span> is a matrix that describes the probability of transitioning from a transient state to an absorbing state. <span class="math inline">\(R_{i,k}\)</span> is the probability of transitioning from transient state <span class="math inline">\(i\)</span> to absorbing state <span class="math inline">\(k\)</span>.</li>
-<li><span class="math inline">\(0\)</span> is a matrix filled with zeros. The rows correspond to absorbing state <span class="math inline">\(k\)</span>, and the columns correspond to transient states <span class="math inline">\(j\)</span>. This represents that an absorbing state has a 0% probability of transitioning to a transient state</li>
-<li><span class="math inline">\(I\)</span> is an identity matrix where each row and column corresponds to the different absorbing states. The main diagonal is filled with ones, and everything else is set to zero. This matrix represents that absorbing state <span class="math inline">\(k\)</span> has a 100% probability of transitioning to itself (i.e., the state will never change).</li>
-<li>When combined together, <span class="math inline">\(\begin{bmatrix}0 &amp; I\end{bmatrix}\)</span> represents that once an absorbing state has been entered, it cannot be left for a transient state or a different absorbing state.</li>
+<li><span class="math inline">\(Q\)</span> is a matrix that describes
+the probability of transition between different transient states. <span class="math inline">\(Q_{i,j}\)</span> is the probability of
+transitioning from transient state <span class="math inline">\(i\)</span> to transient state <span class="math inline">\(j\)</span>. When <span class="math inline">\(i=j\)</span>, the transition probability is
+describing the probability that a transient state stays the same or
+doesn’t transition to a different transient state.</li>
+<li><span class="math inline">\(R\)</span> is a matrix that describes
+the probability of transitioning from a transient state to an absorbing
+state. <span class="math inline">\(R_{i,k}\)</span> is the probability
+of transitioning from transient state <span class="math inline">\(i\)</span> to absorbing state <span class="math inline">\(k\)</span>.</li>
+<li><span class="math inline">\(0\)</span> is a matrix filled with
+zeros. The rows correspond to absorbing states <span class="math inline">\(k\)</span>, and the columns correspond to
+transient states <span class="math inline">\(j\)</span>. This represents
+that an absorbing state has a 0% probability of transitioning to a
+transient state</li>
+<li><span class="math inline">\(I\)</span> is an identity matrix where
+each row and column corresponds to the different absorbing states. The
+main diagonal is filled with ones, and everything else is set to zero.
+This matrix represents that absorbing state <span class="math inline">\(k\)</span> has a 100% probability of transitioning
+to itself (i.e., the state will never change).</li>
+<li>When combined, <span class="math inline">\(\begin{bmatrix}0 &amp;
+I\end{bmatrix}\)</span> represents that once an absorbing state has been
+entered, it cannot be left for a transient state or a different
+absorbing state.</li>
 </ul>
 </div>
 <div id="the-samc-class" class="section level2">
 <h2>The <code>samc-class</code></h2>
-<p>The <code>samc-class</code> is used to manage the <span class="math inline">\(P\)</span> matrix and other information to help ensure that the calculations used by the rest of the package are used correctly. Creating an <code>samc-class</code> object is the mandatory first step in the package, and is created using the <code>samc()</code> utility function. When creating the <span class="math inline">\(P\)</span> matrix, <code>samc()</code> only treats the <span class="math inline">\(R\)</span> matrix portion as a single column containing the total absorption probability for each transient state. The <code>samc()</code> function has several parameters that provide a number of different options for constructing the <span class="math inline">\(P\)</span> matrix that is at the core of the <code>samc-class</code>.</p>
+<p>The <code>samc-class</code> is used to manage the <span class="math inline">\(P\)</span> matrix and other information to help
+ensure that the calculations used by the rest of the package are used
+correctly. Creating a <code>samc-class</code> object is the mandatory
+first step in the package, and is created using the <code>samc()</code>
+utility function. When creating the <span class="math inline">\(P\)</span> matrix, <code>samc()</code> only treats
+the <span class="math inline">\(R\)</span> matrix portion as a single
+column containing the total absorption probability for each transient
+state. The <code>samc()</code> function has several parameters that
+provide many different options for constructing the <span class="math inline">\(P\)</span> matrix that is at the core of the
+<code>samc-class</code>.</p>
 <div id="option-1-maps" class="section level4">
 <h4>Option 1: Maps</h4>
-<p>The first option is using a map of resistance (or conductance) and a map of total absorption with a list of transition arguments to calculate the transition probabilities between cells in the maps. There are certain requirements for these maps:</p>
+<p>The first option is to use a map of resistance (or conductance) and a
+map of total absorption with a list of transition arguments to calculate
+the transition probabilities between cells in the maps. There are
+certain requirements for these maps:</p>
 <ul>
-<li>They must be 2-dimensional matrices or <code>RasterLayer</code> objects. They have to be the same type.</li>
-<li>They must have the same dimensions (number of rows and columns).</li>
-<li><code>NA</code>s are allowed in the cells, but must match between the sets of data. I.e., if cell <code>[3, 6]</code> of the <em>resistance</em> data has a <code>NA</code> value, then cell <code>[3, 6]</code> of the <em>absorption</em> data must also have a <code>NA</code> value, and vice versa.</li>
+<li>They must be 2-dimensional matrices, <code>RasterLayer</code>, or
+<code>SpatRaster</code> objects. These different types cannot be
+mixed.</li>
+<li>All inputs must have the same dimensions (number of rows and
+columns).</li>
+<li><code>NA</code> is allowed in the cells, but must match between the
+sets of data. I.e., if cell <code>[3, 6]</code> of the
+<em>resistance</em> data has a <code>NA</code> value, then cell
+<code>[3, 6]</code> of the <em>absorption</em> data must also have a
+<code>NA</code> value and vice versa.</li>
 </ul>
-<p>If using <code>RasterLayer</code> objects, then additional conditions must be met:</p>
+<p>If using <code>SpatRaster</code> or <code>RasterLayer</code> objects,
+then additional conditions must be met:</p>
 <ul>
 <li>Both sets of data must have the same coordinate extents.</li>
-<li>Both sets of data must use the same coordinate reference system (CRS).</li>
+<li>Both sets of data must use the same coordinate reference system
+(CRS).</li>
 </ul>
-<p>An optional fidelity map may be provided. This map would represent the probability of no transition between timesteps (e.g., no movement). By default, the package treats all cells in the maps the same and uses a value of <code>0</code> for fidelity. If used, the fidelity map must meet all of the same requirements listed above for the other map inputs.</p>
+<p>An optional fidelity map may be provided. This map would represent
+the probability of no transition between timesteps (e.g., no movement).
+By default, the package treats all cells in the maps the same and uses a
+value of <code>0</code> for fidelity. If used, the fidelity map must
+meet all of the same requirements listed above for the other map
+inputs.</p>
 </div>
-<div id="option-2-transitionlayer" class="section level4">
-<h4>Option 2: TransitionLayer</h4>
-<p>A <code>TransitionLayer</code> object can be manually created using the gdistance package and can be further modified before being supplied as an input to <code>samc()</code>, allowing for additional flexibility in constructing the <span class="math inline">\(P\)</span> matrix. While the package is able to check for some potential issues in the <code>TranstionLayer</code>, it is still possible to accidentally modify the <code>TransitionLayer</code> in a way that causes issues that cannot be detected by the package, so extra care must be taken by the user.</p>
-<p>This option requires a <code>RasterLayer</code> map of total absorption. This map must match the <code>RasterLayer</code> that was used to create the <code>TransitionLayer</code> using the same conditions as <em>Option 1</em> (above).</p>
-<p>This option also allows the input of a <code>RasterLayer</code> fidelity map with the same requirements as <em>Option 1</em> (above).</p>
+<div id="option-2-p-matrix" class="section level4">
+<h4>Option 2: P Matrix</h4>
+<p>The second option for using this package is to directly supply a
+<span class="math inline">\(P\)</span> matrix. The <span class="math inline">\(P\)</span> matrix can be provided either as a
+regular matrix or a <code>dgCmatrix</code>, which is a sparse matrix
+object available through the Matrix package. The <span class="math inline">\(R\)</span> portion of the <span class="math inline">\(P\)</span> matrix must be a single column that
+represents the total absorption probability for each transient
+state.</p>
+<p>The advantage of this approach is total flexibility. The disadvantage
+is that the <span class="math inline">\(P\)</span> matrix can be created
+with certain properties that would lead to crashes, and the package is
+unable to detect all of them at this time. The other disadvantage is
+that the package cannot map the results back to anything for
+visualization purposes.</p>
 </div>
-<div id="option-3-p-matrix" class="section level4">
-<h4>Option 3: P Matrix</h4>
-<p>The Third option for using this package is to directly supply a <span class="math inline">\(P\)</span> matrix. The <span class="math inline">\(P\)</span> matrix can be provided either as a regular matrix or a <code>dgCmatrix</code>, which is a sparse matrix object available through the Matrix package. The <span class="math inline">\(R\)</span> portion of the <span class="math inline">\(P\)</span> matrix must be a single column which represents the total absorption probability for each transient state.</p>
-<p>The advantage of this approach is total flexibility. The disadvantage is that the <span class="math inline">\(P\)</span> matrix can be created with certain properties that would lead to crashes, and the package is unable to detect all of them at this time. The other disadvantage is that the package cannot map the results back to anything for visualization purposes.</p>
-</div>
-<div id="option-4-igraph" class="section level4">
-<h4>Option 4: igraph</h4>
-<p>A future version of the package will incorporate igraph support for graph based inputs. This will provide the flexibility of a custom <span class="math inline">\(P\)</span> matrix, but will generally be more user-friendly to construct, be able to perform more thorough data checking to avoid issues in the <span class="math inline">\(P\)</span> matrix, and allow for mapping the results back to a graph for visualization purposes.</p>
+<div id="option-3-igraph" class="section level4">
+<h4>Option 3: igraph</h4>
+<p>A future version of the package will incorporate igraph support for
+graph-based inputs. This will provide the flexibility of a custom <span class="math inline">\(P\)</span> matrix, but will generally be more
+user-friendly to construct, be able to perform more thorough data
+checking to avoid issues in the <span class="math inline">\(P\)</span>
+matrix, and allow for mapping the results back to a graph for
+visualization purposes.</p>
 </div>
 </div>
 <div id="utility-functions" class="section level2">
 <h2>Utility Functions</h2>
-<p>In addition to the <code>samc()</code> function, the package has other utility functions that users might find helpful:</p>
+<p>In addition to the <code>samc()</code> function, the package has
+other utility functions that users might find helpful:</p>
 <ul>
-<li>The <code>check()</code> function is used to check that input map data meets the data requirements outlined above. It can be used to compare two <code>RasterLayer</code> objects, two <code>matrix</code> objects, or check either a <code>RasterLayer</code> or a <code>matrix</code> against an already created <code>samc-class</code> object. It can also be used with a <code>RasterStack</code> to check all the layers in the stack against one another.</li>
-<li>The <code>map()</code> function is used to simplify mapping vector results based on input maps and returns a <code>RasterLayer</code>. This is provided because R handles matrices and raster layers somewhat differently when reading and writing vector data, which can cause users to map the data incorrectly if they aren’t careful. It also handles mapping with NA values, another potential source of error.</li>
-<li>The <code>locate()</code> function is used to get cell numbers for use as <code>origin</code> and <code>dest</code> values in various analytical function arguments. This function should be used instead of <code>cellFromXY()</code> in the raster package because <code>cellFromXY()</code> cell numbers do not necessarily correspond to cell numbers in the samc package (the samc package does not assign cell numbers to <code>NA</code> cells, whereas the raster package does). The <code>locate()</code> function can be used to return a <code>RasterLayer</code> with the cell numbers encoded as cell values by simply excluding the <code>xy</code> argument.</li>
-<li>The <code>pairwise()</code> function is provided to easily and efficiently run specific metrics for all the pairwise combinations of start and end locations.</li>
+<li>The <code>check()</code> function is used to check that input map
+data meets the data requirements outlined above. It can be used to
+compare two <code>SpatRaster</code> objects, two
+<code>RasterLayer</code> objects, two <code>matrix</code> objects, or
+check either a <code>SpatRaster</code>, <code>RasterLayer</code>, or a
+<code>matrix</code> against an already created <code>samc-class</code>
+object. It can also be used with a multilayer <code>SpatRaster</code> or
+a <code>RasterStack</code> to check all the layers in the stack against
+one another.</li>
+<li>The <code>map()</code> function is used to simplify mapping vector
+results based on input maps and returns a object with the same data type
+that was used to create the <code>samc-class</code> object. This is
+provided because R handles matrices and raster layers somewhat
+differently when reading and writing vector data, which can cause users
+to map the data incorrectly if they aren’t careful. It also handles
+mapping with <code>NA</code> values, another potential source of
+error.</li>
+<li>The <code>locate()</code> function is used to get cell numbers for
+use as <code>origin</code> and <code>dest</code> values in various
+analytical function arguments. This function should be used instead of
+<code>cellFromXY()</code> in the raster or terra packages because
+<code>cellFromXY()</code> cell numbers do not necessarily correspond to
+cell numbers in the samc package (the samc package does not assign cell
+numbers to <code>NA</code> cells, whereas other packages do). The
+<code>locate()</code> function can be used to return a map with the cell
+numbers encoded as cell values by simply excluding the <code>xy</code>
+argument. In this case, the map will have the same class type as the
+inputs to <code>samc()</code></li>
+<li>The <code>pairwise()</code> function is provided to easily and
+efficiently run specific metrics for all the pairwise combinations of
+start and end locations.</li>
 </ul>
 </div>
 <div id="analytical-functions" class="section level2">
 <h2>Analytical Functions</h2>
-<p>The package implements functions for the formulas provided in Table 1 of Fletcher et al. (<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/ele.13333">2019</a>), as well as other new ones since that publication. Many of the formulas are related conceptually, and are grouped together into single functions with multiple parameter signatures to reduce the number of unique function names needed. Note that the descriptions assume <span class="math inline">\(\psi\)</span> contains probabilities (see above). The following descriptions were written in an ecological context; the function reference pages provide mathematically formal descriptions.</p>
+<p>The package implements functions for the formulas provided in Table 1
+of Fletcher et al. (<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/ele.13333">2019</a>),
+as well as other new ones since that publication. Many of the formulas
+are related conceptually and are grouped into single functions with
+multiple parameter signatures to reduce the number of unique function
+names needed. Note that the descriptions assume <span class="math inline">\(\psi\)</span> contains probabilities (see above).
+The following descriptions were written in an ecological context; the
+function reference pages provide mathematically formal descriptions.</p>
 <table>
 <colgroup>
 <col width="30%" />
@@ -228,27 +522,32 @@ Q &amp; R \\
 <tr class="odd">
 <td align="left"><code>absorption()</code></td>
 <td align="left"><span class="math inline">\(A = F R\)</span></td>
-<td align="left">Probability of an individual experiencing a specific type of mortality</td>
+<td align="left">Probability of an individual experiencing a specific
+type of mortality</td>
 </tr>
 <tr class="even">
 <td align="left"></td>
 <td align="left"><span class="math inline">\(\psi^T A\)</span></td>
-<td align="left">Probability of an individual experiencing a specific type of mortality, regardless of initial location</td>
+<td align="left">Probability of an individual experiencing a specific
+type of mortality, given an initial state <span class="math inline">\(\psi\)</span></td>
 </tr>
 <tr class="odd">
 <td align="left"><code>cond_passage()</code></td>
-<td align="left"><span class="math inline">\(\tilde{t} = \tilde{B}_j^{-1}\tilde{F}\tilde{B}_j{\cdot}1\)</span></td>
+<td align="left"><span class="math inline">\(\tilde{t} =
+\tilde{B}_j^{-1}\tilde{F}\tilde{B}_j{\cdot}1\)</span></td>
 <td align="left">Mean first conditional passage time</td>
 </tr>
 <tr class="even">
 <td align="left"><code>dispersal()</code></td>
 <td align="left"><span class="math inline">\(\tilde{D}_{jt}=({\sum}_{n=0}^{t-1}\tilde{Q}^n)\tilde{q}_j\)</span></td>
-<td align="left">Probability of an individual visiting a location, if starting at any other location, before or at time <em>t</em></td>
+<td align="left">Probability of an individual visiting a location, if
+starting at any other location, before or at time <em>t</em></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
 <td align="left"><span class="math inline">\(\psi^T\tilde{D}_{jt}\)</span></td>
-<td align="left">Probability of an individual visiting a location, before or at time <em>t</em>, regardless of initial location</td>
+<td align="left">Probability of an individual visiting a location,
+before or at time <em>t</em>, given an initial state <span class="math inline">\(\psi\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
@@ -258,37 +557,47 @@ Q &amp; R \\
 <tr class="odd">
 <td align="left"></td>
 <td align="left"><span class="math inline">\(\psi^TD\)</span></td>
-<td align="left">Probability of an individual visiting a location, regardless of initial location</td>
+<td align="left">Probability of an individual visiting a location, given
+an initial state <span class="math inline">\(\psi\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><code>distribution()</code></td>
 <td align="left"><span class="math inline">\(Q^t\)</span></td>
-<td align="left">Probability of an individual being at a location at time <em>t</em></td>
+<td align="left">Probability of an individual being at a location at
+time <em>t</em></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
 <td align="left"><span class="math inline">\(\psi^TQ^t\)</span></td>
-<td align="left">Probability of an individual being at a location at time <em>t</em>, regardless of initial location</td>
+<td align="left">Probability of an individual being at a location at
+time <em>t</em>, given an initial state <span class="math inline">\(\psi\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><code>mortality()</code></td>
-<td align="left"><span class="math inline">\(\tilde{B}_t = (\sum_{n=0}^{t-1} Q^n) \tilde{R}\)</span></td>
-<td align="left">Probability of an individual experiencing mortality at a location before or at time <em>t</em></td>
+<td align="left"><span class="math inline">\(\tilde{B}_t =
+(\sum_{n=0}^{t-1} Q^n) \tilde{R}\)</span></td>
+<td align="left">Probability of an individual experiencing mortality at
+a location before or at time <em>t</em></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left"><span class="math inline">\(\psi^T \tilde{B}_t\)</span></td>
-<td align="left">Probability of an individual experiencing mortality at a location, before or at time <em>t</em>, regardless of initial location</td>
+<td align="left"><span class="math inline">\(\psi^T
+\tilde{B}_t\)</span></td>
+<td align="left">Probability of an individual experiencing mortality at
+a location, before or at time <em>t</em>, given an initial state <span class="math inline">\(\psi\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left"><span class="math inline">\(B = F \tilde{R}\)</span></td>
-<td align="left">Probability of an individual experiencing mortality at a location</td>
+<td align="left"><span class="math inline">\(B = F
+\tilde{R}\)</span></td>
+<td align="left">Probability of an individual experiencing mortality at
+a location</td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
 <td align="left"><span class="math inline">\(\psi^T B\)</span></td>
-<td align="left">Probability of an individual experiencing mortality at a location, regardless of initial location</td>
+<td align="left">Probability of an individual experiencing mortality at
+a location, given an initial state <span class="math inline">\(\psi\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><code>survival()</code></td>
@@ -298,43 +607,86 @@ Q &amp; R \\
 <tr class="odd">
 <td align="left"></td>
 <td align="left"><span class="math inline">\({\psi}^Tz\)</span></td>
-<td align="left">Overall life expectancy, regardless of initial location</td>
+<td align="left">Overall life expectancy, given an initial state <span class="math inline">\(\psi\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><code>visitation()</code></td>
-<td align="left"><span class="math inline">\(F = (I-Q)^{-1}\)</span></td>
-<td align="left">Expected number of times an individual visits a location</td>
+<td align="left"><span class="math inline">\(\tilde{F}_t =
+\sum_{n=0}^{t-1} Q^n\)</span></td>
+<td align="left">Expected number of times an individual visits a
+location before or at time <em>t</em></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><span class="math inline">\({\psi}^T
+\tilde{F}_t\)</span></td>
+<td align="left">Expected number of times an individual visits a
+location before or at time <em>t</em>, given an initial state <span class="math inline">\(\psi\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><span class="math inline">\(F =
+(I-Q)^{-1}\)</span></td>
+<td align="left">Expected number of times an individual visits a
+location</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><span class="math inline">\({\psi}^T F\)</span></td>
+<td align="left">Expected number of times an individual visits a
+location, given an initial state <span class="math inline">\(\psi\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>Depending on the combination of inputs used, a function might return a single value, a vector, a matrix, or a list. In some cases, the calculations will be impractical with sufficiently large landscape datasets due to memory and other performance constraints. To work around this, many equations have multiple associated function signatures that allow users to calculate individual portions of the result rather than the entire result. This opens up multiple optimizations that makes calculating many of the metrics more practical. More specific details about performance considerations can be found in the <a href="performance.html">Performance</a> vignette.</p>
+<p>Depending on the combination of inputs used, a function might return
+a single value, a vector, a matrix, or a list. In some cases, the
+calculations will be impractical with sufficiently large landscape
+datasets due to memory and other performance constraints. To work around
+this, many equations have multiple associated function signatures that
+allow users to calculate individual portions of the result rather than
+the entire result. This opens up multiple optimizations that make
+calculating many of the metrics more practical. More specific details
+about performance considerations can be found in the <a href="performance.html">Performance</a> vignette.</p>
 <div id="initial-state-data" class="section level4">
 <h4>Initial State Data</h4>
-<p>Several of the analytical functions allow the input of an initial state <span class="math inline">\(\psi\)</span> for the Markov chain via the <code>occ</code> parameter. The descriptions for these analytical functions assume that values in <span class="math inline">\(\psi\)</span> sum to one. When this is the case, <span class="math inline">\(\psi_i\)</span> represents the probability that the Markov chain starts in transient state <span class="math inline">\(i\)</span>.</p>
-<p>When the values in <span class="math inline">\(\psi\)</span> sum to a value other than one, care must be taken in the interpretation of the results. For example, <span class="math inline">\(\psi\)</span> could be used to represent a population of individuals where <span class="math inline">\(\psi_i\)</span> represents the number of individuals that start in transient state <span class="math inline">\(i\)</span>. In this case, the results of the functions using <span class="math inline">\(\psi\)</span> aren’t probabilities, but rather the expected number of individuals.</p>
+<p>Several of the analytical functions allow the input of an initial
+state <span class="math inline">\(\psi\)</span> for the Markov chain via
+the <code>init</code> parameter. The descriptions for these analytical
+functions assume that values in <span class="math inline">\(\psi\)</span> sum to one. When this is the case,
+<span class="math inline">\(\psi_i\)</span> represents the probability
+that the Markov chain starts in transient state <span class="math inline">\(i\)</span>.</p>
+<p>When the values in <span class="math inline">\(\psi\)</span> sum to a
+value other than one, care must be taken in the interpretation of the
+results. For example, <span class="math inline">\(\psi\)</span> could be
+used to represent a population of individuals where <span class="math inline">\(\psi_i\)</span> represents the number of
+individuals that start in transient state <span class="math inline">\(i\)</span>. In this case, the results of the
+functions using <span class="math inline">\(\psi\)</span> aren’t
+probabilities, but rather the expected number of individuals.</p>
 </div>
 </div>
 <div id="built-in-example-data" class="section level2">
 <h2>Built-in Example Data</h2>
-<p>The package includes built-in example map data. Some of this data was used to create the figures in the SAMC paper, and is used in numerous package tutorials. They are:</p>
+<p>The package includes built-in example map data. Some of this data was
+used to create the figures in the SAMC paper and is used in numerous
+package tutorials.</p>
 <ul>
-<li><code>ex_res_data</code>: A matrix with landscape resistance data.</li>
-<li><code>ex_abs_data</code>: A matrix with landscape absorption (mortality) data.</li>
-<li><code>ex_occ_data</code>: A matrix with landscape occupancy data.</li>
+<li><code>example_split_corridor</code>: A list with three matrices
+<ul>
+<li><code>res</code>: A matrix with landscape resistance data.</li>
+<li><code>abs</code>: A matrix with landscape absorption (mortality)
+data.</li>
+<li><code>init</code>: A matrix with initial starting locations.</li>
+</ul></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(samc<span class="sc">::</span>ex_res_data)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(samc<span class="sc">::</span>ex_abs_data)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(samc<span class="sc">::</span>ex_occ_data)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">raster</span>(samc<span class="sc">::</span>ex_res_data, <span class="at">xmn =</span> <span class="dv">1</span>, <span class="at">xmx =</span> <span class="fu">ncol</span>(samc<span class="sc">::</span>ex_res_data), <span class="at">ymn =</span> <span class="dv">1</span>, <span class="at">ymx =</span> <span class="fu">nrow</span>(samc<span class="sc">::</span>ex_res_data)),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Example Resistance Data&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">256</span>))</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">raster</span>(samc<span class="sc">::</span>ex_abs_data, <span class="at">xmn =</span> <span class="dv">1</span>, <span class="at">xmx =</span> <span class="fu">ncol</span>(samc<span class="sc">::</span>ex_abs_data), <span class="at">ymn =</span> <span class="dv">1</span>, <span class="at">ymx =</span> <span class="fu">nrow</span>(samc<span class="sc">::</span>ex_abs_data)),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Example Absorption Data&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">256</span>))</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">raster</span>(samc<span class="sc">::</span>ex_occ_data, <span class="at">xmn =</span> <span class="dv">1</span>, <span class="at">xmx =</span> <span class="fu">ncol</span>(samc<span class="sc">::</span>ex_occ_data), <span class="at">ymn =</span> <span class="dv">1</span>, <span class="at">ymx =</span> <span class="fu">nrow</span>(samc<span class="sc">::</span>ex_occ_data)),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Example Occupancy Data&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">256</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(samc<span class="sc">::</span>example_split_corridor)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>res_data <span class="ot">&lt;-</span> samc<span class="sc">::</span>example_split_corridor<span class="sc">$</span>res</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>abs_data <span class="ot">&lt;-</span> samc<span class="sc">::</span>example_split_corridor<span class="sc">$</span>abs</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>init_data <span class="ot">&lt;-</span> samc<span class="sc">::</span>example_split_corridor<span class="sc">$</span>init</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">rasterize</span>(res_data), <span class="at">main =</span> <span class="st">&quot;Example Resistance Data&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">256</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">rasterize</span>(abs_data), <span class="at">main =</span> <span class="st">&quot;Example Absorption Data&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">256</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">rasterize</span>(init_data), <span class="at">main =</span> <span class="st">&quot;Example Starting Location Data&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">256</span>))</span></code></pre></div>
 </div>
 
 

@@ -6,13 +6,13 @@ knitr::opts_chunk$set(
 
 library(samc)
 
-res_data <- samc::ex_res_data
-abs_data <- samc::ex_abs_data
-occ_data <- samc::ex_occ_data
+res_data <- samc::example_split_corridor$res
+abs_data <- samc::example_split_corridor$abs
+init_data <- samc::example_split_corridor$init
 
-tr <- list(fun = function(x) 1/mean(x), dir = 8, sym = TRUE)
+rw_model <- list(fun = function(x) 1/mean(x), dir = 8, sym = TRUE)
 
-samc_obj <- samc(res_data, abs_data, tr_args = tr)
+samc_obj <- samc(res_data, abs_data, model = rw_model)
 
 ## -----------------------------------------------------------------------------
 # Assume samc_obj was created using samc()

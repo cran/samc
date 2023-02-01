@@ -12,62 +12,41 @@ if (!all(sapply(required, requireNamespace, quietly = TRUE))) {
 do.call(knitr::read_chunk, list(path = "scripts/example-maze.R"))
 
 ## ----include = FALSE----------------------------------------------------------
-library(samc)
 library(raster)
+library(terra)
 library(gdistance)
+library(samc)
 library(viridisLite)
 plot_maze <- function(map, title, colors) {
   # start = 1 (top left), finish = last element (bottom right)
-  sf <- xyFromCell(map, c(1, length(map)))
+  sf <- terra::xyFromCell(map, c(1, ncell(map)))
 
-  plot(map, main = title, col = colors, axes = FALSE, box = FALSE, asp = 1)
-  plot(rasterToPolygons(map), border = 'black', lwd = 1, add = TRUE)
+  plot(map, main = title, col = colors, axes = FALSE, asp = 1)
+  plot(as.polygons(map, dissolve = FALSE), border = 'black', lwd = 1, add = TRUE)
   points(sf, pch = c('S', 'F'), cex = 1, font = 2)
 }
 # A simple color palette with 2 colors
 vir_col <- viridis(3)[2:3]
-maze_res = matrix(
-  c(1,0,0,0,0,1,1,1,1,1,1,0,1,0,0,0,0,1,0,1,
-    1,1,1,1,0,1,0,1,0,0,1,1,1,0,1,1,0,1,1,1,
-    1,0,0,1,0,1,0,1,1,0,1,0,1,0,0,1,0,0,1,0,
-    1,1,0,0,0,1,0,0,0,0,0,0,1,1,0,1,0,1,1,1,
-    0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,0,0,0,1,
-    1,1,0,1,0,0,0,1,0,1,0,0,1,0,1,1,1,1,0,1,
-    0,0,0,0,0,1,0,0,0,1,1,0,1,1,1,0,0,1,0,1,
-    1,1,0,1,1,1,1,1,0,0,1,0,0,1,0,0,1,1,1,1,
-    0,1,0,1,0,0,0,1,1,1,1,1,0,1,1,0,1,0,1,0,
-    1,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,1,0,1,1,
-    0,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,1,0,0,1,
-    1,1,0,0,1,0,0,1,0,1,0,1,1,1,0,1,0,0,1,1,
-    0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,1,
-    0,0,0,0,1,0,0,1,1,1,0,1,0,1,1,1,0,0,1,1,
-    1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,0,0,1,1,0,
-    1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1,1,
-    1,1,1,1,0,1,0,0,0,1,1,0,1,1,0,1,1,1,1,0,
-    0,1,0,1,0,1,1,1,0,0,0,0,0,1,0,1,0,1,0,0,
-    0,0,0,1,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,
-    1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1),
-  nrow = 20, byrow = TRUE
-)
+maze_res <- samc::example_maze
 
-maze_res <- raster(maze_res, xmn = 0.5, xmx = ncol(maze_res) + 0.5, ymn = 0.5, ymx = nrow(maze_res) + 0.5)
+maze_res <- samc::rasterize(maze_res)
 maze_res[maze_res==0] <- NA # 0 makes the formatting cleaner above, but NA is needed for true barriers
 
 # Get info about the shortest path through the maze using gdistance
 lcd <- (function() {
   points <- xyFromCell(maze_res, c(1, 400))
 
-  tr <- transition(maze_res, function(x) 1/mean(x), 4)
+  tr <- transition(raster(maze_res), function(x) 1/mean(x), 4)
   tr <- geoCorrection(tr)
 
-  list(dist = costDistance(tr, points),
+  list(dist = gdistance::costDistance(tr, points),
        path = shortestPath(tr, points[1, ], points[2, ], output="SpatialLines"))
 })()
 
 # Basic maze layout
 plot_maze(maze_res, "Resistance", vir_col[1])
 lines(lcd$path, col = vir_col[2], lw = 3)
-# End of maze
+# End of the maze
 maze_finish <- maze_res * 0
 maze_finish[20, 20] <- 1
 
@@ -75,9 +54,9 @@ plot_maze(maze_finish, "Absorption", vir_col)
 tolerance = sqrt(.Machine$double.eps) # Default tolerance in functions like all.equal()
 
 print(tolerance)
-tr <- list(fun = function(x) 1/mean(x), dir = 4, sym = TRUE)
+rw_model <- list(fun = function(x) 1/mean(x), dir = 4, sym = TRUE)
 
-maze_samc <- samc(maze_res, maze_finish, tr_args = tr)
+maze_samc <- samc(maze_res, maze_finish, model = rw_model)
 
 maze_origin <- locate(maze_samc, data.frame(x = 1, y = 20))
 maze_dest <- locate(maze_samc, data.frame(x = 20, y = 1))
@@ -96,23 +75,26 @@ plot_maze(map(maze_samc, maze_visit), "Visits Per Cell", viridis(256))
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
 # Intersections determined using a moving window function
-ints_res <- focal(maze_res, w = matrix(c(NA, 1, NA, 1, 1, 1, NA, 1, NA), nrow = 3, ncol = 3), fun = function(x){sum(!is.na(x)) > 3}, pad = TRUE)
+ints_res <- focal(maze_res,
+                  w = matrix(c(NA, 1, NA, 1, 1, 1, NA, 1, NA), nrow = 3, ncol = 3),
+                  fun = function(x) {sum(!is.na(x)) > 3})
+
 ints_res[is.na(maze_res)] <- NA
 ints_res <- ints_res * 0.1
 
 plot_maze(ints_res, "Intersections", vir_col)
 
 ## -----------------------------------------------------------------------------
-ints_samc <- samc(maze_res, maze_finish, ints_res, tr_args = tr)
+ints_samc <- samc(maze_res, maze_finish, ints_res, model = rw_model)
 
 ## -----------------------------------------------------------------------------
 # Original results from Part 1
 survival(maze_samc)[maze_origin]
-cond_passage(maze_samc, maze_origin, maze_dest)
+cond_passage(maze_samc, origin = maze_origin, dest = maze_dest)
 
 # Results with fidelity at intersections
 survival(ints_samc)[maze_origin]
-cond_passage(ints_samc, maze_origin, maze_dest)
+cond_passage(ints_samc, origin = maze_origin, dest = maze_dest)
 
 ## -----------------------------------------------------------------------------
 ints_disp <- dispersal(ints_samc, origin = maze_origin)
@@ -160,7 +142,9 @@ plot_maze(map(maze_samc, maze_dist), "Location at t=201", viridis(256))
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
 # Dead ends
-ends_res <- focal(maze_res, w = matrix(c(NA, 1, NA, 1, 1, 1, NA, 1, NA), nrow = 3, ncol = 3), fun = function(x){sum(!is.na(x)) == 2}, pad = TRUE)
+ends_res <- focal(maze_res,
+                  w = matrix(c(NA, 1, NA, 1, 1, 1, NA, 1, NA), nrow = 3, ncol = 3),
+                  fun = function(x){sum(!is.na(x)) == 2})
 ends_res[is.na(maze_res)] <- NA
 ends_res <- ends_res * 9 + 1
 ends_res[20, 20] <- 1
@@ -168,16 +152,16 @@ ends_res[20, 20] <- 1
 plot_maze(ends_res, "Dead Ends", vir_col)
 
 ## -----------------------------------------------------------------------------
-ends_samc <- samc(ends_res, maze_finish, tr_args = tr)
+ends_samc <- samc(ends_res, maze_finish, model = rw_model)
 
 ## -----------------------------------------------------------------------------
 # Original results from Part 1
 survival(maze_samc)[maze_origin]
-cond_passage(maze_samc, maze_origin, maze_dest)
+cond_passage(maze_samc, origin = maze_origin, dest = maze_dest)
 
 # Results with dead ends
 survival(ends_samc)[maze_origin]
-cond_passage(ends_samc, maze_origin, maze_dest)
+cond_passage(ends_samc, origin = maze_origin, dest = maze_dest)
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center', message=FALSE----
 ends_disp <- dispersal(ends_samc, origin = maze_origin)
@@ -198,16 +182,16 @@ plot_maze(maze_traps, "Traps", vir_col)
 ## -----------------------------------------------------------------------------
 maze_abs_total <- maze_finish + maze_traps
 
-traps_samc <- samc(maze_res, maze_abs_total, tr_args = tr)
+traps_samc <- samc(maze_res, maze_abs_total, model = rw_model)
 
 ## -----------------------------------------------------------------------------
 # Original results from Part 1
 survival(maze_samc)[maze_origin]
-cond_passage(maze_samc, maze_origin, maze_dest)
+cond_passage(maze_samc, origin = maze_origin, dest = maze_dest)
 
 # Results with traps
 survival(traps_samc)[maze_origin]
-cond_passage(traps_samc, maze_origin, maze_dest)
+cond_passage(traps_samc, origin = maze_origin, dest = maze_dest)
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
 traps_surv <- survival(traps_samc)
@@ -243,7 +227,7 @@ traps_mort[maze_dest]
 names(maze_finish) <- "Finish"
 names(maze_traps) <- "Traps"
 
-traps_samc$abs_states <- raster::stack(maze_finish, maze_traps)
+traps_samc$abs_states <- c(maze_finish, maze_traps)
 
 ## ---- fig.show='hold', fig.width=7, fig.height=5, fig.align='center'----------
 traps_mort_dec <- mortality(traps_samc, origin = maze_origin)

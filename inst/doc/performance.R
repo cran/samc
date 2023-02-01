@@ -39,12 +39,6 @@ plot(xdat/1000, ydat,
 ## ----fig4, out.width = '100%', fig.align = "center", echo = FALSE-------------
 knitr::include_graphics("img/bt.png")
 
-## ----fig5, out.width = '100%', fig.align = "center", echo = FALSE-------------
-knitr::include_graphics("img/br.png")
-
 ## ----fig6, out.width = '100%', fig.align = "center", echo = FALSE-------------
 knitr::include_graphics("img/btt.png")
-
-## ----fig7, out.width = '100%', fig.align = "center", echo = FALSE-------------
-knitr::include_graphics("img/btr.png")
 

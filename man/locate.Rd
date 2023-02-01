@@ -15,10 +15,10 @@ locate(samc, xy)
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object}
 
-\item{xy}{Any valid input to the y argument of the \code{\link[raster]{extract}} function in the raster package.}
+\item{xy}{Any valid input to the y argument of the \code{\link[terra]{extract}} function in the raster package.}
 }
 \value{
-A RasterLayer or a vector
+A SpatRaster, RasterLayer, matrix, or a vector
 }
 \description{
 Get cell numbers from raster data
@@ -33,8 +33,8 @@ associated with this data are excluded from the P matrix. This causes issues
 trying to determine the cell numbers that should be used in analyses.
 
 The \code{\link{locate}} function operates more-or-less like the
-\code{\link[raster]{cellFromXY}} function in the raster package, but unlike
-\code{\link[raster]{cellFromXY}}, locate properly accounts for NA cells
+\code{\link[terra]{cellFromXY}} function in the raster package, but unlike
+\code{\link[terra]{cellFromXY}}, locate properly accounts for NA cells
 in identifying cell numbers from coordinate data.
 
 This function can also be used if the samc object was created from matrix inputs
@@ -45,31 +45,29 @@ that (1,1) is the bottom left corner.
 The xy parameter can also be excluded. In this case, the function returns a
 raster where the values of the cells contains the cell number.
 
-Internally, this function relies on the \code{\link[raster]{extract}} function
+Internally, this function relies on the \code{\link[terra]{extract}} function
 from the raster package, and any valid input for the y argument of that function
 is valid here.
 }
 \examples{
+library(terra)
 library(samc)
-library(raster)
 
 
 # Load example data
-res_data <- samc::ex_res_data
-abs_data <- samc::ex_abs_data
-occ_data <- samc::ex_occ_data
+res_data <- samc::example_split_corridor$res
+abs_data <- samc::example_split_corridor$abs
 
 
 # Create samc-class object
 samc_obj <- samc(res_data, abs_data,
-                 tr_args = list(fun = function(x) 1/mean(x), dir = 8, sym = TRUE))
+                 model = list(fun = function(x) 1/mean(x), dir = 8, sym = TRUE))
 
 
-# We can use locate() to return a raster with the cell numbers encoded as data
+# We can use locate() to return an object with the cell numbers encoded as data
 # in the cells
 cell_raster <- locate(samc_obj)
-plot(cell_raster)
-
+print(cell_raster)
 
 # We can use a variety of spatial inputs to get cell numbers using locate()
 # The simplest is a two-column data.frame

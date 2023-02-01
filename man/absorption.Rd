@@ -4,28 +4,23 @@
 \alias{absorption}
 \alias{absorption,samc,missing,missing-method}
 \alias{absorption,samc,missing,location-method}
-\alias{absorption,samc,RasterLayer,missing-method}
-\alias{absorption,samc,matrix,missing-method}
+\alias{absorption,samc,ANY,missing-method}
 \title{Calculate absorption metrics}
 \usage{
-absorption(samc, occ, origin)
+absorption(samc, init, origin)
 
 \S4method{absorption}{samc,missing,missing}(samc)
 
 \S4method{absorption}{samc,missing,location}(samc, origin)
 
-\S4method{absorption}{samc,RasterLayer,missing}(samc, occ)
-
-\S4method{absorption}{samc,matrix,missing}(samc, occ)
+\S4method{absorption}{samc,ANY,missing}(samc, init)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}
 
-\item{occ}{The initial state \eqn{\psi} of the Markov chain. If the \code{\link{samc-class}}
-objects was constructed using map inputs, then occ must be the same type of input
-(either \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}),
-and must have the same properties as initial map inputs (see the \code{\link{check}}
-function).}
+\item{init}{Sets the initial state \eqn{\psi} of the transients states. Input
+must be able to pass the \code{\link{check}} function when compared against
+the \code{\link{samc-class}} object. Can only contain positive finite values.}
 
 \item{origin}{A positive integer or character name representing transient state
 \eqn{\mathit{i}}. Corresponds to row \eqn{\mathit{i}} of matrix \eqn{\mathbf{P}}
@@ -62,7 +57,7 @@ at transient state \eqn{\mathit{i}}.
 
 \eqn{\psi^T A}
 \itemize{
-  \item \strong{absorption(samc, occ)}
+  \item \strong{absorption(samc, init)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_{k}} is the
 probability of absorption due to absorbing state \eqn{\mathit{k}} given an
@@ -80,37 +75,37 @@ performance vignette: \href{../doc/performance.html}{\code{vignette("performance
 # "Load" the data. In this case we are using data built into the package.
 # In practice, users will likely load raster data using the raster() function
 # from the raster package.
-res_data <- samc::ex_res_data
-abs_data <- samc::ex_abs_data
-occ_data <- samc::ex_occ_data
+res_data <- samc::example_split_corridor$res
+abs_data <- samc::example_split_corridor$abs
+init_data <- samc::example_split_corridor$init
 
 
 # Make sure our data meets the basic input requirements of the package using
 # the check() function.
 check(res_data, abs_data)
-check(res_data, occ_data)
+check(res_data, init_data)
 
-# Setup the details for our transition function
-tr <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
-           dir = 8, # Directions of the transitions. Either 4 or 8.
-           sym = TRUE) # Is the function symmetric?
+# Setup the details for a random-walk model
+rw_model <- list(fun = function(x) 1/mean(x), # Function for calculating transition probabilities
+                 dir = 8, # Directions of the transitions. Either 4 or 8.
+                 sym = TRUE) # Is the function symmetric?
 
 
 # Create a `samc-class` object with the resistance and absorption data using
 # the samc() function. We use the recipricol of the arithmetic mean for
 # calculating the transition matrix. Note, the input data here are matrices,
 # not RasterLayers.
-samc_obj <- samc(res_data, abs_data, tr_args = tr)
+samc_obj <- samc(res_data, abs_data, model = rw_model)
 
 
-# Convert the occupancy data to probability of occurrence
-occ_prob_data <- occ_data / sum(occ_data, na.rm = TRUE)
+# Convert the initial state data to probabilities
+init_prob_data <- init_data / sum(init_data, na.rm = TRUE)
 
 
 # Calculate short- and long-term metrics using the analytical functions
-short_mort <- mortality(samc_obj, occ_prob_data, time = 50)
+short_mort <- mortality(samc_obj, init_prob_data, time = 50)
 short_dist <- distribution(samc_obj, origin = 3, time = 50)
-long_disp <- dispersal(samc_obj, occ_prob_data)
+long_disp <- dispersal(samc_obj, init_prob_data)
 visit <- visitation(samc_obj, dest = 4)
 surv <- survival(samc_obj)
 
