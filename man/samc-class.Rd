@@ -82,9 +82,15 @@ be accessed and modified in the class:
 \describe{
 \item{\code{data}}{Data associated with different components of the P matrix}
 
+\item{\code{conv_cache}}{Convolution cache}
+
+\item{\code{model}}{List containing model info used to build the samc object}
+
 \item{\code{source}}{Information about the data source for the P matrix}
 
 \item{\code{map}}{Used to verify landscape inputs and mapping of vector data}
+
+\item{\code{crw_map}}{Matrix used to map location and direction to edges description}
 
 \item{\code{names}}{Names of the transient states}
 

@@ -1,15 +1,41 @@
-# samc 3.0.0
+# samc 3.1.0
+
+## New Features
+
+- Added support for the convolution algorithm described by Hughes et al. (2023, DOI: 10.1007/s10980-023-01619-9):
+  - This algorithm is very memory efficient and fast, making it a good choice in memory-constrained scenarios.
+  - Not currently supported for all metrics.
+  - Only supported with metrics that use the `init` parameter.
+  - Long-term metrics have indeterminate run times that can be either really fast or really slow, depending on the data used to setup the model.
+  - Does not currently support `NA` values in landscape data.
+  - Only relevant for creating `samc-class` objects from raster/map data; does not work with manually constructed transition matrices.
+- Added experimental support for correlated random-walk (CRW) models:
+  - Users should generally assume that the CRW walk requires an order of magnitude more memory than the default random-walk model.
+  - The current implementation relies on the von Mises distribution and allows users to specify a single global value for kappa as a turning probability. Future versions of the package will expand on this to support cell specific turning probabilities and directional bias.
+  - Currently only supports metrics with an `origin` input. It does not support the `init` or `dest` inputs. The `origin` input for CRW is a matrix with the cell number and a direction
+  - The `map()` function averages the results for all directions. This could change in the future to allow for more flexibility.
+
+## Performance
+
+- Added support for built-in named transition functions, which results in significantly faster `samc-class` object creation by eliminating overhead associated with user-defined functions. Currently, only `"1/mean(x)"` is supported, but others can be added in the future.
+
+## Other
+
+- Added the toy resistance data used for a workshop at the IALE 2021 conference.
+
+
+# samc 3.0.2
 
 ## New Features
 
 - Added support for the terra package for raster data. Internally, the package now uses terra and converts RasterLayer objects to SpatRaster objects. It's recommended that users switch to the terra package for loading and preparing raster data for samc.
 - Made the `rasterize()` function publicly available. Mainly useful for converting matrices to a SpatRaster that matches the structure used internally by the package.
 - Added short-term versions of the `visitation()` function.
-- Breaking Added support for setting the initial state in the `visitation()` function
+- ***Breaking*** Added support for setting the initial state in the `visitation()` function
 
 ## Performance
 
-- (**Breaking**) Removed default naming of cells for samc objects created from rasters. This leads to substantially smaller samc objects, especially as raster inputs become larger.
+- ***Breaking*** Removed default naming of cells for samc objects created from rasters. This leads to substantially smaller samc objects, especially as raster inputs become larger.
 - Overhauled the samc object creation to be substantially more memory efficient. It is now feasible to create samc objects with 100+ million transient states with 32 GB of RAM. However, this memory efficiency comes with the tradeoff that samc objects can take significantly longer to create (~2x as long based on preliminary testing).
 - Added optional support for iterative solvers in metrics (where applicable). This greatly reduces the memory requirements of these metrics, but in general, will take longer to calculate. Initial tests indicate that the `visitation()` function is feasible for samc objects with 50 Million cells with 32 GB of RAM. Details about changing the solver can be found in the help documentation for the `samc-class`.
 - Added caching behavior for some metrics when using a direct solver. This can reduce run-time by over 95% when rerunning these metrics with the same arguments but different input values. Using different arguments or metrics may require rebuilding the cache, so it is best to keep specific usages of a metric grouped in code.
@@ -22,14 +48,14 @@
 
 ## Other
 
-- (**Breaking**) Combined the three original example data objects into a single list. Updated documentation accordingly.
+- ***Breaking*** Combined the three original example data objects into a single list. Updated documentation accordingly.
 - Moved the maze example vignette data into a built-in data object.
-- (**Breaking**) Removed support for TransitionLayer inputs to the `samc()` function so that gdistance can be removed as a dependency.
-- (**Breaking**) The `sym` option for creating the samc object is currently ignored.
-- (**Breaking**) The `map()` function was updated so that the output matches the input types used in the `samc()` function.
-- (**Breaking**) Rename the `tr_args` parameter to `model` to reflect future anticipated support for different types of models. Current usage will not change and assumes a default random-walk model.
-- (**Breaking**) Renamed the `occ` parameter in metrics to `init` (short for "initial state" or "initialize")
-- (**Breaking**) Added the parameter for setting the initial state in the `cond_passage()` function to match other metrics, but it is not currently used.
+- ***Breaking*** Removed support for TransitionLayer inputs to the `samc()` function so that gdistance can be removed as a dependency.
+- ***Breaking*** The `sym` option for creating the samc object is currently ignored.
+- ***Breaking*** The `map()` function was updated so that the output matches the input types used in the `samc()` function.
+- ***Breaking*** Rename the `tr_args` parameter to `model` to reflect future anticipated support for different types of models. Current usage will not change and assumes a default random-walk model.
+- ***Breaking*** Renamed the `occ` parameter in metrics to `init` (short for "initial state" or "initialize")
+- ***Breaking*** Added the parameter for setting the initial state in the `cond_passage()` function to match other metrics, but it is not currently used.
 - Bumped various package version requirements.
 
 # samc 2.0.1
@@ -54,7 +80,7 @@
 - Added an initial vignette discussing *Disconnected Data*. The current contents are only slightly modified from an email discussion; they will be rewritten and expanded upon in the future. The *Troubleshooting* vignette has had an error message and a warning message related to the topic added to it.
 - Added a Rcpp related error to the *Troubleshooting* vignette.
 - Bumped version requirements for R to 3.6.0, Rcpp to 1.0.5, RcppEigen to 0.3.3.9.1, and set C++14 as the standard to use in Makevars.
-- Enabled the Github discussions page as a replacement for Gitter: https://github.com/andrewmarx/samc/discussions
+- Enabled the Github discussions page as a replacement for Gitter
 
 # samc 1.4.0
 
@@ -113,8 +139,8 @@
   - Time step vector inputs have not been added for short-term metrics that return dense matrices
 - Updated the map() function to support list inputs generated by the short-term metrics. The result is a list of RasterLayers
 - Updated the *Temporal Analysis* and *Animations* vignettes to incorporate time step vectors
-- Created a [Gitter community](https://gitter.im/samc-package/community) for package support. Gitter badges on the README and home pages can be used to access it.
-- Updated the package citation info to refer to Marx et al. (2020, DOI: [10.1111/ecog.04891](https://doi.org/10.1111/ecog.04891))
+- Created a Gitter community for package support. Gitter badges on the README and home pages can be used to access it.
+- Updated the package citation info to refer to Marx et al. (2020, DOI: 10.1111/ecog.04891)
 
 
 # samc 1.0.4
@@ -133,7 +159,7 @@
 - Complete package rewrite (code dependent on v0.1.0 will not work)
 - samc-class for managing SAMC data
 - Utility functions for creating samc-class objects, checking inputs, and mapping data
-- Heavily optimized analytical functions for all metrics described in Fletcher et al. (2019, DOI: [10.1111/ele.13333](https://doi.org/10.1111/ele.13333))
+- Heavily optimized analytical functions for all metrics described in Fletcher et al. (2019, DOI: 10.1111/ele.13333)
   - Utilizing sparse matrices
   - Eigen C++ implementation via Rcpp and RcppEigen
 - Updated example data
@@ -143,5 +169,5 @@
 
 # samc 0.1.0
 
-- Created crude functions for calculating metrics in Fletcher et al. (2019, DOI: [10.1111/ele.13333](https://doi.org/10.1111/ele.13333))
+- Created crude functions for calculating metrics in Fletcher et al. (2019, DOI: 10.1111/ele.13333)
 - Included example data

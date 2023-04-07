@@ -12,23 +12,23 @@
 \alias{samc,matrix,missing,missing,missing-method}
 \title{Create an samc object}
 \usage{
-samc(data, absorption, fidelity, model)
+samc(data, absorption, fidelity, model, options = NULL)
 
-\S4method{samc}{SpatRaster,SpatRaster,SpatRaster,list}(data, absorption, fidelity, model)
+\S4method{samc}{SpatRaster,SpatRaster,SpatRaster,list}(data, absorption, fidelity, model, options = NULL)
 
-\S4method{samc}{RasterLayer,RasterLayer,RasterLayer,list}(data, absorption, fidelity, model)
+\S4method{samc}{RasterLayer,RasterLayer,RasterLayer,list}(data, absorption, fidelity, model, options = NULL)
 
-\S4method{samc}{SpatRaster,SpatRaster,missing,list}(data, absorption, model)
+\S4method{samc}{SpatRaster,SpatRaster,missing,list}(data, absorption, model, options = NULL)
 
-\S4method{samc}{RasterLayer,RasterLayer,missing,list}(data, absorption, model)
+\S4method{samc}{RasterLayer,RasterLayer,missing,list}(data, absorption, model, options = NULL)
 
-\S4method{samc}{matrix,matrix,matrix,list}(data, absorption, fidelity, model)
+\S4method{samc}{matrix,matrix,matrix,list}(data, absorption, fidelity, model, options = NULL)
 
-\S4method{samc}{matrix,matrix,missing,list}(data, absorption, model)
+\S4method{samc}{matrix,matrix,missing,list}(data, absorption, model, options = NULL)
 
-\S4method{samc}{dgCMatrix,missing,missing,missing}(data)
+\S4method{samc}{dgCMatrix,missing,missing,missing}(data, options = NULL)
 
-\S4method{samc}{matrix,missing,missing,missing}(data)
+\S4method{samc}{matrix,missing,missing,missing}(data, options = NULL)
 }
 \arguments{
 \item{data}{A \code{\link[terra]{SpatRaster-class}} or \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}} or Matrix package dgCMatrix sparse matrix.}
@@ -38,6 +38,8 @@ samc(data, absorption, fidelity, model)
 \item{fidelity}{A \code{\link[terra]{SpatRaster-class}} or \code{\link[raster]{RasterLayer-class}} or \code{\link[base]{matrix}}}
 
 \item{model}{A list with args for constructing a transition matrix.}
+
+\item{options}{A list of options that changes how the samc behaves computationally.}
 }
 \value{
 A \code{\link{samc-class}} object
