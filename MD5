@@ -1,6 +1,6 @@
-23523230a191b0691a1979a12072497e *DESCRIPTION
+79b34bfd914716db1b84205292f280a0 *DESCRIPTION
 d0f3f201c276af2dda74f90b509a2246 *NAMESPACE
-ea30b3d673de97341df93256449c3bd6 *NEWS.md
+a7b1f1a416e9fa25b84a0a08094fb309 *NEWS.md
 3a1ac86bb157793970f6dedd364acb96 *R/RcppExports.R
 cd0d7a9c768ffc71eea4e09e65d07e19 *R/absorption.R
 9a9967fc48277b5827bf476a92213782 *R/check.R
@@ -20,16 +20,16 @@ dccbc436124e9cbea021e4af57faeacb *R/map.R
 62d4a5add7167b541916c61408a08b7e *R/samc-class.R
 d2093fb2b023dfc180e01590b570b9f6 *R/samc.R
 00184872e6beb73b61ef04f19cc7de34 *R/survival.R
-ce3123c0cd37fae2b0104a24124660e9 *R/visitation.R
+8f220a44296e1004533fe2b25ab81a47 *R/visitation.R
 6b04f103f3620a4d567fce36c42cf576 *R/zzz.R
 88621d4f3c374f4843fe259d5199850e *build/vignette.rds
 70a90709ea177a2d328a2205e82344b3 *data/example_maze.rda
 d00211ab1b9ba6589673dc63c7afbc04 *data/example_split_corridor.rda
 9c46ce56f0d3022de6757fcd2fcf4e1e *data/example_toy_res.rda
 92f7807c3e4199c0e45489a5647907ba *inst/CITATION
-12aac10e409eb98ed452920a3a65a593 *inst/doc/overview.R
+a83dc7c6e48e1d67a9bdc8a176581d78 *inst/doc/overview.R
 7f863383b8ca329284aded50bf41eb59 *inst/doc/overview.Rmd
-f629804e5a88714a0d5dd5ee4ac291a6 *inst/doc/overview.html
+6d9e9c04fc6bb762639c523b7696a525 *inst/doc/overview.html
 46bd8a90a3c3d14119f3ebfe1c9de619 *inst/examples/example.R
 0a6f3850c50d89560feda5166a4f2d5d *inst/examples/locate.R
 a203583837091087ac3ad77218b764db *inst/examples/pairwise.R
@@ -58,6 +58,7 @@ b0ed5fe17987e21f5baff6121b985b28 *man/samc-class-modify.Rd
 f22c2c64ea22c946d37facda7a646a39 *man/samc_data-class.Rd
 a102498390af1c393fe108b0ba136619 *man/survival.Rd
 86c6fcb8e33f138637e55e6a4f8d227e *man/visitation.Rd
+fab28b55e186862cd7b5cc4d4b3e4803 *man/visitation_net.Rd
 5250790642ade50229b1645108722c39 *src/Makevars
 1511410574b9dc40ae660171f7bdb4fa *src/Makevars.win
 4ced361aae761fd00d71ad58372b00bc *src/RcppExports.cpp
@@ -82,5 +83,5 @@ b52c17dda68763768504d2c8598c5781 *tests/testthat/test-check.R
 4ae538ed224a6b6f4f99f50666a5e560 *tests/testthat/test-mortality.R
 f47c5918f97e6774240ff803ae62b29f *tests/testthat/test-samc.R
 1a77ffd153304749dcbc597097c8fe2d *tests/testthat/test-survival.R
-5662eec4efe1aad625ec9a177d5569fc *tests/testthat/test-visitation.R
+5ff2fbf98c5a7f32392f08692b2fc4ce *tests/testthat/test-visitation.R
 7f863383b8ca329284aded50bf41eb59 *vignettes/overview.Rmd
