@@ -1,9 +1,9 @@
-79b34bfd914716db1b84205292f280a0 *DESCRIPTION
+92b139978b75900593266765cc87435a *DESCRIPTION
 d0f3f201c276af2dda74f90b509a2246 *NAMESPACE
-a7b1f1a416e9fa25b84a0a08094fb309 *NEWS.md
+de1129f66eaa82f4753bfb34c5728d69 *NEWS.md
 3a1ac86bb157793970f6dedd364acb96 *R/RcppExports.R
 cd0d7a9c768ffc71eea4e09e65d07e19 *R/absorption.R
-9a9967fc48277b5827bf476a92213782 *R/check.R
+e0e1ca06a5f12320b95d38cf49eb22a3 *R/check.R
 fa8c11974ed632f161f71a20f7400ff0 *R/cond_passage.R
 481d8c4adbe9e03cbf17193f8f66544c *R/data.R
 3df7eec561d8d09ca798669323530a20 *R/dispersal.R
@@ -29,7 +29,7 @@ d00211ab1b9ba6589673dc63c7afbc04 *data/example_split_corridor.rda
 92f7807c3e4199c0e45489a5647907ba *inst/CITATION
 a83dc7c6e48e1d67a9bdc8a176581d78 *inst/doc/overview.R
 7f863383b8ca329284aded50bf41eb59 *inst/doc/overview.Rmd
-6d9e9c04fc6bb762639c523b7696a525 *inst/doc/overview.html
+cbb0168899172922fbd853d38a52c156 *inst/doc/overview.html
 46bd8a90a3c3d14119f3ebfe1c9de619 *inst/examples/example.R
 0a6f3850c50d89560feda5166a4f2d5d *inst/examples/locate.R
 a203583837091087ac3ad77218b764db *inst/examples/pairwise.R
