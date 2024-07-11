@@ -8,9 +8,9 @@
 \usage{
 pairwise(fun, samc, origin, dest)
 
-\S4method{pairwise}{`function`,samc,location,location}(fun, samc, origin, dest)
+\S4method{pairwise}{function,samc,location,location}(fun, samc, origin, dest)
 
-\S4method{pairwise}{`function`,samc,location,missing}(fun, samc, origin)
+\S4method{pairwise}{function,samc,location,missing}(fun, samc, origin)
 }
 \arguments{
 \item{fun}{A samc analytical function with signature fun(samc, origin, dest)}

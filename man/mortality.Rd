@@ -7,11 +7,13 @@
 \alias{mortality,samc,missing,missing,location,numeric-method}
 \alias{mortality,samc,missing,location,location,numeric-method}
 \alias{mortality,samc,ANY,missing,missing,numeric-method}
+\alias{mortality,samc,ANY,missing,location,numeric-method}
 \alias{mortality,samc,missing,missing,missing,missing-method}
 \alias{mortality,samc,missing,location,missing,missing-method}
 \alias{mortality,samc,missing,missing,location,missing-method}
 \alias{mortality,samc,missing,location,location,missing-method}
 \alias{mortality,samc,ANY,missing,missing,missing-method}
+\alias{mortality,samc,ANY,missing,location,missing-method}
 \title{Calculate mortality metrics}
 \usage{
 mortality(samc, init, origin, dest, time)
@@ -26,6 +28,8 @@ mortality(samc, init, origin, dest, time)
 
 \S4method{mortality}{samc,ANY,missing,missing,numeric}(samc, init, time)
 
+\S4method{mortality}{samc,ANY,missing,location,numeric}(samc, init, dest, time)
+
 \S4method{mortality}{samc,missing,missing,missing,missing}(samc)
 
 \S4method{mortality}{samc,missing,location,missing,missing}(samc, origin)
@@ -35,6 +39,8 @@ mortality(samc, init, origin, dest, time)
 \S4method{mortality}{samc,missing,location,location,missing}(samc, origin, dest)
 
 \S4method{mortality}{samc,ANY,missing,missing,missing}(samc, init)
+
+\S4method{mortality}{samc,ANY,missing,location,missing}(samc, init, dest)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}

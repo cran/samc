@@ -88,9 +88,13 @@ be accessed and modified in the class:
 
 \item{\code{source}}{Information about the data source for the P matrix}
 
+\item{\code{nodes}}{The number of nodes in the graph}
+
 \item{\code{map}}{Used to verify landscape inputs and mapping of vector data}
 
 \item{\code{crw_map}}{Matrix used to map location and direction to edges description}
+
+\item{\code{prob_mat}}{Matric for CRW probabilities}
 
 \item{\code{names}}{Names of the transient states}
 

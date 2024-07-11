@@ -2,15 +2,18 @@
 % Please edit documentation in R/survival.R
 \name{survival}
 \alias{survival}
-\alias{survival,samc,missing-method}
-\alias{survival,samc,ANY-method}
+\alias{survival,samc,missing,missing-method}
+\alias{survival,samc,missing,location-method}
+\alias{survival,samc,ANY,missing-method}
 \title{Calculate survival metrics}
 \usage{
-survival(samc, init)
+survival(samc, init, origin)
 
-\S4method{survival}{samc,missing}(samc)
+\S4method{survival}{samc,missing,missing}(samc)
 
-\S4method{survival}{samc,ANY}(samc, init)
+\S4method{survival}{samc,missing,location}(samc, origin)
+
+\S4method{survival}{samc,ANY,missing}(samc, init)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}
@@ -18,6 +21,11 @@ survival(samc, init)
 \item{init}{Sets the initial state \eqn{\psi} of the transients states. Input
 must be able to pass the \code{\link{check}} function when compared against
 the \code{\link{samc-class}} object. Can only contain positive finite values.}
+
+\item{origin}{A positive integer or character name representing transient state
+\eqn{\mathit{i}}. Corresponds to row \eqn{\mathit{i}} of matrix \eqn{\mathbf{P}}
+in the \code{\link{samc-class}} object. When paired with the \code{dest}
+parameter, multiple values may be provided as a vector.}
 }
 \value{
 See Details

@@ -7,6 +7,7 @@
 \alias{distribution,samc,missing,missing,location,numeric-method}
 \alias{distribution,samc,missing,location,location,numeric-method}
 \alias{distribution,samc,ANY,missing,missing,numeric-method}
+\alias{distribution,samc,ANY,missing,location,numeric-method}
 \title{Calculate distribution metrics}
 \usage{
 distribution(samc, init, origin, dest, time)
@@ -20,6 +21,8 @@ distribution(samc, init, origin, dest, time)
 \S4method{distribution}{samc,missing,location,location,numeric}(samc, origin, dest, time)
 
 \S4method{distribution}{samc,ANY,missing,missing,numeric}(samc, init, time)
+
+\S4method{distribution}{samc,ANY,missing,location,numeric}(samc, init, dest, time)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}

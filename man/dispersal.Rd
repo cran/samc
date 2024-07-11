@@ -2,6 +2,7 @@
 % Please edit documentation in R/dispersal.R
 \name{dispersal}
 \alias{dispersal}
+\alias{dispersal,samc,missing,location,location,numeric-method}
 \alias{dispersal,samc,missing,missing,location,numeric-method}
 \alias{dispersal,samc,ANY,missing,location,numeric-method}
 \alias{dispersal,samc,missing,missing,missing,missing-method}
@@ -13,6 +14,8 @@
 \title{Calculate dispersal metrics}
 \usage{
 dispersal(samc, init, origin, dest, time)
+
+\S4method{dispersal}{samc,missing,location,location,numeric}(samc, origin, dest, time)
 
 \S4method{dispersal}{samc,missing,missing,location,numeric}(samc, dest, time)
 

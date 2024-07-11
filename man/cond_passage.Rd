@@ -4,6 +4,7 @@
 \alias{cond_passage}
 \alias{cond_passage,samc,missing,missing,location-method}
 \alias{cond_passage,samc,missing,location,location-method}
+\alias{cond_passage,samc,ANY,missing,location-method}
 \title{Conditional Mean First Passage Time}
 \usage{
 cond_passage(samc, init, origin, dest)
@@ -11,11 +12,15 @@ cond_passage(samc, init, origin, dest)
 \S4method{cond_passage}{samc,missing,missing,location}(samc, dest)
 
 \S4method{cond_passage}{samc,missing,location,location}(samc, origin, dest)
+
+\S4method{cond_passage}{samc,ANY,missing,location}(samc, init, dest)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}
 
-\item{init}{Placeholder/not currently implemented.}
+\item{init}{Sets the initial state \eqn{\psi} of the transients states. Input
+must be able to pass the \code{\link{check}} function when compared against
+the \code{\link{samc-class}} object. Can only contain positive finite values.}
 
 \item{origin}{A positive integer or character name representing transient state
 \eqn{\mathit{i}}. Corresponds to row \eqn{\mathit{i}} of matrix \eqn{\mathbf{P}}
