@@ -2,12 +2,21 @@
 % Please edit documentation in R/visitation.R
 \name{visitation_net}
 \alias{visitation_net}
+\alias{visitation_net,samc,missing,location,missing-method}
 \alias{visitation_net,samc,missing,location,location-method}
+\alias{visitation_net,samc,ANY,missing,missing-method}
+\alias{visitation_net,samc,ANY,missing,location-method}
 \title{Calculate net visitation}
 \usage{
 visitation_net(samc, init, origin, dest)
 
+\S4method{visitation_net}{samc,missing,location,missing}(samc, origin)
+
 \S4method{visitation_net}{samc,missing,location,location}(samc, origin, dest)
+
+\S4method{visitation_net}{samc,ANY,missing,missing}(samc, init)
+
+\S4method{visitation_net}{samc,ANY,missing,location}(samc, init, dest)
 }
 \arguments{
 \item{samc}{A \code{\link{samc-class}} object created using the \code{\link{samc}} function.}
@@ -33,7 +42,7 @@ See Details
 Calculates the net number of times that transient states are visited before absorption.
 }
 \details{
-The \code{\link{visitation}} function calculates the
+Add details here
 }
 \section{Performance}{
 

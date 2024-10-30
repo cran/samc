@@ -106,6 +106,8 @@ be accessed and modified in the class:
 
 \item{\code{threads}}{Used for multi-threading}
 
+\item{\code{precision}}{"single" or "double". Only applies to convolution currently.}
+
 \item{\code{.cache}}{Cached data for performance boosts}
 }}
 
