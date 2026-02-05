@@ -42,13 +42,13 @@ metric.
 \details{
 \eqn{A = F R}
 \itemize{
-  \item \strong{absorption(samc)}
+    \item \strong{absorption(samc)}
 
 The result is a matrix \eqn{M} where \eqn{M_{i,k}} is the
 probability of absorption due to absorbing state \eqn{\mathit{k}} if starting
 at transient state \eqn{\mathit{i}}.
 
-  \item \strong{absorption(samc, origin)}
+    \item \strong{absorption(samc, origin)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_{k}} is the
 probability of absorption due to absorbing state \eqn{\mathit{k}} if starting
@@ -57,7 +57,7 @@ at transient state \eqn{\mathit{i}}.
 
 \eqn{\psi^T A}
 \itemize{
-  \item \strong{absorption(samc, init)}
+    \item \strong{absorption(samc, init)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_{k}} is the
 probability of absorption due to absorbing state \eqn{\mathit{k}} given an
@@ -67,8 +67,8 @@ initial state \eqn{\psi}.
 \section{Performance}{
 
 
-Any relevant performance information about this function can be found in the
-performance vignette: \href{../doc/performance.html}{\code{vignette("performance", package = "samc")}}
+Performance details are in the performance vignette:
+\code{vignette("performance", package = "samc")}.
 }
 
 \examples{

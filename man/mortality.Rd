@@ -73,7 +73,7 @@ Calculates the probability of absorption at individual transient states.
 \details{
 \eqn{\tilde{B}_t = \tilde{F} \tilde{R}}
 \itemize{
-  \item \strong{mortality(samc, time)}
+    \item \strong{mortality(samc, time)}
 
 The result is a matrix \eqn{M} where \eqn{M_{i,j}} is the
 probability of absorption at transient state \eqn{\mathit{j}} within \eqn{\mathit{t}}
@@ -82,7 +82,7 @@ or fewer steps if starting at transient state \eqn{\mathit{i}}.
 The returned matrix will always be dense and cannot be optimized. Must enable
 override to use (see \code{\link{samc-class}}).
 
-  \item \strong{mortality(samc, origin, time)}
+    \item \strong{mortality(samc, origin, time)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the probability
 of absorption at transient state \eqn{\mathit{j}} within \eqn{\mathit{t}} or
@@ -95,7 +95,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{mortality(samc, dest, time)}
+    \item \strong{mortality(samc, dest, time)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the probability
 of absorption at transient state \eqn{\mathit{j}} within \eqn{\mathit{t}} or
@@ -108,7 +108,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{mortality(samc, origin, dest, time)}
+    \item \strong{mortality(samc, origin, dest, time)}
 
 The result is a numeric value that is the probability of absorption at transient
 state \eqn{\mathit{j}} within \eqn{\mathit{t}} or fewer time steps if starting
@@ -120,7 +120,7 @@ ordered named list containing a numeric value for each time step.
 
 \eqn{\psi^T \tilde{B}_t}
 \itemize{
-  \item \strong{mortality(samc, init, time)}
+    \item \strong{mortality(samc, init, time)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the unconditional
 probability of absorption at transient state \eqn{\mathit{j}} within \eqn{\mathit{t}}
@@ -137,7 +137,7 @@ vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 
 \eqn{B = F \tilde{R}}
 \itemize{
-  \item \strong{mortality(samc)}
+    \item \strong{mortality(samc)}
 
 The result is a matrix \eqn{M} where \eqn{M_{i,j}} is the
 probability of absorption at transient state \eqn{\mathit{j}} if starting at
@@ -146,7 +146,7 @@ transient state \eqn{\mathit{i}}.
 The returned matrix will always be dense and cannot be optimized. Must enable
 override to use (see \code{\link{samc-class}}).
 
-  \item \strong{mortality(samc, origin)}
+    \item \strong{mortality(samc, origin)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the probability of absorption
 at transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
@@ -155,7 +155,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{mortality(samc, dest)}
+    \item \strong{mortality(samc, dest)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the probability of absorption
 at transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
@@ -164,7 +164,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{mortality(samc, origin, dest)}
+    \item \strong{mortality(samc, origin, dest)}
 
 The result is a numeric value that is the probability of absorption
 at transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
@@ -172,7 +172,7 @@ at transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{
 
 \eqn{\psi^T B}
 \itemize{
-  \item \strong{mortality(samc, init)}
+    \item \strong{mortality(samc, init)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the unconditional
 probability of absorption at transient state \eqn{\mathit{j}} given an initial
@@ -186,8 +186,8 @@ vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \section{Performance}{
 
 
-Any relevant performance information about this function can be found in the
-performance vignette: \href{../doc/performance.html}{\code{vignette("performance", package = "samc")}}
+Performance details are in the performance vignette:
+\code{vignette("performance", package = "samc")}.
 }
 
 \examples{

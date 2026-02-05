@@ -41,7 +41,7 @@ Calculate the mean number of steps to first passage
 \details{
 \eqn{\tilde{t}=\tilde{B}_j^{-1}\tilde{F}\tilde{B}_j{\cdot}1}
 \itemize{
-  \item \strong{cond_passage(samc, dest)}
+    \item \strong{cond_passage(samc, dest)}
 
 The result is a vector where each element corresponds to a cell in the landscape,
 and can be mapped back to the landscape using the \code{\link{map}} function.
@@ -55,7 +55,7 @@ The \strong{cond_passage()} function fills inserts a \code{0} value for vector i
 corresponding to \emph{i == j}. This corrects the final result so that vector indices
 work as expected, and allows the vector to be properly used in the \code{\link{map}} function.
 
-  \item \strong{cond_passage(samc, origin, dest)}
+    \item \strong{cond_passage(samc, origin, dest)}
 
 The result is a numeric value representing the mean number of steps before
 absorption starting from a given origin conditional on absorption into \emph{j}.
@@ -82,8 +82,8 @@ handle them accordingly.
 \section{Performance}{
 
 
-Any relevant performance information about this function can be found in the
-performance vignette: \href{../doc/performance.html}{\code{vignette("performance", package = "samc")}}
+Performance details are in the performance vignette:
+\code{vignette("performance", package = "samc")}.
 }
 
 \examples{

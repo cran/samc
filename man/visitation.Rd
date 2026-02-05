@@ -70,7 +70,7 @@ Calculates the number of times that transient states are visited before absorpti
 \details{
 \eqn{\tilde{F}_{t} = (\sum_{n=0}^{t-1}{Q}^n)}
 \itemize{
-  \item \strong{visitation(samc, time)}
+    \item \strong{visitation(samc, time)}
 
 The result is a matrix \eqn{M} where \eqn{M_{i,j}} is the number of times that
 transient state \eqn{\mathit{j}} is visited after \eqn{\mathit{t}} time steps
@@ -79,7 +79,7 @@ if starting at transient state \eqn{\mathit{i}}.
 The returned matrix will always be dense and cannot be optimized. Must enable
 override to use (see \code{\link{samc-class}}).
 
-  \item \strong{visitation(samc, origin, time)}
+    \item \strong{visitation(samc, origin, time)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the number
 of times that transient state \eqn{\mathit{j}} is visited after \eqn{\mathit{t}}
@@ -89,7 +89,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{visitation(samc, dest, time)}
+    \item \strong{visitation(samc, dest, time)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the number
 of times that transient state \eqn{\mathit{j}} is visited after \eqn{\mathit{t}}
@@ -99,7 +99,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{visitation(samc, origin, dest, time)}
+    \item \strong{visitation(samc, origin, dest, time)}
 
 The result is a numeric value that is the number of times transient state
 \eqn{\mathit{j}} is visited after \eqn{\mathit{t}} time steps if starting at
@@ -108,7 +108,7 @@ transient state \eqn{\mathit{i}}.
 
 \eqn{\psi^T \tilde{F}_{t}}
 \itemize{
-  \item \strong{visitation(samc, init, time)}
+    \item \strong{visitation(samc, init, time)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the number
 of times that transient state \eqn{\mathit{j}} is visited after \eqn{\mathit{t}}
@@ -118,7 +118,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{visitation(samc, init, dest, time)}
+    \item \strong{visitation(samc, init, dest, time)}
 
 The result is a numeric value that is the number of times transient state
 \eqn{\mathit{j}} is visited after \eqn{\mathit{t}} time steps given an initial
@@ -128,7 +128,7 @@ state \eqn{\psi}.
 
 \eqn{F = (I-Q)^{-1}}
 \itemize{
-  \item \strong{visitation(samc)}
+    \item \strong{visitation(samc)}
 
 The result is a matrix \eqn{M} where \eqn{M_{i,j}} is the number of times that
 transient state \eqn{\mathit{j}} is visited before absorption if starting at
@@ -137,7 +137,7 @@ transient state \eqn{\mathit{i}}.
 The returned matrix will always be dense and cannot be optimized. Must enable
 override to use (see \code{\link{samc-class}}).
 
-  \item \strong{visitation(samc, origin)}
+    \item \strong{visitation(samc, origin)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the number
 of times that transient state \eqn{\mathit{j}} is visited before absorption if
@@ -147,7 +147,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{visitation(samc, dest)}
+    \item \strong{visitation(samc, dest)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the number
 of times that transient state \eqn{\mathit{j}} is visited before absorption if
@@ -157,7 +157,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{visitation(samc, origin, dest)}
+    \item \strong{visitation(samc, origin, dest)}
 
 The result is a numeric value that is the number of times transient state
 \eqn{\mathit{j}} is visited before absorption if starting at transient
@@ -166,7 +166,7 @@ state \eqn{\mathit{i}}.
 
 \eqn{\psi^TF}
 \itemize{
-  \item \strong{visitation(samc, init)}
+    \item \strong{visitation(samc, init)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the number
 of times that transient state \eqn{\mathit{j}} is visited before absorption
@@ -176,7 +176,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{visitation(samc, init, dest)}
+    \item \strong{visitation(samc, init, dest)}
 
 The result is a numeric value that is the number of times transient state
 \eqn{\mathit{j}} is visited before absorption given an initial state \eqn{\psi}.
@@ -185,8 +185,8 @@ The result is a numeric value that is the number of times transient state
 \section{Performance}{
 
 
-Any relevant performance information about this function can be found in the
-performance vignette: \href{../doc/performance.html}{\code{vignette("performance", package = "samc")}}
+Performance details are in the performance vignette:
+\code{vignette("performance", package = "samc")}.
 }
 
 \examples{

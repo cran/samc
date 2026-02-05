@@ -36,7 +36,7 @@ Calculates the expected time to absorption
 \details{
 \eqn{z=(I-Q)^{-1}{\cdot}1=F{\cdot}1}
 \itemize{
-  \item \strong{survival(samc)}
+    \item \strong{survival(samc)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the expected
 time to absorption if starting at transient state \eqn{\mathit{i}}.
@@ -48,7 +48,7 @@ vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 
 \eqn{\psi^Tz}
 \itemize{
-  \item \strong{survival(samc, init)}
+    \item \strong{survival(samc, init)}
 
 The result is a numeric that is the expected time to absorption given an initial
 state \eqn{\psi}.
@@ -57,8 +57,8 @@ state \eqn{\psi}.
 \section{Performance}{
 
 
-Any relevant performance information about this function can be found in the
-performance vignette: \href{../doc/performance.html}{\code{vignette("performance", package = "samc")}}
+Performance details are in the performance vignette:
+\code{vignette("performance", package = "samc")}.
 }
 
 \examples{

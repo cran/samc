@@ -100,14 +100,14 @@ directly from a preconstructed P matrix. This matrix must be either a base R
 matrix, or a sparse matrix (dgCMatrix format) from the Matrix package. It
 must meet the following requirements:
 \itemize{
-  \item The number of rows must equal the number of columns (a square matrix)
-  \item Total absorption must be a single column on the right-hand side of the matrix
-  \item At the bottom of the matrix, there must be a row filled with 0's except
-  for the last element (bottom-right of the matrix diagonal), which must be set to 1
-  \item Every disconnected region of the matrix must have at least one non-zero
-  absorbing value
-  \item Each row must sum to 1
-  \item All values must be in the range of 0-1
+    \item The number of rows must equal the number of columns (a square matrix)
+    \item Total absorption must be a single column on the right-hand side of the matrix
+    \item At the bottom of the matrix, there must be a row filled with 0's except
+    for the last element (bottom-right of the matrix diagonal), which must be set to 1
+    \item Every disconnected region of the matrix must have at least one non-zero
+    absorbing value
+    \item Each row must sum to 1
+    \item All values must be in the range of 0-1
 }
 
 Additionally, the columns and rows of the P matrix may be named (e.g., using

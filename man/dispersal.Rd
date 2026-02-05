@@ -64,7 +64,7 @@ Calculates the probability of individuals visiting locations
 \details{
 \eqn{\tilde{D}_{jt}=(\sum_{n=0}^{t-1}\tilde{Q}^n)\tilde{q}_j}
 \itemize{
-  \item \strong{dispersal(samc, dest, time)}
+    \item \strong{dispersal(samc, dest, time)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the probability
 of visiting transient state \eqn{\mathit{j}} within \eqn{\mathit{t}} or fewer
@@ -83,7 +83,7 @@ vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 
 \eqn{\psi^T\tilde{D}_{jt}}
 \itemize{
-  \item \strong{dispersal(samc, init, dest, time)}
+    \item \strong{dispersal(samc, init, dest, time)}
 
 The result is a numeric that is the probability of visiting transient state \eqn{\mathit{j}}
 within \eqn{\mathit{t}} or fewer time steps given an initial state \eqn{\psi}
@@ -94,7 +94,7 @@ ordered named list containing a vector for each time step.
 
 \eqn{D=(F-I)diag(F)^{-1}}
 \itemize{
-  \item \strong{dispersal(samc)}
+    \item \strong{dispersal(samc)}
 
 The result is a matrix \eqn{M} where \eqn{M_{i,j}} is the probability of visiting
 transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
@@ -102,7 +102,7 @@ transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}
 The returned matrix will always be dense and cannot be optimized. Must enable
 override to use (see \code{\link{samc-class}}).
 
-  \item \strong{dispersal(samc, origin)}
+    \item \strong{dispersal(samc, origin)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the probability
 of visiting transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
@@ -111,7 +111,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{dispersal(samc, dest)}
+    \item \strong{dispersal(samc, dest)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_i} is the probability
 of visiting transient state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
@@ -120,7 +120,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{dispersal(samc, origin, dest)}
+    \item \strong{dispersal(samc, origin, dest)}
 
 The result is a numeric value that is the probability of visiting transient
 state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
@@ -128,7 +128,7 @@ state \eqn{\mathit{j}} if starting at transient state \eqn{\mathit{i}}.
 
 \eqn{\psi^TD}
 \itemize{
-  \item \strong{dispersal(samc, init)}
+    \item \strong{dispersal(samc, init)}
 
 The result is a vector \eqn{\mathbf{v}} where \eqn{\mathbf{v}_j} is the probability
 of visiting transient state \eqn{\mathit{j}} given an initial state \eqn{\psi}.
@@ -137,7 +137,7 @@ If the samc-class object was created using matrix or RasterLayer maps, then
 vector \eqn{\mathbf{v}} can be mapped to a RasterLayer using the
 \code{\link{map}} function.
 
-  \item \strong{dispersal(samc, init, dest)}
+    \item \strong{dispersal(samc, init, dest)}
 
 The result is a numeric value that is the probability of visiting transient
 state \eqn{\mathit{j}} given an initial state \eqn{\psi}.
@@ -146,8 +146,8 @@ state \eqn{\mathit{j}} given an initial state \eqn{\psi}.
 \section{Performance}{
 
 
-Any relevant performance information about this function can be found in the
-performance vignette: \href{../doc/performance.html}{\code{vignette("performance", package = "samc")}}
+Performance details are in the performance vignette:
+\code{vignette("performance", package = "samc")}.
 }
 
 \examples{
