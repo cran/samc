@@ -152,6 +152,8 @@
 .crw = function(x, absorption, fidelity, fun, dir, sym = TRUE, model) {
     tr = .tr_vals(x, fun, dir)
 
+    kappa_mode = model$kappa_mode
+
     edge_counts = sum(is.finite(tr))
     edge_nums = tr
     edge_nums[is.finite(edge_nums)] = 1:edge_counts
@@ -163,8 +165,6 @@
     ncells = length(cell_nums)
 
     edge_counts = sum(is.finite(tr))
-
-    mu = circular::circular(0)
 
     # Angle matrix
     # TODO make sure works for 4 directions
@@ -178,14 +178,17 @@
                         1, -1),
         nrow = 8, byrow = TRUE)
 
-    ang_mat = matrix(nrow = 8, ncol = 8)
+    # ang_mat was original general version. cos_mat is for von mises, which has a cos() that cancels the acos()
+    # ang_mat = matrix(nrow = 8, ncol = 8)
+    cos_mat = matrix(nrow = 8, ncol = 8)
 
     for (r in 1:8) {
         for (c in 1:8) {
             mag_v1 = sqrt(sum(dir_vec[r, ]^2))
             mag_v2 = sqrt(sum(dir_vec[c, ]^2))
 
-            ang_mat[r, c] = circular::circular(acos(sum(dir_vec[r, ] * dir_vec[c, ]) / (mag_v1 * mag_v2)))
+            # ang_mat[r, c] = acos(sum(dir_vec[r, ] * dir_vec[c, ]) / (mag_v1 * mag_v2))
+            cos_mat[r, c] = sum(dir_vec[r, ] * dir_vec[c, ]) / (mag_v1 * mag_v2)
         }
     }
 
@@ -253,11 +256,24 @@
     crw_index = 0
     index = 0
 
+    kappa_vals = terra::values(x, mat = FALSE, row = 1, nrows = 1) * 0
+    inv_norm_vals = kappa_vals
+
+    if (kappa_mode == "scalar") {
+        kappa_vals = kappa_vals + model$kappa
+        inv_norm_vals = inv_norm_vals + (1 / (2 * pi * besselI(model$kappa, nu = 0, expon.scaled = TRUE)))
+    }
+
     # Loop through cells with values
     for (r in 1:nrows) {
         fid = terra::values(fidelity, mat = FALSE, row = r, nrows = 1)
         vals = 1 - fid - terra::values(absorption, mat = FALSE, row = r, nrows = 1)
-        kappa_vals = terra::values(model$kappa, mat = FALSE, row = r, nrows = 1)
+
+        if (kappa_mode == "raster"){
+            kappa_vals = terra::values(model$kappa, mat = FALSE, row = r, nrows = 1)
+            inv_norm_vals = 1/(2 * pi * besselI(x = kappa_vals, nu = 0, expon.scaled = TRUE))
+        }
+
         for (c in 1:ncols) {
             cell = cell + 1
             if (is.finite(vals[c])) {
@@ -289,10 +305,16 @@
                                     e2_num = edge_nums[e2]
                                     mat_p_count[e2_num] = mat_p_count[e2_num] + 1
 
-                                    res = tr[e2] * circular::dvonmises(
-                                        circular::circular(ang_mat[d, dv]),
-                                        mu = circular::circular(mu),
-                                        kappa = kappa_vals[c])
+                                    temp = if (kappa_vals[c] == 0) {
+                                        1 / (2 * pi)
+                                    } else if (kappa_vals[c] < 100000) {
+                                        inv_norm_vals[c] * (exp(kappa_vals[c] * (cos_mat[d, dv] - 1)))
+                                    } else {
+                                        ifelse(x == 1, Inf, 0)
+                                    }
+
+                                    res = tr[e2] * temp
+
                                     rs = rs + res
 
                                     row_indices[dv] = mat_p[e2_num] + mat_p_count[e2_num]
